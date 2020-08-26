@@ -30,7 +30,7 @@ pipeline {
                         title: "${env.JOB_NAME}", 
                         webhookURL: 'https://discordapp.com/api/webhooks/747819422705778738/dHWPHidlNLpiiKftWU84__Ss2LAkws77Swfdk5OWs22qla3hlI1B4zywW8ROg4nAwjRM'
                     slackSend channel: 'jenkins-training', color: 'good', 
-                        message: 'Success ${env.JOB_NAME} ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} (Léo)', 
+                        message: "Success ${env.JOB_NAME} ${currentBuild.displayName} ${currentBuild.absoluteUrl} (Léo)", 
                         tokenCredentialId: 'slack-token', teamDomain: 'devinstitut'
             }
         }
