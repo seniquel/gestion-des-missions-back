@@ -24,8 +24,7 @@ pipeline {
     post {
         success {
             script {
-                if ("${env.BRANCH_NAME}" == 'Jenkinsfile')
-                    //echo "${env.JOB_NAME} Success ${currentBuild.displayName} ${currentBuild.absoluteUrl} (Léo)"
+                if ("${env.BRANCH_NAME}" == 'master')
                     discordSend description: "Success ${currentBuild.displayName} ${currentBuild.absoluteUrl}", 
                         footer: 'Léo est le meilleur', image: '', link: '', result: 'SUCCESS', thumbnail: '',
                         title: "${env.JOB_NAME}", 
@@ -36,7 +35,6 @@ pipeline {
             }
         }
         failure {
-            //echo "${env.JOB_NAME} Success ${env.JOB_NAME} ${currentBuild.displayName} ${currentBuild.absoluteUrl} (Léo)"
             discordSend description: "Failure ${currentBuild.displayName} ${currentBuild.absoluteUrl}", 
                 footer: 'Léo a lamentablement échoué', image: '', link: '', result: 'FAILURE', thumbnail: '',
                title: ' ${env.JOB_NAME}', 
