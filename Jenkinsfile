@@ -23,26 +23,25 @@ pipeline {
     }
     post {
         success {
-            when {
-                branch 'master'
-            }
-            steps {
-                discordSend description: '${env.JOB_NAME}', footer: 'Léo est le meilleur', image: '', link: '', result: 'success', thumbnail: '', 
-                    title: 'Success ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} ', 
-                    webhookURL: 'https://discordapp.com/api/webhooks/747819422705778738/dHWPHidlNLpiiKftWU84__Ss2LAkws77Swfdk5OWs22qla3hlI1B4zywW8ROg4nAwjRM'
-                slackSend channel: 'jenkins-training', color: 'good', 
-                    message: 'Success ${env.JOB_NAME} ${currentBuild.DisplayName} ${currentBuild.absoluteUrl}', 
-                    tokenCredentialId: 'slack-token', teamDomain: 'devinstitut'
-
+            script {
+                if ("${env.BRANCH_NAME}" == 'master')
+                    discordSend description: "Success ${currentBuild.displayName} ${currentBuild.absoluteUrl}", 
+                        footer: 'Léo est le meilleur', image: '', link: '', result: 'SUCCESS', thumbnail: '',
+                        title: "${env.JOB_NAME}", 
+                        webhookURL: 'https://discordapp.com/api/webhooks/747819422705778738/dHWPHidlNLpiiKftWU84__Ss2LAkws77Swfdk5OWs22qla3hlI1B4zywW8ROg4nAwjRM'
+                    slackSend channel: 'jenkins-training', color: 'good', 
+                        message: 'Success ${env.JOB_NAME} ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} (Léo)', 
+                        tokenCredentialId: 'slack-token', teamDomain: 'devinstitut'
             }
         }
         failure {
-                discordSend description: '${env.JOB_NAME}', footer: 'Léo a lamentablement échoué', image: '', link: '', result: 'failure', thumbnail: '', 
-                    title: 'Failure ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} ', 
-                    webhookURL: 'https://discordapp.com/api/webhooks/747819422705778738/dHWPHidlNLpiiKftWU84__Ss2LAkws77Swfdk5OWs22qla3hlI1B4zywW8ROg4nAwjRM'
-                slackSend channel: 'jenkins-training', color: 'danger', 
-                    message: 'Failure ${env.JOB_NAME} ${currentBuild.DisplayName} ${currentBuild.absoluteUrl}', 
-                    tokenCredentialId: 'slack-token', teamDomain: 'devinstitut'
+            discordSend description: "Failure ${currentBuild.displayName} ${currentBuild.absoluteUrl}", 
+                footer: 'Léo a lamentablement échoué', image: '', link: '', result: 'FAILURE', thumbnail: '',
+               title: ' ${env.JOB_NAME}', 
+                 webhookURL: 'https://discordapp.com/api/webhooks/747819422705778738/dHWPHidlNLpiiKftWU84__Ss2LAkws77Swfdk5OWs22qla3hlI1B4zywW8ROg4nAwjRM'
+             slackSend channel: 'jenkins-training', color: 'danger', 
+                 message: "Failure ${env.JOB_NAME} ${currentBuild.displayName} ${currentBuild.absoluteUrl} (Léo)",
+                tokenCredentialId: 'slack-token', teamDomain: 'devinstitut'
         }
     }
 }
