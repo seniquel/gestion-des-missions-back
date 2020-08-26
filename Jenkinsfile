@@ -35,9 +35,6 @@ pipeline {
                     //     tokenCredentialId: 'slack-token', teamDomain: 'devinstitut'
             }
         }
-
-            
-        }
         failure {
             echo '${env.JOB_NAME} Success ${env.JOB_NAME} ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} (Léo)'
                 // discordSend description: 'Failure ${currentBuild.DisplayName} ${currentBuild.absoluteUrl}', 
