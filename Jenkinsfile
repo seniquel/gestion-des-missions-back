@@ -27,7 +27,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                discordSend description: '${env.JOB_NAME}', footer: '', image: '', link: '', result: 'success', thumbnail: '', 
+                discordSend description: '${env.JOB_NAME}', footer: 'Léo est le meilleur', image: '', link: '', result: 'success', thumbnail: '', 
                     title: 'Success ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} ', 
                     webhookURL: 'https://discordapp.com/api/webhooks/747819422705778738/dHWPHidlNLpiiKftWU84__Ss2LAkws77Swfdk5OWs22qla3hlI1B4zywW8ROg4nAwjRM'
                 slackSend channel: 'jenkins-training', color: 'good', 
@@ -37,7 +37,7 @@ pipeline {
             }
         }
         failure {
-                discordSend description: '${env.JOB_NAME}', footer: '', image: '', link: '', result: 'failure', thumbnail: '', 
+                discordSend description: '${env.JOB_NAME}', footer: 'Léo a lamentablement échoué', image: '', link: '', result: 'failure', thumbnail: '', 
                     title: 'Failure ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} ', 
                     webhookURL: 'https://discordapp.com/api/webhooks/747819422705778738/dHWPHidlNLpiiKftWU84__Ss2LAkws77Swfdk5OWs22qla3hlI1B4zywW8ROg4nAwjRM'
                 slackSend channel: 'jenkins-training', color: 'danger', 
