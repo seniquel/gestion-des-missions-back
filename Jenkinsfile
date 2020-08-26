@@ -10,11 +10,6 @@ pipeline {
 				sh 'mvn -v'
 			}
 		}
-        stage('checkout') {
-            steps{
-                git 'https://github.com/seniquel/gestion-des-missions-back.git'
-            }
-        }
         stage('build') {
             steps {
                 sh 'mvn clean package'
