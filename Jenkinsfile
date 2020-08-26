@@ -25,7 +25,8 @@ pipeline {
         success {
             script {
                 if ("${env.BRANCH_NAME}" == 'Jenkinsfile')
-                    echo "${env.JOB_NAME} Success ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} (Léo)"
+                    echo "${env.JOB_NAME} Success ${currentBuild.displayName} ${currentBuild.absoluteUrl} (Léo)"
+                    sh 'env'
                     sh 'echo "I can access $env.JOB_NAME in shell command as well."'
                     // discordSend description: "Success ${currentBuild.DisplayName} ${currentBuild.absoluteUrl}", 
                     //     footer: 'Léo est le meilleur', image: '', link: '', result: 'SUCCESS', thumbnail: '',
