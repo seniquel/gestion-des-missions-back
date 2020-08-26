@@ -24,7 +24,7 @@ pipeline {
     post {
         success {
             script {
-                if (${env.BRANCH_NAME} == 'master')
+                if ("${env.BRANCH_NAME}" == 'master')
                     echo '${env.JOB_NAME} Success ${env.JOB_NAME} ${currentBuild.DisplayName} ${currentBuild.absoluteUrl} (Léo)'   
                     // discordSend description: 'Success ${currentBuild.DisplayName} ${currentBuild.absoluteUrl}', 
                     //     footer: 'Léo est le meilleur', image: '', link: '', result: 'SUCCESS', thumbnail: '',
