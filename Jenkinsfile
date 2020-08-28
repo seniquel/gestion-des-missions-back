@@ -11,7 +11,7 @@ pipeline {
         }
         stage('compile') {
             when {
-                branch 'master'
+                branch 'jenkins'
             }
             steps {
                 sh 'mvn clean package'
