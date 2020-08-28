@@ -20,7 +20,7 @@ pipeline {
             }
             post {
                 success {
-                     discordSend description: "${env.GIT_COMMIT}", footer: "#${env.BUILD_NUMBER} - Test Failure", image: '', link: "${env.BUILD_URL}", result: 'FAILURE', thumbnail: "", title: "${env.JOB_NAME}, ${env.GIT_BRANCH}", webhookURL: "${env.WEBHOOK_URL}"
+                     discordSend description: "${env.GIT_COMMIT}", footer: "#${env.BUILD_NUMBER} - Test Success", image: '', link: "${env.BUILD_URL}", result: 'SUCCESS', thumbnail: "", title: "${env.JOB_NAME}, ${env.GIT_BRANCH}", webhookURL: "${env.WEBHOOK_URL}"
                 }
             }
         }
