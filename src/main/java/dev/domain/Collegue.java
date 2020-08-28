@@ -16,7 +16,7 @@ public class Collegue {
 
     private String email;
 
-    private String motDePasse;
+    // private String motDePasse;
 
     @OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)
     private List<RoleCollegue> roles;
