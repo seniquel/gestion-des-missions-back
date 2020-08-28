@@ -1,5 +1,5 @@
-echo "### Génération de l'image postresql-mission-db ###"
+echo "### Génération de l'image mission-db ###"
 docker build -t postgresql-mission-db mission-db/.
 
-echo "### Création du containeur postgresql ###"
+echo "### Création du containeur mission-db ###"
 docker run -d --name postgresql-mission-db postgresql-mission-db 
