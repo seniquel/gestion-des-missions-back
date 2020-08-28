@@ -6,7 +6,7 @@
     <groupId>dev</groupId>
     <artifactId>gestion-des-missions-back</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>gestion-des-missions-back</name>
     <description>Demo project for Spring Boot</description>
