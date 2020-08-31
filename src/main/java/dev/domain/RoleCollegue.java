@@ -4,49 +4,96 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+/**
+ * Roles d'un collegue
+ * 
+ * @author antoinelabeeuw
+ *
+ */
 @Entity
 public class RoleCollegue {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "collegue_id")
-    private Collegue collegue;
+	@ManyToOne
+	@JoinColumn(name = "collegue_id")
+	private Collegue collegue;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
-    public RoleCollegue() {
-    }
+	/**
+	 * Constructeur
+	 * 
+	 */
+	public RoleCollegue() {
+	}
 
-    public RoleCollegue(Collegue collegue, Role role) {
-        this.collegue = collegue;
-        this.role = role;
-    }
+	/**
+	 * Constructeur
+	 * 
+	 * @param collegue
+	 * @param role
+	 */
+	public RoleCollegue(Collegue collegue, Role role) {
+		this.collegue = collegue;
+		this.role = role;
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	/**
+	 * Getter
+	 * 
+	 * @return the id
+	 */
+	public UUID getId() {
+		return id;
+	}
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+	/**
+	 * Setter
+	 * 
+	 * @param id the id to set
+	 */
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	/**
+	 * Getter
+	 * 
+	 * @return the collegue
+	 */
+	public Collegue getCollegue() {
+		return collegue;
+	}
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+	/**
+	 * Setter
+	 * 
+	 * @param collegue the collegue to set
+	 */
+	public void setCollegue(Collegue collegue) {
+		this.collegue = collegue;
+	}
 
-    public Collegue getCollegue() {
-        return collegue;
-    }
+	/**
+	 * Getter
+	 * 
+	 * @return the role
+	 */
+	public Role getRole() {
+		return role;
+	}
 
-    public void setCollegue(Collegue collegue) {
-        this.collegue = collegue;
-    }
+	/**
+	 * Setter
+	 * 
+	 * @param role the role to set
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 }

@@ -33,6 +33,9 @@ public class Nature extends EntiteModifiable {
 	@OneToMany(mappedBy = "nature")
 	private List<Mission> missions;
 
+	/** Constructeur
+	 * @param signatureNumerique
+	 */
 	public Nature(SignatureNumerique signatureNumerique) {
 		super(signatureNumerique);
 	}
@@ -163,19 +166,22 @@ public class Nature extends EntiteModifiable {
 		this.depassementFrais = depassementFrais;
 	}
 
-	/** Getter
+	/**
+	 * Getter
+	 * 
 	 * @return the missions
 	 */
 	public List<Mission> getMissions() {
 		return missions;
 	}
 
-	/** Setter
+	/**
+	 * Setter
+	 * 
 	 * @param missions the missions to set
 	 */
 	public void setMissions(List<Mission> missions) {
 		this.missions = missions;
 	}
-	
 
 }

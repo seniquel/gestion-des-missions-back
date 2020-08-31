@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
+ * signature numérique des classes
+ * 
  * @author groupe 2
  *
  */

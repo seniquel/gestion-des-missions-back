@@ -3,6 +3,7 @@ package dev.domain;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
  * @author antoinelabeeuw
  *
  */
+@Entity
 public class TransportMission {
 	/** id */
 	@Id

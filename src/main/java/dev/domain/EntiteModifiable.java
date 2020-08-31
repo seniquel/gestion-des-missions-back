@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
+ * classe de base modifiable
+ * 
  * @author antoinelabeeuw
  *
  */

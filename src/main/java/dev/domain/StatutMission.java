@@ -3,6 +3,7 @@ package dev.domain;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
  * @author antoinelabeeuw
  *
  */
+@Entity
 public class StatutMission {
 	/** id */
 	@Id
@@ -28,6 +30,14 @@ public class StatutMission {
 	/** statut */
 	@Enumerated(EnumType.STRING)
 	private Statut statut;
+
+	/**
+	 * Constructeur
+	 * 
+	 */
+	public StatutMission() {
+		super();
+	}
 
 	/**
 	 * Getter
@@ -81,14 +91,6 @@ public class StatutMission {
 	 */
 	public void setStatut(Statut statut) {
 		this.statut = statut;
-	}
-
-	/**
-	 * Constructeur
-	 * 
-	 */
-	public StatutMission() {
-		super();
 	}
 
 }

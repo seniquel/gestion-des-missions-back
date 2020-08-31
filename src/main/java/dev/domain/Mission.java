@@ -37,15 +37,15 @@ public class Mission extends EntiteModifiable {
 	@ManyToOne
 	@JoinColumn(name = "collegue_id")
 	private Collegue collegue;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "statut_id")
 	private StatutMission statut;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "transport_id")
 	private TransportMission transport;
-	
+
 	/**
 	 * Constructeur
 	 * 
@@ -163,45 +163,58 @@ public class Mission extends EntiteModifiable {
 		this.nature = nature;
 	}
 
-	/** Getter
+	/**
+	 * Getter
+	 * 
 	 * @return the collegue
 	 */
 	public Collegue getCollegue() {
 		return collegue;
 	}
 
-	/** Setter
+	/**
+	 * Setter
+	 * 
 	 * @param collegue the collegue to set
 	 */
 	public void setCollegue(Collegue collegue) {
 		this.collegue = collegue;
 	}
 
-	/** Getter
+	/**
+	 * Getter
+	 * 
 	 * @return the statut
 	 */
 	public StatutMission getStatut() {
 		return statut;
 	}
 
-	/** Setter
+	/**
+	 * Setter
+	 * 
 	 * @param statut the statut to set
 	 */
 	public void setStatut(StatutMission statut) {
 		this.statut = statut;
 	}
 
-	/** Getter
+	/**
+	 * Getter
+	 * 
 	 * @return the transport
 	 */
 	public TransportMission getTransport() {
 		return transport;
 	}
 
-	/** Setter
+	/**
+	 * Setter
+	 * 
 	 * @param transport the transport to set
 	 */
 	public void setTransport(TransportMission transport) {
 		this.transport = transport;
 	}
+	
 }

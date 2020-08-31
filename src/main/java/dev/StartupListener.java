@@ -3,7 +3,6 @@ package dev;
 import dev.domain.Collegue;
 import dev.domain.Role;
 import dev.domain.RoleCollegue;
-import dev.domain.Version;
 import dev.repository.CollegueRepo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.ContextRefreshedEvent;
