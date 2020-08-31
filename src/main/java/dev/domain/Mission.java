@@ -38,13 +38,9 @@ public class Mission extends EntiteModifiable {
 	@JoinColumn(name = "collegue_id")
 	private Collegue collegue;
 
-	@ManyToOne
-	@JoinColumn(name = "statut_id")
-	private StatutMission statut;
+	private Statut statut;
 
-	@ManyToOne
-	@JoinColumn(name = "transport_id")
-	private TransportMission transport;
+	private Transport transport;
 
 	/**
 	 * Constructeur
@@ -70,8 +66,8 @@ public class Mission extends EntiteModifiable {
 	 * @param transport
 	 */
 	public Mission(SignatureNumerique signatureNumerique, LocalDate dateDebut, LocalDate dateFin, String villeDepart,
-			String villeArrivee, BigDecimal prime, Nature nature, Collegue collegue, StatutMission statut,
-			TransportMission transport) {
+			String villeArrivee, BigDecimal prime, Nature nature, Collegue collegue, Statut statut,
+			Transport transport) {
 		super(signatureNumerique);
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
@@ -215,7 +211,7 @@ public class Mission extends EntiteModifiable {
 	 * 
 	 * @return the statut
 	 */
-	public StatutMission getStatut() {
+	public Statut getStatut() {
 		return statut;
 	}
 
@@ -224,7 +220,7 @@ public class Mission extends EntiteModifiable {
 	 * 
 	 * @param statut the statut to set
 	 */
-	public void setStatut(StatutMission statut) {
+	public void setStatut(Statut statut) {
 		this.statut = statut;
 	}
 
@@ -233,7 +229,7 @@ public class Mission extends EntiteModifiable {
 	 * 
 	 * @return the transport
 	 */
-	public TransportMission getTransport() {
+	public Transport getTransport() {
 		return transport;
 	}
 
@@ -242,7 +238,7 @@ public class Mission extends EntiteModifiable {
 	 * 
 	 * @param transport the transport to set
 	 */
-	public void setTransport(TransportMission transport) {
+	public void setTransport(Transport transport) {
 		this.transport = transport;
 	}
 

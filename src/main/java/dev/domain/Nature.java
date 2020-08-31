@@ -2,6 +2,7 @@ package dev.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -31,10 +32,7 @@ public class Nature extends EntiteModifiable {
 	private BigDecimal plafondFrais;
 	/** depassementFrais */
 	private BigDecimal depassementFrais;
-	/** missions */
-	@OneToMany(mappedBy = "nature")
-	private List<Mission> missions;
-
+	
 	/**
 	 * Constructeur
 	 * 
@@ -60,7 +58,7 @@ public class Nature extends EntiteModifiable {
 	 */
 	public Nature(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
 			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, BigDecimal plafondFrais,
-			BigDecimal depassementFrais, List<Mission> missions) {
+			BigDecimal depassementFrais) {
 		super(signatureNumerique);
 		this.libelle = libelle;
 		this.payee = payee;
@@ -70,7 +68,6 @@ public class Nature extends EntiteModifiable {
 		this.finValidite = finValidite;
 		this.plafondFrais = plafondFrais;
 		this.depassementFrais = depassementFrais;
-		this.missions = missions;
 	}
 
 	/**
@@ -215,24 +212,6 @@ public class Nature extends EntiteModifiable {
 	 */
 	public void setDepassementFrais(BigDecimal depassementFrais) {
 		this.depassementFrais = depassementFrais;
-	}
-
-	/**
-	 * Getter
-	 * 
-	 * @return the missions
-	 */
-	public List<Mission> getMissions() {
-		return missions;
-	}
-
-	/**
-	 * Setter
-	 * 
-	 * @param missions the missions to set
-	 */
-	public void setMissions(List<Mission> missions) {
-		this.missions = missions;
 	}
 
 }

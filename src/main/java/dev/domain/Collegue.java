@@ -25,8 +25,7 @@ public class Collegue extends EntiteModifiable {
 	private String motDePasse;
 
 	/** roles */
-	@OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)
-	private List<RoleCollegue> roles;
+	private RoleCollegue role;
 
 	/** liste des missions d'un collegue */
 	@OneToMany(mappedBy = "mission")
@@ -59,7 +58,7 @@ public class Collegue extends EntiteModifiable {
 		this.prenom = prenom;
 		this.email = email;
 		this.motDePasse = motDePasse;
-		this.roles = roles;
+		this.role = role;
 		this.missions = missions;
 	}
 
@@ -135,22 +134,13 @@ public class Collegue extends EntiteModifiable {
 		this.motDePasse = motDePasse;
 	}
 
-	/**
-	 * Getter
-	 * 
-	 * @return the roles
-	 */
-	public List<RoleCollegue> getRoles() {
-		return roles;
+
+	public RoleCollegue getRole() {
+		return role;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param roles the roles to set
-	 */
-	public void setRoles(List<RoleCollegue> roles) {
-		this.roles = roles;
+	public void setRole(RoleCollegue role) {
+		this.role = role;
 	}
 
 	/**
