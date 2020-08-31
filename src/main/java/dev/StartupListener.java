@@ -39,7 +39,7 @@ public class StartupListener {
 
         // Création de deux utilisateurs
 
-        Collegue col1 = new Collegue();
+        Collegue col1 = new Collegue(null);
         col1.setNom("Admin");
         col1.setPrenom("DEV");
         col1.setEmail("admin@dev.fr");
@@ -47,7 +47,7 @@ public class StartupListener {
         col1.setRoles(Arrays.asList(new RoleCollegue(col1, Role.ROLE_ADMINISTRATEUR), new RoleCollegue(col1, Role.ROLE_UTILISATEUR)));
         this.collegueRepo.save(col1);
 
-        Collegue col2 = new Collegue();
+        Collegue col2 = new Collegue(null);
         col2.setNom("User");
         col2.setPrenom("DEV");
         col2.setEmail("user@dev.fr");

@@ -4,68 +4,60 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Collegue {
+public class Collegue extends EntiteModifiable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private String nom;
 
-    private String nom;
+	private String prenom;
 
-    private String prenom;
+	private String email;
 
-    private String email;
+	private String motDePasse;
 
-    private String motDePasse;
+	@OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)
+	private List<RoleCollegue> roles;
 
-    @OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)
-    private List<RoleCollegue> roles;
+	public Collegue(SignatureNumerique signatureNumerique) {
+		super(signatureNumerique);
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getMotDePasse() {
+		return motDePasse;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
 
-    public String getMotDePasse() {
-        return motDePasse;
-    }
+	public List<RoleCollegue> getRoles() {
+		return roles;
+	}
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
+	public void setRoles(List<RoleCollegue> roles) {
+		this.roles = roles;
+	}
 
-    public List<RoleCollegue> getRoles() {
-        return roles;
-    }
+	public String getNom() {
+		return nom;
+	}
 
-    public void setRoles(List<RoleCollegue> roles) {
-        this.roles = roles;
-    }
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	public String getPrenom() {
+		return prenom;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
 }
