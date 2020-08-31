@@ -2,10 +2,13 @@ package dev.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * classe conceptualisant une mission
@@ -34,7 +37,15 @@ public class Mission extends EntiteModifiable {
 	@ManyToOne
 	@JoinColumn(name = "collegue_id")
 	private Collegue collegue;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "statut_id")
+	private StatutMission statut;
+	
+	@ManyToOne
+	@JoinColumn(name = "transport_id")
+	private TransportMission transport;
+	
 	/**
 	 * Constructeur
 	 * 
@@ -166,4 +177,31 @@ public class Mission extends EntiteModifiable {
 		this.collegue = collegue;
 	}
 
+	/** Getter
+	 * @return the statut
+	 */
+	public StatutMission getStatut() {
+		return statut;
+	}
+
+	/** Setter
+	 * @param statut the statut to set
+	 */
+	public void setStatut(StatutMission statut) {
+		this.statut = statut;
+	}
+
+	/** Getter
+	 * @return the transport
+	 */
+	public TransportMission getTransport() {
+		return transport;
+	}
+
+	/** Setter
+	 * @param transport the transport to set
+	 */
+	public void setTransport(TransportMission transport) {
+		this.transport = transport;
+	}
 }

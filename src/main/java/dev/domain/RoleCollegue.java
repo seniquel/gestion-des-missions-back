@@ -1,5 +1,7 @@
 package dev.domain;
 
+import java.util.UUID;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,7 @@ public class RoleCollegue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "collegue_id")
@@ -24,11 +26,11 @@ public class RoleCollegue {
         this.role = role;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

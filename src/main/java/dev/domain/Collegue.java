@@ -18,7 +18,7 @@ public class Collegue extends EntiteModifiable {
 	private List<RoleCollegue> roles;
 	
 	/** liste des missions d'un collegue */
-	@OneToMany(mappedBy = "mission", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "mission")
 	private List<Mission> missions;
 
 	public Collegue(SignatureNumerique signatureNumerique) {
