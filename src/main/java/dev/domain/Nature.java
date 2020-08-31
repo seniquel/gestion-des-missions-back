@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Nature extends EntiteModifiable {
+	/** libelle */
+	private String libelle;
 	/** payee */
 	private Boolean payee;
 	/** versementPrime */
@@ -33,11 +35,31 @@ public class Nature extends EntiteModifiable {
 	@OneToMany(mappedBy = "nature")
 	private List<Mission> missions;
 
-	/** Constructeur
+	/**
+	 * Constructeur
+	 * 
 	 * @param signatureNumerique
 	 */
 	public Nature(SignatureNumerique signatureNumerique) {
 		super(signatureNumerique);
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return the libelle
+	 */
+	public String getLibelle() {
+		return libelle;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param libelle the libelle to set
+	 */
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
 	}
 
 	/**
