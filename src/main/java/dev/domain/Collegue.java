@@ -16,6 +16,10 @@ public class Collegue extends EntiteModifiable {
 
 	@OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)
 	private List<RoleCollegue> roles;
+	
+	/** liste des missions d'un collegue */
+	@OneToMany(mappedBy = "mission", cascade = CascadeType.PERSIST)
+	private List<Mission> missions;
 
 	public Collegue(SignatureNumerique signatureNumerique) {
 		super(signatureNumerique);
@@ -60,4 +64,19 @@ public class Collegue extends EntiteModifiable {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
+	/** Getter
+	 * @return the missions
+	 */
+	public List<Mission> getMissions() {
+		return missions;
+	}
+
+	/** Setter
+	 * @param missions the missions to set
+	 */
+	public void setMissions(List<Mission> missions) {
+		this.missions = missions;
+	}
+	
 }

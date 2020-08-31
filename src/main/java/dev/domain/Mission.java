@@ -30,6 +30,11 @@ public class Mission extends EntiteModifiable {
 	@JoinColumn(name = "nature_id")
 	private Nature nature;
 
+	/** collegue */
+	@ManyToOne
+	@JoinColumn(name = "collegue_id")
+	private Collegue collegue;
+
 	/**
 	 * Constructeur
 	 * 
@@ -129,19 +134,36 @@ public class Mission extends EntiteModifiable {
 		this.prime = prime;
 	}
 
-	/** Getter
+	/**
+	 * Getter
+	 * 
 	 * @return the nature
 	 */
 	public Nature getNature() {
 		return nature;
 	}
 
-	/** Setter
+	/**
+	 * Setter
+	 * 
 	 * @param nature the nature to set
 	 */
 	public void setNature(Nature nature) {
 		this.nature = nature;
 	}
-	
+
+	/** Getter
+	 * @return the collegue
+	 */
+	public Collegue getCollegue() {
+		return collegue;
+	}
+
+	/** Setter
+	 * @param collegue the collegue to set
+	 */
+	public void setCollegue(Collegue collegue) {
+		this.collegue = collegue;
+	}
 
 }
