@@ -12,11 +12,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+import javax.transaction.Transactional;
+
 /**
  * Code de démarrage de l'application.
  * Insertion de jeux de données.
  */
 @Component
+@Transactional
 public class StartupListener {
 
     private String appVersion;
