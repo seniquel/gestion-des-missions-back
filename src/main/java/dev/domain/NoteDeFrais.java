@@ -24,6 +24,20 @@ public class NoteDeFrais extends EntiteModifiable {
 	}
 
 	/**
+	 * Constructeur
+	 * 
+	 * @param signatureNumerique
+	 * @param dateDeSaisie
+	 * @param lignesDeFrais
+	 */
+	public NoteDeFrais(SignatureNumerique signatureNumerique, LocalDate dateDeSaisie,
+			List<LigneDeFrais> lignesDeFrais) {
+		super(signatureNumerique);
+		this.dateDeSaisie = dateDeSaisie;
+		this.lignesDeFrais = lignesDeFrais;
+	}
+
+	/**
 	 * Getter
 	 * 
 	 * @return the dateDeSaisie

@@ -56,6 +56,35 @@ public class Mission extends EntiteModifiable {
 	}
 
 	/**
+	 * Constructeur
+	 * 
+	 * @param signatureNumerique
+	 * @param dateDebut
+	 * @param dateFin
+	 * @param villeDepart
+	 * @param villeArrivee
+	 * @param prime
+	 * @param nature
+	 * @param collegue
+	 * @param statut
+	 * @param transport
+	 */
+	public Mission(SignatureNumerique signatureNumerique, LocalDate dateDebut, LocalDate dateFin, String villeDepart,
+			String villeArrivee, BigDecimal prime, Nature nature, Collegue collegue, StatutMission statut,
+			TransportMission transport) {
+		super(signatureNumerique);
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.villeDepart = villeDepart;
+		this.villeArrivee = villeArrivee;
+		this.prime = prime;
+		this.nature = nature;
+		this.collegue = collegue;
+		this.statut = statut;
+		this.transport = transport;
+	}
+
+	/**
 	 * Getter
 	 * 
 	 * @return the dateDebut
@@ -216,5 +245,5 @@ public class Mission extends EntiteModifiable {
 	public void setTransport(TransportMission transport) {
 		this.transport = transport;
 	}
-	
+
 }

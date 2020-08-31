@@ -45,6 +45,35 @@ public class Nature extends EntiteModifiable {
 	}
 
 	/**
+	 * Constructeur
+	 * 
+	 * @param signatureNumerique
+	 * @param libelle
+	 * @param payee
+	 * @param versementPrime
+	 * @param pourcentagePrime
+	 * @param debutValidite
+	 * @param finValidite
+	 * @param plafondFrais
+	 * @param depassementFrais
+	 * @param missions
+	 */
+	public Nature(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
+			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, BigDecimal plafondFrais,
+			BigDecimal depassementFrais, List<Mission> missions) {
+		super(signatureNumerique);
+		this.libelle = libelle;
+		this.payee = payee;
+		this.versementPrime = versementPrime;
+		this.pourcentagePrime = pourcentagePrime;
+		this.debutValidite = debutValidite;
+		this.finValidite = finValidite;
+		this.plafondFrais = plafondFrais;
+		this.depassementFrais = depassementFrais;
+		this.missions = missions;
+	}
+
+	/**
 	 * Getter
 	 * 
 	 * @return the libelle

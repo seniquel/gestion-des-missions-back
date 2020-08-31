@@ -42,6 +42,28 @@ public class Collegue extends EntiteModifiable {
 	}
 
 	/**
+	 * Constructeur
+	 * 
+	 * @param signatureNumerique
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param motDePasse
+	 * @param roles
+	 * @param missions
+	 */
+	public Collegue(SignatureNumerique signatureNumerique, String nom, String prenom, String email, String motDePasse,
+			List<RoleCollegue> roles, List<Mission> missions) {
+		super(signatureNumerique);
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.roles = roles;
+		this.missions = missions;
+	}
+
+	/**
 	 * Getter
 	 * 
 	 * @return the nom
