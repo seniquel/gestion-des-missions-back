@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   missions-db:
-    build: ./docker/missions-db
+    build: ./missions-db
     container_name: missions-db
     networks:
       - missions-network
@@ -10,7 +10,7 @@ services:
       - missions-bdd-data:/var/lib/postgresq/data
 
   missions-back:
-    build: ./docker/missions-back
+    build: .
     container_name: missions-back
     depends_on:
       - missions-db
