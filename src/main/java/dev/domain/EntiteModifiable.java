@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class EntiteModifiable {
 	/** signatureNumerique */
-	private SignatureNumerique signatureNumerique;
+	protected SignatureNumerique signatureNumerique;
 
 	/**
 	 * Constructeur
