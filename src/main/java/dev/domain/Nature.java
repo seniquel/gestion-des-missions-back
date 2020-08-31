@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 /** classe conceptualisant une nature
  * @author antoinelabeeuw
  *
@@ -12,24 +11,18 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Nature extends EntiteModifiable {
 	/** payee */
-	@NotNull
 	private Boolean payee;
 	/** versementPrime */
-	@NotNull
 	private Boolean versementPrime;
 	/** pourcentagePrime */
 	private BigDecimal pourcentagePrime;
 	/** debutValidite */
-	@NotNull
 	private LocalDate debutValidite;
 	/** finValidite */
-	@NotNull
 	private LocalDate finValidite;
 	/** plafondFrais */
-	@NotNull
 	private BigDecimal plafondFrais;
 	/** depassementFrais */
-	@NotNull
 	private BigDecimal depassementFrais;
 	
 	public Nature(SignatureNumerique signatureNumerique) {
