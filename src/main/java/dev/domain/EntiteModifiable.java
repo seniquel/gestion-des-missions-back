@@ -1,5 +1,10 @@
 package dev.domain;
 
+import java.util.UUID;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -8,6 +13,10 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public class EntiteModifiable {
+	/** id */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected UUID id;
 	/** signatureNumerique */
 	protected SignatureNumerique signatureNumerique;
 
