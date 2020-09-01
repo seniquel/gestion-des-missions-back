@@ -28,7 +28,7 @@ public class Collegue extends EntiteModifiable {
 	private RoleCollegue role;
 
 	/** liste des missions d'un collegue */
-	@OneToMany(mappedBy = "mission")
+	@OneToMany(mappedBy = "collegue")
 	private List<Mission> missions;
 
 	/**
@@ -52,7 +52,7 @@ public class Collegue extends EntiteModifiable {
 	 * @param missions
 	 */
 	public Collegue(SignatureNumerique signatureNumerique, String nom, String prenom, String email, String motDePasse,
-			List<RoleCollegue> roles, List<Mission> missions) {
+			RoleCollegue role, List<Mission> missions) {
 		super(signatureNumerique);
 		this.nom = nom;
 		this.prenom = prenom;
