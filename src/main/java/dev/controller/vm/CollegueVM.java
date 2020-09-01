@@ -2,8 +2,6 @@ package dev.controller.vm;
 
 import dev.domain.Collegue;
 import dev.domain.Role;
-import dev.domain.RoleCollegue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +14,7 @@ public class CollegueVM {
     private String email;
     private String nom;
     private String prenom;
-    private RoleCollegue role;;
+    private Role role;;
 
     public CollegueVM(Collegue col) {
         this.email = col.getEmail();
@@ -49,11 +47,11 @@ public class CollegueVM {
         this.prenom = prenom;
     }
 
-    public RoleCollegue getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(RoleCollegue role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

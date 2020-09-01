@@ -18,12 +18,7 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
-public class LigneDeFrais {
-	/** id */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private UUID id;
-
+public class LigneDeFrais extends EntiteBase {
 	/** date */
 	private LocalDate date;
 
@@ -44,24 +39,6 @@ public class LigneDeFrais {
 	 */
 	public LigneDeFrais() {
 		super();
-	}
-
-	/**
-	 * Getter
-	 * 
-	 * @return the id
-	 */
-	public UUID getId() {
-		return id;
-	}
-
-	/**
-	 * Setter
-	 * 
-	 * @param id the id to set
-	 */
-	public void setId(UUID id) {
-		this.id = id;
 	}
 
 	/**

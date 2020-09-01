@@ -3,11 +3,12 @@ package dev.domain;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 
 /**
  * signature numérique des classes
@@ -15,12 +16,8 @@ import javax.persistence.MappedSuperclass;
  * @author groupe 2
  *
  */
-@Entity
+@Embeddable
 public class SignatureNumerique {
-	/** id */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private UUID id;
 	/** dateMaj */
 	private LocalDate dateMaj;
 
@@ -29,25 +26,7 @@ public class SignatureNumerique {
 	 * 
 	 */
 	public SignatureNumerique() {
-		super();
-	}
-
-	/**
-	 * Getter
-	 * 
-	 * @return the id
-	 */
-	public UUID getId() {
-		return id;
-	}
-
-	/**
-	 * Setter
-	 * 
-	 * @param id the id to set
-	 */
-	public void setId(UUID id) {
-		this.id = id;
+		LocalDate.now();
 	}
 
 	/**

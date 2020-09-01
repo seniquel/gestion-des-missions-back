@@ -42,13 +42,7 @@ public class Mission extends EntiteModifiable {
 
 	private Transport transport;
 
-	/**
-	 * Constructeur
-	 * 
-	 * @param signatureNumerique
-	 */
-	public Mission(SignatureNumerique signatureNumerique) {
-		super(signatureNumerique);
+	public Mission() {
 	}
 
 	/**
@@ -68,7 +62,7 @@ public class Mission extends EntiteModifiable {
 	public Mission(SignatureNumerique signatureNumerique, LocalDate dateDebut, LocalDate dateFin, String villeDepart,
 			String villeArrivee, BigDecimal prime, Nature nature, Collegue collegue, Statut statut,
 			Transport transport) {
-		super(signatureNumerique);
+		this.signatureNumerique = signatureNumerique;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.villeDepart = villeDepart;
