@@ -1,7 +1,9 @@
 package dev.domain;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  * classe conceptualisant un collegue
@@ -25,19 +27,13 @@ public class Collegue extends EntiteModifiable {
 	private String motDePasse;
 
 	/** roles */
-	private RoleCollegue role;
+	private Role role;
 
 	/** liste des missions d'un collegue */
 	@OneToMany(mappedBy = "collegue")
 	private List<Mission> missions;
 
-	/**
-	 * Constructeur
-	 * 
-	 * @param signatureNumerique
-	 */
-	public Collegue(SignatureNumerique signatureNumerique) {
-		super(signatureNumerique);
+	public Collegue() {
 	}
 
 	/**
@@ -52,8 +48,8 @@ public class Collegue extends EntiteModifiable {
 	 * @param missions
 	 */
 	public Collegue(SignatureNumerique signatureNumerique, String nom, String prenom, String email, String motDePasse,
-			RoleCollegue role, List<Mission> missions) {
-		super(signatureNumerique);
+			Role role, List<Mission> missions) {
+		this.signatureNumerique = signatureNumerique;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -135,11 +131,11 @@ public class Collegue extends EntiteModifiable {
 	}
 
 
-	public RoleCollegue getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(RoleCollegue role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
