@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import dev.domain.Nature;
+import dev.domain.SignatureNumerique;
 import dev.repository.NatureRepo;
 
 @Service
@@ -27,11 +28,14 @@ public class NatureService {
 			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite,
 			BigDecimal plafondFrais, BigDecimal depassementFrais) {
 		
-		Nature nature = new Nature(SignatureNumerique signatureNumerique,
-				String libelle, Boolean payee, Boolean versementPrime,
-				BigDecimal pourcentagePrime, LocalDate debutValidite, 
-				LocalDate finValidite, BigDecimal plafondFrais, 
-				BigDecimal depassementFrais);
+		SignatureNumerique signature = new SignatureNumerique();
+		signature.setDateMaj(LocalDate.now());
+		signature.setId(UUID.randomUUID());
+		Nature nature = new Nature(signature,
+				libelle, payee, versementPrime,
+				pourcentagePrime,  debutValidite, 
+				 finValidite,  plafondFrais, 
+				 depassementFrais);
 
 		Nature natureSauvegardee = this.repo.save(nature);
 
