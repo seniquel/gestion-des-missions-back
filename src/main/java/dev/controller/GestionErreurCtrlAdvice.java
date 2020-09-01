@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import dev.exception.CollegueException;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
+import dev.exception.MissionException;
+import dev.exception.MissionNotFoundException;
 
 @ControllerAdvice
 public class GestionErreurCtrlAdvice {
@@ -19,6 +21,16 @@ public class GestionErreurCtrlAdvice {
 	
 	@ExceptionHandler(CollegueNotFoundException.class)
 	public ResponseEntity<MessageErreurDto> quandClientNotFoundException(CollegueNotFoundException ex) {
+		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());	
+	}
+	
+	@ExceptionHandler(MissionException.class)
+	public ResponseEntity<MessageErreurDto> quandMissionException(MissionException ex) {
+		return ResponseEntity.badRequest().body(ex.getMessageErreur());	
+	}
+	
+	@ExceptionHandler(MissionNotFoundException.class)
+	public ResponseEntity<MessageErreurDto> quandMissionNotFoundException(MissionNotFoundException ex) {
 		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());	
 	}
 	
