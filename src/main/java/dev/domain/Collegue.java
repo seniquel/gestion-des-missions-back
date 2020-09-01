@@ -3,69 +3,162 @@ package dev.domain;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * classe conceptualisant un collegue
+ * 
+ * @author diginamic + groupe 2
+ *
+ */
 @Entity
-public class Collegue {
+public class Collegue extends EntiteModifiable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/** nom */
+	private String nom;
 
-    private String nom;
+	/** prenom */
+	private String prenom;
 
-    private String prenom;
+	/** email */
+	private String email;
 
-    private String email;
+	/** motDePasse */
+	private String motDePasse;
 
-    private String motDePasse;
+	/** roles */
+	private RoleCollegue role;
 
-    @OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)
-    private List<RoleCollegue> roles;
+	/** liste des missions d'un collegue */
+	@OneToMany(mappedBy = "mission")
+	private List<Mission> missions;
 
-    public Long getId() {
-        return id;
-    }
+	/**
+	 * Constructeur
+	 * 
+	 * @param signatureNumerique
+	 */
+	public Collegue(SignatureNumerique signatureNumerique) {
+		super(signatureNumerique);
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * Constructeur
+	 * 
+	 * @param signatureNumerique
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param motDePasse
+	 * @param roles
+	 * @param missions
+	 */
+	public Collegue(SignatureNumerique signatureNumerique, String nom, String prenom, String email, String motDePasse,
+			List<RoleCollegue> roles, List<Mission> missions) {
+		super(signatureNumerique);
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.role = role;
+		this.missions = missions;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	/**
+	 * Getter
+	 * 
+	 * @return the nom
+	 */
+	public String getNom() {
+		return nom;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	/**
+	 * Setter
+	 * 
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
-    public String getMotDePasse() {
-        return motDePasse;
-    }
+	/**
+	 * Getter
+	 * 
+	 * @return the prenom
+	 */
+	public String getPrenom() {
+		return prenom;
+	}
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
+	/**
+	 * Setter
+	 * 
+	 * @param prenom the prenom to set
+	 */
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
 
-    public List<RoleCollegue> getRoles() {
-        return roles;
-    }
+	/**
+	 * Getter
+	 * 
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
 
-    public void setRoles(List<RoleCollegue> roles) {
-        this.roles = roles;
-    }
+	/**
+	 * Setter
+	 * 
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	/**
+	 * Getter
+	 * 
+	 * @return the motDePasse
+	 */
+	public String getMotDePasse() {
+		return motDePasse;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	/**
+	 * Setter
+	 * 
+	 * @param motDePasse the motDePasse to set
+	 */
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
 
-    public String getPrenom() {
-        return prenom;
-    }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+	public RoleCollegue getRole() {
+		return role;
+	}
+
+	public void setRole(RoleCollegue role) {
+		this.role = role;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return the missions
+	 */
+	public List<Mission> getMissions() {
+		return missions;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param missions the missions to set
+	 */
+	public void setMissions(List<Mission> missions) {
+		this.missions = missions;
+	}
+
 }

@@ -1,11 +1,13 @@
 package dev.repository;
 
-import dev.domain.Collegue;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import dev.domain.Collegue;
 
-public interface CollegueRepo extends JpaRepository<Collegue, Long> {
+public interface CollegueRepo extends JpaRepository<Collegue, UUID> {
 
     Optional<Collegue> findByEmail(String email);
 }
