@@ -39,7 +39,6 @@ public class Nature extends EntiteModifiable {
 	 * @param signatureNumerique
 	 */
 	public Nature(SignatureNumerique signatureNumerique) {
-		super(signatureNumerique);
 	}
 
 	/**
@@ -59,7 +58,7 @@ public class Nature extends EntiteModifiable {
 	public Nature(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
 			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, BigDecimal plafondFrais,
 			BigDecimal depassementFrais) {
-		super(signatureNumerique);
+		this.signatureNumerique = signatureNumerique;
 		this.libelle = libelle;
 		this.payee = payee;
 		this.versementPrime = versementPrime;
