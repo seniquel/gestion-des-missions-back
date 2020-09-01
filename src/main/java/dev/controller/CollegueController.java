@@ -33,7 +33,7 @@ public class CollegueController {
 	}
 	
 	@GetMapping("{uuid}")
-	public ResponseEntity<Optional<Collegue>> getColleguetByUUID(@PathVariable UUID id) {
+	public ResponseEntity<Optional<Collegue>> getCollegueByUUID(@PathVariable UUID id) {
 		Optional<Collegue> collegue = service.getCollegue(id);
 		if(collegue.isPresent()) {
 			return ResponseEntity.status(HttpStatus.OK)
