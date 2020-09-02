@@ -53,8 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService(DataSource ds) {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
         manager.setDataSource(ds);
-        manager.setUsersByUsernameQuery("select email, mot_de_passe, 'true' from collegue where email=?");
-        manager.setAuthoritiesByUsernameQuery("select c.email, c.role from collegue c where c.email=?");
+        manager.setUsersByUsernameQuery("select email, mot_de_passe, missions, 'true' from collegue where email=?");
+        manager.setAuthoritiesByUsernameQuery("select email, role, missions from collegue c where c.email=?");
         return manager;
     }
 
