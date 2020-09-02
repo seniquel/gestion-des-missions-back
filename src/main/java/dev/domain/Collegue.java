@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * classe conceptualisant un collegue
  * 
@@ -15,6 +18,9 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property="collegue_id")
 public class Collegue extends EntiteBase {
 
 	/** nom */

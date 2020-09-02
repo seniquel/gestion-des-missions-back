@@ -4,12 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * classe conceptualisant une mission
@@ -18,6 +17,9 @@ import org.hibernate.annotations.NotFoundAction;
  *
  */
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property="mission_id")
 public class Mission extends EntiteModifiable {
 	/** dateDebut */
 	private LocalDate dateDebut;
