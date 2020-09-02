@@ -20,8 +20,7 @@ public class NoteDeFrais extends EntiteModifiable {
 	 * 
 	 * @param signatureNumerique
 	 */
-	public NoteDeFrais(SignatureNumerique signatureNumerique) {
-		super(signatureNumerique);
+	public NoteDeFrais() {
 	}
 
 	/**
@@ -33,7 +32,7 @@ public class NoteDeFrais extends EntiteModifiable {
 	 */
 	public NoteDeFrais(SignatureNumerique signatureNumerique, LocalDate dateDeSaisie,
 			List<LigneDeFrais> lignesDeFrais) {
-		super(signatureNumerique);
+		this.signatureNumerique = signatureNumerique;
 		this.dateDeSaisie = dateDeSaisie;
 		this.lignesDeFrais = lignesDeFrais;
 	}

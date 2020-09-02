@@ -2,6 +2,8 @@ package dev.domain;
 
 import java.util.UUID;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,12 +16,9 @@ import javax.persistence.MappedSuperclass;
  *
  */
 @MappedSuperclass
-public class EntiteModifiable {
-	/** id */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected UUID id;
+public class EntiteModifiable extends EntiteBase {
 	/** signatureNumerique */
+	@Embedded
 	protected SignatureNumerique signatureNumerique;
 
 	/**
@@ -27,9 +26,7 @@ public class EntiteModifiable {
 	 * 
 	 * @param signatureNumerique
 	 */
-	public EntiteModifiable(SignatureNumerique signatureNumerique) {
-		super();
-		this.signatureNumerique = signatureNumerique;
+	public EntiteModifiable() {
 	}
 
 	/**
