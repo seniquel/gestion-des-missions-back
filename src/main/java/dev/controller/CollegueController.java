@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.domain.Collegue;
+import dev.domain.Mission;
 import dev.exception.CodeErreur;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
@@ -33,11 +34,24 @@ public class CollegueController {
 	}
 	
 	@GetMapping("{uuid}")
-	public ResponseEntity<Optional<Collegue>> getCollegueByUUID(@PathVariable UUID id) {
-		Optional<Collegue> collegue = service.getCollegue(id);
+	public ResponseEntity<Optional<Collegue>> getCollegueByUUID(@PathVariable UUID uuid) {
+		Optional<Collegue> collegue = service.getCollegue(uuid);
 		if(collegue.isPresent()) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(collegue);
+		}
+		else {
+			throw new CollegueNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Ce collegue n'existe pas"));
+		}
+
+	}
+	
+	@GetMapping("{uuid}/missions")
+	public ResponseEntity<List<Mission>> getMissionsCollegueByUUID(@PathVariable UUID uuid) {
+		Optional<Collegue> collegue = service.getCollegue(uuid);
+		if(collegue.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(collegue.get().getMissions());
 		}
 		else {
 			throw new CollegueNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Ce collegue n'existe pas"));
