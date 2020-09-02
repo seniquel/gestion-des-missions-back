@@ -2,11 +2,8 @@ package dev.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 /**
  * classe conceptualisant une nature

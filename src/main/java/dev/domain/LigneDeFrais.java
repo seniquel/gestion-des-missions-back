@@ -2,14 +2,12 @@ package dev.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * classe conceptualisant une ligne de frais
@@ -31,6 +29,7 @@ public class LigneDeFrais extends EntiteBase {
 	/** noteDeFrais */
 	@ManyToOne
 	@JoinColumn(name = "noteDeFrais_id")
+	@JsonBackReference
 	private NoteDeFrais noteDeFrais;
 
 	/**

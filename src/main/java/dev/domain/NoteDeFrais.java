@@ -1,11 +1,13 @@
 package dev.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class NoteDeFrais extends EntiteModifiable {
@@ -13,7 +15,8 @@ public class NoteDeFrais extends EntiteModifiable {
 	private LocalDate dateDeSaisie;
 
 	@OneToMany(mappedBy = "noteDeFrais")
-	private List<LigneDeFrais> lignesDeFrais;
+	@JsonManagedReference
+	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
 
 	/**
 	 * Constructeur
@@ -71,6 +74,16 @@ public class NoteDeFrais extends EntiteModifiable {
 	 */
 	public void setLignesDeFrais(List<LigneDeFrais> lignesDeFrais) {
 		this.lignesDeFrais = lignesDeFrais;
+	}
+	
+	public void addLigneFrais(LigneDeFrais ligneDeFrais) {
+		this.lignesDeFrais.add(ligneDeFrais);
+		ligneDeFrais.setNoteDeFrais(this);
+	}
+	
+	public void removeLigneFrais(LigneDeFrais ligneDeFrais) {
+		this.lignesDeFrais.remove(ligneDeFrais);
+		ligneDeFrais.setNoteDeFrais(null);
 	}
 
 }

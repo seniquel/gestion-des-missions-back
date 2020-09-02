@@ -5,11 +5,9 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * classe conceptualisant un collegue
@@ -18,9 +16,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  *
  */
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property="collegue_id")
 public class Collegue extends EntiteBase {
 
 	/** nom */
@@ -42,6 +37,7 @@ public class Collegue extends EntiteBase {
 	@OneToMany(mappedBy = "collegue",
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true)
+	@JsonBackReference
 	private List<Mission> missions = new ArrayList<Mission>();
 
 	public Collegue() {
