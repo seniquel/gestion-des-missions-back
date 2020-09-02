@@ -26,7 +26,7 @@ public class NatureService {
 	@Transactional
 	public Nature creer(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
 			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, BigDecimal plafondFrais,
-			BigDecimal depassementFrais) {
+			Boolean depassementFrais) {
 		Nature nature = new Nature(signatureNumerique, libelle, payee, versementPrime, 
 				pourcentagePrime, debutValidite, finValidite, plafondFrais, depassementFrais);
 

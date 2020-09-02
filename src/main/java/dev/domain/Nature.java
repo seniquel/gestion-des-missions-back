@@ -31,14 +31,13 @@ public class Nature extends EntiteModifiable {
 	/** plafondFrais */
 	private BigDecimal plafondFrais;
 	/** depassementFrais */
-	private BigDecimal depassementFrais;
+	private Boolean depassementFrais;
 	
 	/**
 	 * Constructeur
 	 * 
-	 * @param signatureNumerique
 	 */
-	public Nature(SignatureNumerique signatureNumerique) {
+	public Nature() {
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class Nature extends EntiteModifiable {
 	 */
 	public Nature(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
 			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, BigDecimal plafondFrais,
-			BigDecimal depassementFrais) {
+			Boolean depassementFrais) {
 		this.signatureNumerique = signatureNumerique;
 		this.libelle = libelle;
 		this.payee = payee;
@@ -200,7 +199,7 @@ public class Nature extends EntiteModifiable {
 	 * 
 	 * @return the depassementFrais
 	 */
-	public BigDecimal getDepassementFrais() {
+	public Boolean getDepassementFrais() {
 		return depassementFrais;
 	}
 
@@ -209,7 +208,7 @@ public class Nature extends EntiteModifiable {
 	 * 
 	 * @param depassementFrais the depassementFrais to set
 	 */
-	public void setDepassementFrais(BigDecimal depassementFrais) {
+	public void setDepassementFrais(Boolean depassementFrais) {
 		this.depassementFrais = depassementFrais;
 	}
 

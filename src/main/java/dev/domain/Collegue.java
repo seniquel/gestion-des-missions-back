@@ -1,8 +1,11 @@
 package dev.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 /**
@@ -12,7 +15,7 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
-public class Collegue extends EntiteModifiable {
+public class Collegue extends EntiteBase {
 
 	/** nom */
 	private String nom;
@@ -30,8 +33,10 @@ public class Collegue extends EntiteModifiable {
 	private Role role;
 
 	/** liste des missions d'un collegue */
-	@OneToMany(mappedBy = "collegue")
-	private List<Mission> missions;
+	@OneToMany(mappedBy = "collegue",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true)
+	private List<Mission> missions = new ArrayList<Mission>();
 
 	public Collegue() {
 	}
@@ -47,9 +52,8 @@ public class Collegue extends EntiteModifiable {
 	 * @param roles
 	 * @param missions
 	 */
-	public Collegue(SignatureNumerique signatureNumerique, String nom, String prenom, String email, String motDePasse,
+	public Collegue(String nom, String prenom, String email, String motDePasse,
 			Role role, List<Mission> missions) {
-		this.signatureNumerique = signatureNumerique;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -155,6 +159,16 @@ public class Collegue extends EntiteModifiable {
 	 */
 	public void setMissions(List<Mission> missions) {
 		this.missions = missions;
+	}
+	
+	public void addMission(Mission mission) {
+		this.missions.add(mission);
+		mission.setCollegue(this);
+	}
+	
+	public void removeMission(Mission mission) {
+		this.missions.remove(mission);
+		mission.setCollegue(null);
 	}
 
 }

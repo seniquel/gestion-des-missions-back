@@ -26,7 +26,6 @@ public class SignatureNumerique {
 	 * 
 	 */
 	public SignatureNumerique() {
-		LocalDate.now();
 	}
 
 	/**
