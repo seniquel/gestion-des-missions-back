@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -14,7 +15,9 @@ public class NoteDeFrais extends EntiteModifiable {
 	/** dateDeSaisie */
 	private LocalDate dateDeSaisie;
 
-	@OneToMany(mappedBy = "noteDeFrais")
+	@OneToMany(mappedBy = "noteDeFrais",cascade = CascadeType.ALL,
+	        orphanRemoval = true
+		    )
 	@JsonManagedReference
 	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
 
