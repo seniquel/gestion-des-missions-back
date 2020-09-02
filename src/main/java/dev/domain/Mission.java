@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * classe conceptualisant une mission
@@ -35,7 +36,7 @@ public class Mission extends EntiteModifiable {
 	/** collegue */
 	@ManyToOne
 	@JoinColumn(name = "collegue_id")
-	@JsonManagedReference
+	@JsonBackReference
 	private Collegue collegue;
 
 	/** statut */

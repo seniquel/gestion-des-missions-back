@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * classe conceptualisant un collegue
@@ -37,7 +38,7 @@ public class Collegue extends EntiteBase {
 	@OneToMany(mappedBy = "collegue",
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true)
-	@JsonBackReference
+	@JsonManagedReference
 	private List<Mission> missions = new ArrayList<Mission>();
 
 	public Collegue() {
