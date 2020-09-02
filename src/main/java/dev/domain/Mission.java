@@ -2,14 +2,14 @@ package dev.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * classe conceptualisant une mission
  * 
@@ -36,19 +36,26 @@ public class Mission extends EntiteModifiable {
 	/** collegue */
 	@ManyToOne
 	@JoinColumn(name = "collegue_id")
+	@JsonBackReference
 	private Collegue collegue;
 
+	/** statut */
 	private Statut statut;
 
+	/** transport */
 	private Transport transport;
 
+
+	@OneToOne
+	@JoinColumn(name="noteDeFrais_id")
+	private NoteDeFrais noteDeFrais;
+	
 	public Mission() {
 	}
 
-	/**
-	 * Constructeur
-	 * 
-	 * @param signatureNumerique
+
+
+	/** Constructeur
 	 * @param dateDebut
 	 * @param dateFin
 	 * @param villeDepart
@@ -58,11 +65,10 @@ public class Mission extends EntiteModifiable {
 	 * @param collegue
 	 * @param statut
 	 * @param transport
+	 * @param noteDeFrais
 	 */
-	public Mission(SignatureNumerique signatureNumerique, LocalDate dateDebut, LocalDate dateFin, String villeDepart,
-			String villeArrivee, BigDecimal prime, Nature nature, Collegue collegue, Statut statut,
-			Transport transport) {
-		this.signatureNumerique = signatureNumerique;
+	public Mission(LocalDate dateDebut, LocalDate dateFin, String villeDepart, String villeArrivee, BigDecimal prime,
+			Nature nature, Collegue collegue, Statut statut, Transport transport, NoteDeFrais noteDeFrais) {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.villeDepart = villeDepart;
@@ -72,7 +78,10 @@ public class Mission extends EntiteModifiable {
 		this.collegue = collegue;
 		this.statut = statut;
 		this.transport = transport;
+		this.noteDeFrais = noteDeFrais;
 	}
+
+
 
 	/**
 	 * Getter
@@ -235,5 +244,24 @@ public class Mission extends EntiteModifiable {
 	public void setTransport(Transport transport) {
 		this.transport = transport;
 	}
+
+
+
+	/** Getter
+	 * @return the noteDeFrais
+	 */
+	public NoteDeFrais getNoteDeFrais() {
+		return noteDeFrais;
+	}
+
+
+
+	/** Setter
+	 * @param noteDeFrais the noteDeFrais to set
+	 */
+	public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
+		this.noteDeFrais = noteDeFrais;
+	}
+	
 
 }
