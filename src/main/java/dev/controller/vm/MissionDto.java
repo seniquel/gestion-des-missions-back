@@ -2,9 +2,12 @@ package dev.controller.vm;
 
 import java.util.UUID;
 
+import dev.domain.NoteDeFrais;
+
 public class MissionDto extends CreerMissionDto {
 	
 	private UUID uuid;
+	private NoteDeFrais noteDeFrais;
 
 	/** Getter
 	 * @return the uuid
@@ -19,4 +22,13 @@ public class MissionDto extends CreerMissionDto {
 	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
 	}
+
+	public NoteDeFrais getNoteDeFrais() {
+		return noteDeFrais;
+	}
+
+	public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
+		this.noteDeFrais = noteDeFrais;
+	}
+	
 }

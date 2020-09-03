@@ -78,6 +78,11 @@ public class Mission extends EntiteModifiable {
 		this.collegue = collegue;
 		this.statut = statut;
 		this.transport = transport;
+		this.noteDeFrais = new NoteDeFrais();
+		noteDeFrais.setDateDeSaisie(LocalDate.now());
+		noteDeFrais.signatureNumerique.setDateMaj(LocalDate.now());
+		this.signatureNumerique = new SignatureNumerique();
+		signatureNumerique.setDateMaj(LocalDate.now());
 	}
 
 

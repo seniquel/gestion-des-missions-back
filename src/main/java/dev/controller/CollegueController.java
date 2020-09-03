@@ -117,6 +117,7 @@ public class CollegueController {
 		missionDto.setCollegueId(missionCreee.getCollegue().getUuid());
 		missionDto.setStatut(missionCreee.getStatut().toString());
 		missionDto.setTransport(missionCreee.getTransport().toString());
+		missionDto.setNoteDeFrais(missionCreee.getNoteDeFrais());
 		
 		return ResponseEntity.ok(missionDto);
 	}

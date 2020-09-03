@@ -15,56 +15,56 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreerMissionDto {
 	
 	/** dateDebut */
-	@NotNull(message = "dateDebut ne peut pas être nulle")
-	@Future(message = "dateDebut doit être une date future")
+	@NotNull
+	@Future
 	@JsonProperty("dateDebut")
 	private LocalDate dateDebut;
 
 	/** dateFin */
-	@NotNull(message = "dateFin ne peut pas être nulle")
-	@Future(message = "dateFin doit être une date future")
+	@NotNull
+	@Future
 	@JsonProperty("dateFin")
 	private LocalDate dateFin;
 	
 	/** villeDepart */
-	@NotNull(message = "villeDepart ne peut pas être nulle")
-	@NotBlank(message = "villeDepart ne peut pas être vide")
-	@Size(min=2, message = "villeDepart doit compter au moins 2 caractères")
+	@NotNull
+	@NotBlank
+	@Size(min=2)
 	@JsonProperty("villeDepart")
 	private String villeDepart;
 	
 	/** villeArrivee */
-	@NotNull(message = "villeArrivee ne peut pas être nulle")
-	@NotBlank(message = "villeArrivee ne peut pas être vide")
-	@Size(min=2, message = "villeArrivee doit compter au moins 2 caractères")
+	@NotNull
+	@NotBlank
+	@Size(min=2)
 	@JsonProperty("villeArrivee")
 	private String villeArrivee;
 	
 	/** prime */
-	@NotNull(message = "prime ne peut pas être nulle")
-	@PositiveOrZero(message = "prime ne peut pas être négative")
+	@NotNull
+	@PositiveOrZero
 	@JsonProperty("prime")
 	private BigDecimal prime;
 	
 	/** natureUuid */
-	@NotNull(message = "natureUuid ne peut pas être nulle")
+	@NotNull
 	@JsonProperty("natureId")
 	private UUID natureId;
 	
 	/** collegueId */
-	@NotNull(message = "collegueId ne peut pas être nulle")
+	@NotNull
 	@JsonProperty("collegueId")
 	private UUID collegueId;
 	
 	/** statut */
-	@NotNull(message = "statut ne peut pas être nul")
-	@NotBlank(message = "statut ne peut pas être vide")
+	@NotNull
+	@NotBlank
 	@JsonProperty("statut")
 	private String statut;
 	
 	/** transport */
-	@NotNull(message = "transport ne peut pas être nul")
-	@NotBlank(message = "transport ne peut pas être vide")
+	@NotNull
+	@NotBlank
 	@JsonProperty("transport")
 	private String transport;
 

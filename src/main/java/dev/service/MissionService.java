@@ -47,7 +47,7 @@ public class MissionService {
 		
 		Mission mission = new Mission(dateDebut, dateFin, villeDepart, villeArrivee, prime, 
 				natureRepo.findById(uuidNature).get(), collegueRepo.findById(uuidCollegue).get(), statut, transport);
-		
+		noteRepo.save(mission.getNoteDeFrais());
 		return missionRepo.save(mission);
 	}
 	
