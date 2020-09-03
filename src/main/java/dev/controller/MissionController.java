@@ -1,5 +1,6 @@
 package dev.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -8,11 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.domain.Collegue;
 import dev.domain.Mission;
+import dev.excel.ExportMissions;
 import dev.domain.NoteDeFrais;
 import dev.exception.CodeErreur;
 import dev.exception.CollegueNotFoundException;
@@ -44,6 +48,12 @@ public class MissionController {
 					new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
 		}
 
+	}
+	
+	@PostMapping("missions-par-annee")
+	public void creerFichierExcel(@RequestBody int annee){
+		List<Mission> liste = service.getMissionCollegueConnecteParAnnee(annee);
+		ExportMissions.creerFichierExcel(liste, annee);
 	}
 
 	@GetMapping("{uuid}/noteDeFrais")
