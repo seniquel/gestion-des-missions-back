@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.domain.Collegue;
 import dev.domain.Mission;
+import dev.domain.NoteDeFrais;
 import dev.exception.CodeErreur;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
@@ -21,29 +22,38 @@ import dev.service.MissionService;
 @RestController
 @RequestMapping("missions")
 public class MissionController {
-	
+
 	private MissionService service;
-	
+
 	public MissionController(MissionService service) {
 		this.service = service;
 	}
-	
+
 	@GetMapping
-	public List<Mission> getMission(){
+	public List<Mission> getMission() {
 		return service.lister();
 	}
-	
+
 	@GetMapping("{uuid}")
-	public ResponseEntity<Optional<Mission>> getMissionByUUID(@PathVariable UUID id) {
-		Optional<Mission> mission = service.getMission(id);
-		if(mission.isPresent()) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(mission);
-		}
-		else {
-			throw new CollegueNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Ce collegue n'existe pas"));
+	public ResponseEntity<Optional<Mission>> getMissionByUUID(@PathVariable UUID uuid) {
+		Optional<Mission> mission = service.getMission(uuid);
+		if (mission.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK).body(mission);
+		} else {
+			throw new CollegueNotFoundException(
+					new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
 		}
 
 	}
 
+	@GetMapping("{uuid}/noteDeFrais")
+	public ResponseEntity<?> getNoteOfMission(@PathVariable UUID uuid) {
+		Optional<Mission> mission = service.getMission(uuid);
+		if (mission.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK).body(mission.get().getNoteDeFrais());
+		} else {
+			throw new CollegueNotFoundException(
+					new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
+		}
+	}
 }
