@@ -46,14 +46,4 @@ public class MissionController {
 
 	}
 
-	@GetMapping("{uuid}/noteDeFrais")
-	public ResponseEntity<?> getNoteOfMission(@PathVariable UUID uuid) {
-		Optional<Mission> mission = service.getMission(uuid);
-		if (mission.isPresent()) {
-			return ResponseEntity.status(HttpStatus.OK).body(mission.get().getNoteDeFrais());
-		} else {
-			throw new CollegueNotFoundException(
-					new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
-		}
-	}
 }

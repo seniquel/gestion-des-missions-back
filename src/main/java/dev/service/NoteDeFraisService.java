@@ -1,6 +1,8 @@
 package dev.service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class NoteDeFraisService {
 	public List<NoteDeFrais> lister() {
 		return this.noteRepo.findAll();
 	}
-
+	
+	public Optional<NoteDeFrais> getNoteByUuid(UUID uuid) {
+		return this.noteRepo.findById(uuid);
+	}
 
 }
