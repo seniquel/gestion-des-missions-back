@@ -16,9 +16,11 @@ public class NoteDeFrais extends EntiteModifiable {
 	/** dateDeSaisie */
 	private LocalDate dateDeSaisie;
 
+
 	private BigDecimal fraisTotal = BigDecimal.valueOf(0);
 
 	@OneToMany(mappedBy = "noteDeFrais", cascade = CascadeType.ALL, orphanRemoval = true)
+
 	@JsonManagedReference
 	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
 
