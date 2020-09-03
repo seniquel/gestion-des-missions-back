@@ -1,5 +1,6 @@
 package dev.excel;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,8 +20,8 @@ import dev.domain.Mission;
  * @author formation
  *
  */
-public class exportMissions {
-	
+public interface ExportMissions {
+
 	private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
         HSSFFont font = workbook.createFont();
         font.setBold(true);
@@ -64,16 +65,16 @@ public class exportMissions {
             rownum++;
             row = sheet.createRow(rownum);
  
-            // EmpNo (A)
+            // Début
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue(mission.getDateDebut());
-            // EmpName (B)
+            // Fin)
             cell = row.createCell(1, CellType.STRING);
             cell.setCellValue(mission.getDateFin());
-            // Salary (C)
+            // Nature
             cell = row.createCell(2, CellType.NUMERIC);
             cell.setCellValue(mission.getNature().getLibelle());
-            // Grade (D)
+            // Prime)
             cell = row.createCell(3, CellType.STRING);
             cell.setCellValue(mission.getPrime().toString()+"€");
         }
