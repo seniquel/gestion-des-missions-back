@@ -16,14 +16,12 @@ public class CollegueVM {
     private String nom;
     private String prenom;
     private Role role;
-    private List<Mission> missions;
 
     public CollegueVM(Collegue col) {
         this.email = col.getEmail();
         this.nom = col.getNom();
         this.prenom = col.getPrenom();
         this.role = col.getRole();
-        this.missions = col.getMissions();
     }
 
     public String getEmail() {
@@ -57,13 +55,5 @@ public class CollegueVM {
     public void setRole(Role role) {
         this.role = role;
     }
-
-	public List<Mission> getMissions() {
-		return missions;
-	}
-
-	public void setMissions(List<Mission> missions) {
-		this.missions = missions;
-	}
     
 }

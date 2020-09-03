@@ -25,5 +25,8 @@ public class CollegueService {
 	public Optional<Collegue> getCollegue(UUID id){
 		return repo.findById(id);
 	}
-
+	
+	public Optional<Collegue> findByEmail(String email){
+		return repo.findByEmail(email);
+	}
 }
