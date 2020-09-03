@@ -15,63 +15,59 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreerMissionDto {
 	
 	/** dateDebut */
-	@NotNull
-	@Future
+	@NotNull(message = "dateDebut ne peut pas être nulle")
+	@Future(message = "dateDebut doit être une date future")
 	@JsonProperty("dateDebut")
 	private LocalDate dateDebut;
 
 	/** dateFin */
-	@NotNull
-	@Future
+	@NotNull(message = "dateFin ne peut pas être nulle")
+	@Future(message = "dateFin doit être une date future")
 	@JsonProperty("dateFin")
 	private LocalDate dateFin;
 	
 	/** villeDepart */
-	@NotNull
-	@NotBlank
-	@Size(min=2)
+	@NotNull(message = "villeDepart ne peut pas être nulle")
+	@NotBlank(message = "villeDepart ne peut pas être vide")
+	@Size(min=2, message = "villeDepart doit compter au moins 2 caractères")
 	@JsonProperty("villeDepart")
 	private String villeDepart;
 	
 	/** villeArrivee */
-	@NotNull
-	@NotBlank
-	@Size(min=2)
+	@NotNull(message = "villeArrivee ne peut pas être nulle")
+	@NotBlank(message = "villeArrivee ne peut pas être vide")
+	@Size(min=2, message = "villeArrivee doit compter au moins 2 caractères")
 	@JsonProperty("villeArrivee")
 	private String villeArrivee;
 	
 	/** prime */
-	@NotNull
-	@PositiveOrZero
+	@NotNull(message = "prime ne peut pas être nulle")
+	@PositiveOrZero(message = "prime ne peut pas être négative")
 	@JsonProperty("prime")
 	private BigDecimal prime;
 	
 	/** natureUuid */
-	@NotNull
+	@NotNull(message = "natureUuid ne peut pas être nulle")
 	@JsonProperty("natureId")
 	private UUID natureId;
 	
-	/** missionId */
-	@NotNull
-	@JsonProperty("missionId")
-	private UUID missionId;
+	/** collegueId */
+	@NotNull(message = "collegueId ne peut pas être nulle")
+	@JsonProperty("collegueId")
+	private UUID collegueId;
 	
 	/** statut */
-	@NotNull
-	@NotBlank
+	@NotNull(message = "statut ne peut pas être nul")
+	@NotBlank(message = "statut ne peut pas être vide")
 	@JsonProperty("statut")
 	private String statut;
 	
 	/** transport */
-	@NotNull
-	@NotBlank
+	@NotNull(message = "transport ne peut pas être nul")
+	@NotBlank(message = "transport ne peut pas être vide")
 	@JsonProperty("transport")
 	private String transport;
-	
-	/** noteDeFraisId */
-	@NotNull
-	@JsonProperty("noteDeFraisId")
-	private UUID noteDeFraisId;
+
 
 	public LocalDate getDateDebut() {
 		return dateDebut;
@@ -121,12 +117,12 @@ public class CreerMissionDto {
 		this.natureId = natureId;
 	}
 
-	public UUID getMissionId() {
-		return missionId;
+	public UUID getCollegueId() {
+		return collegueId;
 	}
 
-	public void setMissionId(UUID missionId) {
-		this.missionId = missionId;
+	public void setCollegueId(UUID collegueId) {
+		this.collegueId = collegueId;
 	}
 
 	public String getStatut() {
@@ -144,14 +140,5 @@ public class CreerMissionDto {
 	public void setTransport(String transport) {
 		this.transport = transport;
 	}
-
-	public UUID getNoteDeFraisId() {
-		return noteDeFraisId;
-	}
-
-	public void setNoteDeFraisId(UUID noteDeFraisId) {
-		this.noteDeFraisId = noteDeFraisId;
-	}
-	
 	
 }
