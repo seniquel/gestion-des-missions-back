@@ -1,5 +1,6 @@
 package dev.domain;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,9 @@ public class NoteDeFrais extends EntiteModifiable {
 	/** dateDeSaisie */
 	private LocalDate dateDeSaisie;
 
-	@OneToMany(mappedBy = "noteDeFrais",cascade = CascadeType.ALL,
-	        orphanRemoval = true
-		    )
+	private BigDecimal fraisTotal = BigDecimal.valueOf(0);
+
+	@OneToMany(mappedBy = "noteDeFrais", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
 
@@ -41,6 +42,7 @@ public class NoteDeFrais extends EntiteModifiable {
 		this.signatureNumerique = signatureNumerique;
 		this.dateDeSaisie = dateDeSaisie;
 		this.lignesDeFrais = lignesDeFrais;
+		calculerFraisTotal();
 	}
 
 	/**
@@ -78,15 +80,47 @@ public class NoteDeFrais extends EntiteModifiable {
 	public void setLignesDeFrais(List<LigneDeFrais> lignesDeFrais) {
 		this.lignesDeFrais = lignesDeFrais;
 	}
-	
+
 	public void addLigneFrais(LigneDeFrais ligneDeFrais) {
 		this.lignesDeFrais.add(ligneDeFrais);
 		ligneDeFrais.setNoteDeFrais(this);
+		this.fraisTotal = this.fraisTotal.add(ligneDeFrais.getMontant());
 	}
-	
+
 	public void removeLigneFrais(LigneDeFrais ligneDeFrais) {
 		this.lignesDeFrais.remove(ligneDeFrais);
 		ligneDeFrais.setNoteDeFrais(null);
+		this.fraisTotal = this.fraisTotal.subtract(ligneDeFrais.getMontant());
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return the fraisTotal
+	 */
+	public BigDecimal getFraisTotal() {
+		return fraisTotal;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param fraisTotal the fraisTotal to set
+	 */
+	public void setFraisTotal(BigDecimal fraisTotal) {
+		this.fraisTotal = fraisTotal;
+	}
+
+	/**
+	 * Calcule automatiquement les frais totaux a partir des lignes de frais de la
+	 * note
+	 * 
+	 */
+	public void calculerFraisTotal() {
+		if (!this.lignesDeFrais.isEmpty()) {
+			for (LigneDeFrais ligneDeFrais : lignesDeFrais) {
+				this.fraisTotal = this.fraisTotal.add(ligneDeFrais.getMontant());
+			}
+		}
+	}
 }

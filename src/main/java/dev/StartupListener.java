@@ -106,7 +106,6 @@ public class StartupListener {
 		NoteDeFrais note1 = new NoteDeFrais();
 		note1.setDateDeSaisie(LocalDate.now());
 		note1.setSignatureNumerique(new SignatureNumerique());
-		this.noteRepo.save(note1);
 
 		LigneDeFrais l1 = new LigneDeFrais();
 		l1.setDate(LocalDate.now());
@@ -123,6 +122,7 @@ public class StartupListener {
 		mis1.setNature(nat1);
 		note1.addLigneFrais(l1);
 		note1.addLigneFrais(l2);
+		this.noteRepo.save(note1);
 		mis1.setNoteDeFrais(note1);
 		col1.addMission(mis1);
 
