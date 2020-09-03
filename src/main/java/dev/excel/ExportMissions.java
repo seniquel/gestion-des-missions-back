@@ -4,6 +4,7 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -30,7 +31,7 @@ public interface ExportMissions {
         return style;
     }
 	
-	public static void creerFichierExcel(List<Mission> list) {
+	public static void creerFichierExcel(List<Mission> list, int annee) {
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Employees sheet");
@@ -67,10 +68,10 @@ public interface ExportMissions {
  
             // Début
             cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue(mission.getDateDebut());
+            cell.setCellValue(mission.getDateDebut().toString());
             // Fin)
             cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue(mission.getDateFin());
+            cell.setCellValue(mission.getDateFin().toString());
             // Nature
             cell = row.createCell(2, CellType.NUMERIC);
             cell.setCellValue(mission.getNature().getLibelle());
@@ -83,7 +84,8 @@ public interface ExportMissions {
         File file;
         
         try {
-        	file = new File("C:/Users/"+System.getProperty("user.name")+"/primes/primes.xls");
+        	//file = new File("C:/Users/"+System.getProperty("user.name")+"/primes/primes.xls");
+        	file = new File("C:/Users/"+System.getProperty("user.name")+"/primes/"+LocalDate.now()+"-primes-"+annee+".xls");
             file.getParentFile().mkdirs();
      
             fop = new FileOutputStream(file);

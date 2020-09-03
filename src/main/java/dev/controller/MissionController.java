@@ -1,5 +1,6 @@
 package dev.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,8 +51,9 @@ public class MissionController {
 	}
 	
 	@PostMapping("missions-par-annee")
-	public void creerFichierExcel(@RequestBody List<Mission> liste){
-		ExportMissions.creerFichierExcel(liste);
+	public void creerFichierExcel(@RequestBody int annee){
+		List<Mission> liste = service.getMissionCollegueConnecteParAnnee(annee);
+		ExportMissions.creerFichierExcel(liste, annee);
 	}
 
 }
