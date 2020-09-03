@@ -96,8 +96,44 @@ public class StartupListener {
         mis1.setStatut(Statut.INITIALE);
         mis1.setTransport(Transport.TRAIN);
         
+        Mission mis2 = new Mission();
+        mis2.setSignatureNumerique(new SignatureNumerique());
+        mis2.setDateDebut(LocalDate.of(2020, 5, 2));
+        mis2.setDateFin(LocalDate.of(2020, 5, 8));
+        mis2.setVilleDepart("Mickeyville");
+        mis2.setVilleArrivee("Donaldville");
+        mis2.setPrime(BigDecimal.valueOf(500));
+        mis2.setStatut(Statut.VALIDEE);
+        mis2.setTransport(Transport.TRAIN);
+        
+        Mission mis3 = new Mission();
+        mis3.setSignatureNumerique(new SignatureNumerique());
+        mis3.setDateDebut(LocalDate.of(2020, 7, 30));
+        mis3.setDateFin(LocalDate.of(2020, 8, 6));
+        mis3.setVilleDepart("Mickeyville");
+        mis3.setVilleArrivee("Donaldville");
+        mis3.setPrime(BigDecimal.valueOf(100));
+        mis3.setStatut(Statut.VALIDEE);
+        mis3.setTransport(Transport.TRAIN);
+        
+        Mission mis4 = new Mission();
+        mis4.setSignatureNumerique(new SignatureNumerique());
+        mis4.setDateDebut(LocalDate.of(2019, 7, 30));
+        mis4.setDateFin(LocalDate.of(2019, 8, 6));
+        mis4.setVilleDepart("Mickeyville");
+        mis4.setVilleArrivee("Donaldville");
+        mis4.setPrime(BigDecimal.valueOf(100));
+        mis4.setStatut(Statut.VALIDEE);
+        mis4.setTransport(Transport.TRAIN);
+        
         mis1.setNature(nat1);
+        mis2.setNature(nat1);
+        mis3.setNature(nat1);
+        mis4.setNature(nat1);
         col1.addMission(mis1);
+        col1.addMission(mis2);
+        col1.addMission(mis3);
+        col1.addMission(mis4);
         
         this.natureRepo.save(nat1);
         this.collegueRepo.save(col1);
