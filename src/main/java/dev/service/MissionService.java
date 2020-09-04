@@ -1,5 +1,6 @@
 package dev.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,11 +35,21 @@ public class MissionService {
 	public List<Mission> getMissionCollegueConnecteParAnnee(int annee){
 		List<Mission> missions = colCtrl.findCollegueConnecte().get().getMissions();
 		List<Mission> missionsParAnnee = new ArrayList<>();
-		for(Mission miss : missions) {
-			if(miss.getDateFin().getYear() == annee) {
-				missionsParAnnee.add(miss);
+		if(annee == LocalDate.now().getYear()) {
+			for(Mission miss : missions) {
+				if(miss.getDateFin().getYear() == annee && miss.getDateFin().compareTo(LocalDate.now())<0) {
+					missionsParAnnee.add(miss);
+				}
 			}
 		}
+		else {
+			for(Mission miss : missions) {
+			if(miss.getDateFin().getYear() == annee) {
+				missionsParAnnee.add(miss);
+				}
+			}
+		}
+		
 		return missionsParAnnee;
 	}
 	

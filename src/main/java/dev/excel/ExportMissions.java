@@ -84,7 +84,6 @@ public interface ExportMissions {
         File file;
         
         try {
-        	//file = new File("C:/Users/"+System.getProperty("user.name")+"/primes/primes.xls");
         	file = new File("C:/Users/"+System.getProperty("user.name")+"/primes/"+LocalDate.now()+"-primes-"+annee+".xls");
             file.getParentFile().mkdirs();
      
