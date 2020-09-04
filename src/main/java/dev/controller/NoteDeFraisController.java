@@ -1,7 +1,6 @@
 package dev.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.CreerLigneFraisDto;
-import dev.domain.LigneDeFrais;
 import dev.domain.NoteDeFrais;
 import dev.exception.CodeErreur;
-import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
 import dev.exception.NoteDeFraisException;
 import dev.service.NoteDeFraisService;
@@ -105,4 +102,6 @@ public class NoteDeFraisController {
 				.ok(noteService.creerLigneDeFrais(ligne.getDate(), ligne.getMontant(), ligne.getNature(), note));
 
 	}
+	
+	
 }

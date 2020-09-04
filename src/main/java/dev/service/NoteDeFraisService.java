@@ -1,7 +1,6 @@
 package dev.service;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -13,24 +12,20 @@ import org.springframework.stereotype.Service;
 
 import dev.domain.LigneDeFrais;
 import dev.domain.NoteDeFrais;
-import dev.repository.LigneDeFraisRepo;
-import dev.repository.MissionRepo;
 import dev.repository.NoteDeFraisRepo;
 
 @Service
 public class NoteDeFraisService {
 	private NoteDeFraisRepo noteRepo;
-	private LigneDeFraisRepo ligneRepo;
 
 	/**
 	 * Constructeur
 	 * 
 	 * @param noteRepo
 	 */
-	public NoteDeFraisService(NoteDeFraisRepo noteRepo, LigneDeFraisRepo ligneRepo) {
+	public NoteDeFraisService(NoteDeFraisRepo noteRepo) {
 		super();
 		this.noteRepo = noteRepo;
-		this.ligneRepo = ligneRepo;
 	}
 
 	public List<NoteDeFrais> lister() {
