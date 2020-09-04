@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreerLigneFraisDto {
 	/** date de la ligne de frais */
 	@NotNull
-	@Past
+	@PastOrPresent
 	@JsonProperty("Date")
 	private LocalDate date;
 	

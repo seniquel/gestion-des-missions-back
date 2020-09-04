@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,45 +41,68 @@ public class NoteDeFraisController {
 		this.noteService = noteService;
 	}
 
+	/**
+	 * transforme une exception non catchée en ResponseEntity
+	 * 
+	 * @param ex : l'excpetion
+	 * @return : une ResponseEntity
+	 */
+	@ExceptionHandler(NoteDeFraisException.class)
+	public ResponseEntity<MessageErreurDto> onNoteDeFraisException(NoteDeFraisException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessageErreur());
+	}
+
+	/**
+	 * liste les notes de frais
+	 * 
+	 * @return : une liste de notes de frais
+	 */
 	@GetMapping
 	public List<NoteDeFrais> lister() {
 		return this.noteService.lister();
 	}
 
+	/**
+	 * @param uuid
+	 * @return
+	 */
 	@GetMapping("{uuid}")
 	public ResponseEntity<?> getLignesDeFraisOfNote(@PathVariable UUID uuid) {
-		Optional<NoteDeFrais> note = noteService.getNoteByUuid(uuid);
-		if (note.isPresent()) {
-			return ResponseEntity.status(HttpStatus.OK).body(note.get());
-		} else {
-			throw new CollegueNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Cette note n'existe pas"));
-		}
+		NoteDeFrais note = noteService.getNoteByUuid(uuid).orElseThrow(() -> new NoteDeFraisException(
+				new MessageErreurDto(CodeErreur.VALIDATION, "Cette note n'existe pas.")));
+		return ResponseEntity.status(HttpStatus.OK).body(note);
 	}
 
 	@PostMapping("{uuid}/ligneDeFrais")
-	// TODO : vérifier que la date est entre le début et la fin de la mission
 	public ResponseEntity<?> ajouterLigneDeFrais(@PathVariable UUID uuid, @RequestBody @Valid CreerLigneFraisDto ligne,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("données invalides pour la création d'une ligne de frais");
+			throw new NoteDeFraisException(
+					new MessageErreurDto(CodeErreur.VALIDATION, "Données invalide pour l'ajout d'une ligne de frais"));
 		}
-		Optional<NoteDeFrais> note = noteService.getNoteByUuid(uuid);
-		if (note.isPresent()) {
-			// verifier doublon de ligne (date et nature)
-			if (noteService.verifierDoublonLigne(ligne.getDate(), ligne.getNature(), note.get().getLignesDeFrais())) {
-				// verifier que le montant des valide
-				// i.e < 0, que le depassement est autorisé et que le montant est inférieur à la
-				// prime
-				if (noteService.verifierMontantValide(ligne.getMontant(), note.get())) {
-					// ajout d'une ligne à la note
-					return ResponseEntity.ok(noteService.creerLigneDeFrais(ligne.getDate(), ligne.getMontant(),
-							ligne.getNature(), note.get()));
-				}
-			}
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La note de frais n'existe pas");
+		NoteDeFrais note = noteService.getNoteByUuid(uuid).orElseThrow(() -> new NoteDeFraisException(
+				new MessageErreurDto(CodeErreur.VALIDATION, "Cette note n'existe pas.")));
+		// verifier doublon de ligne (date et nature)
+		if (!noteService.verifierDoublonLigne(ligne.getDate(), ligne.getNature(), note.getLignesDeFrais())) {
+			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION,
+					"Une ligne de frais existe déjà avec ce couple date/nature."));
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("loupé");
+		// verifier que le montant des valide
+		// i.e < 0, que le depassement est autorisé et que le montant est inférieur à la
+		// prime
+		if (!noteService.verifierMontantValide(ligne.getMontant(), note)) {
+			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION, "Montant invalide"));
+		}
+		// verifier que la date est comprise entre la date de débit de la mission et
+		// celle de fin
+		if (!noteService.verifierDateValide(note.getMission().getDateDebut(), note.getMission().getDateFin(),
+				ligne.getDate())) {
+			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION,
+					"La date doit être comprise entre la date de début et la date de fin de la mission·"));
+		}
+		// Si toutes les vérifications sont ok, ajout d'une ligne à la note
+		return ResponseEntity
+				.ok(noteService.creerLigneDeFrais(ligne.getDate(), ligne.getMontant(), ligne.getNature(), note));
+
 	}
 }

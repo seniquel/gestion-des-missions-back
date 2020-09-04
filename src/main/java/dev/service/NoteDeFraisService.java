@@ -1,6 +1,7 @@
 package dev.service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -84,6 +85,19 @@ public class NoteDeFraisService {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * méthode qui retourne true si la date de la ligne est comprise entre la date
+	 * de début et la date de fin de la mission.
+	 * 
+	 * @param dateDebut : date de début de la mission
+	 * @param dateFin   : date de fin de la mission
+	 * @param dateLigne : date de la ligne de frais a ajouter
+	 * @return : true si ok, false sinon
+	 */
+	public boolean verifierDateValide(LocalDate dateDebut, LocalDate dateFin, LocalDate dateLigne) {
+		return (dateLigne.compareTo(dateDebut) >= 0 && dateLigne.compareTo(dateFin) <= 0);
 	}
 
 	/**
