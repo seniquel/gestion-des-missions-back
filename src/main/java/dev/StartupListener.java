@@ -80,6 +80,7 @@ public class StartupListener {
         nat1.setLibelle("Formation");
         nat1.setPayee(true);
         nat1.setVersementPrime(true);
+        nat1.setTJM(BigDecimal.valueOf(1.5));
         nat1.setPourcentagePrime(BigDecimal.valueOf(10));
         nat1.setDebutValidite(LocalDate.now().minusMonths(10));
         nat1.setFinValidite(LocalDate.now().plusMonths(3));

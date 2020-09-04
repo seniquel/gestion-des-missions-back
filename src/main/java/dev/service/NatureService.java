@@ -25,9 +25,9 @@ public class NatureService {
 
 	@Transactional
 	public Nature creer(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
-			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, BigDecimal plafondFrais,
-			Boolean depassementFrais) {
-		Nature nature = new Nature(signatureNumerique, libelle, payee, versementPrime, 
+			BigDecimal TJM, BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, 
+			BigDecimal plafondFrais, Boolean depassementFrais) {
+		Nature nature = new Nature(signatureNumerique, libelle, payee, versementPrime, TJM,
 				pourcentagePrime, debutValidite, finValidite, plafondFrais, depassementFrais);
 
 		Nature natureSauvegardee = this.repo.save(nature);

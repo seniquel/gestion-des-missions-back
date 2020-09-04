@@ -19,6 +19,8 @@ public class Nature extends EntiteModifiable {
 	private Boolean payee;
 	/** versementPrime */
 	private Boolean versementPrime;
+	/** Taux Journalier Moyen */
+	private BigDecimal TJM;
 	/** pourcentagePrime */
 	private BigDecimal pourcentagePrime;
 	/** debutValidite */
@@ -52,12 +54,13 @@ public class Nature extends EntiteModifiable {
 	 * @param missions
 	 */
 	public Nature(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
-			BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, BigDecimal plafondFrais,
-			Boolean depassementFrais) {
+			BigDecimal TJM, BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, 
+			BigDecimal plafondFrais, Boolean depassementFrais) {
 		this.signatureNumerique = signatureNumerique;
 		this.libelle = libelle;
 		this.payee = payee;
 		this.versementPrime = versementPrime;
+		this.TJM = TJM;
 		this.pourcentagePrime = pourcentagePrime;
 		this.debutValidite = debutValidite;
 		this.finValidite = finValidite;
@@ -207,6 +210,14 @@ public class Nature extends EntiteModifiable {
 	 */
 	public void setDepassementFrais(Boolean depassementFrais) {
 		this.depassementFrais = depassementFrais;
+	}
+
+	public BigDecimal getTJM() {
+		return TJM;
+	}
+
+	public void setTJM(BigDecimal tJM) {
+		TJM = tJM;
 	}
 
 }
