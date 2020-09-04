@@ -11,16 +11,18 @@ import dev.repository.LigneDeFraisRepo;
 public class LigneDeFraisService {
 	private LigneDeFraisRepo ligneRepo;
 
-	/** Constructeur
+	/**
+	 * Constructeur
+	 * 
 	 * @param ligneRepo
 	 */
 	public LigneDeFraisService(LigneDeFraisRepo ligneRepo) {
 		super();
 		this.ligneRepo = ligneRepo;
 	}
-	
+
 	public List<LigneDeFrais> lister() {
 		return ligneRepo.findAll();
 	}
-	
+
 }

@@ -3,6 +3,7 @@ package dev.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -46,8 +47,9 @@ public class Mission extends EntiteModifiable {
 	private Transport transport;
 
 
-	@OneToOne
-	@JoinColumn(name="noteDeFrais_id")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="noteDeFrais_id", referencedColumnName = "uuid")
+	@JsonManagedReference
 	private NoteDeFrais noteDeFrais;
 	
 	public Mission() {

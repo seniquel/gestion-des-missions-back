@@ -122,10 +122,12 @@ public class StartupListener {
 		mis1.setNature(nat1);
 		note1.addLigneFrais(l1);
 		note1.addLigneFrais(l2);
-		this.noteRepo.save(note1);
 		mis1.setNoteDeFrais(note1);
+		note1.setMission(mis1);
 		col1.addMission(mis1);
-
+		
+		
+		this.noteRepo.save(note1);
 		this.ligneRepo.save(l1);
 		this.ligneRepo.save(l2);
 		this.natureRepo.save(nat1);
