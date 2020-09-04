@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.controller.vm.CreerLigneFraisDto;
+import dev.controller.vm.LigneFraisDto;
 import dev.domain.NoteDeFrais;
 import dev.exception.CodeErreur;
 import dev.exception.MessageErreurDto;
@@ -70,8 +70,16 @@ public class NoteDeFraisController {
 		return ResponseEntity.status(HttpStatus.OK).body(note);
 	}
 
+	/**
+	 * méthode qui permet l'ajout d'une nouvelle ligne de frais
+	 * 
+	 * @param uuid   : l'uuid de la note sur laquelle la ligne va etre ajoutée
+	 * @param ligne  : la ligne a ajouter
+	 * @param result
+	 * @return : la ligne nouvellement créée
+	 */
 	@PostMapping("{uuid}/ligneDeFrais")
-	public ResponseEntity<?> ajouterLigneDeFrais(@PathVariable UUID uuid, @RequestBody @Valid CreerLigneFraisDto ligne,
+	public ResponseEntity<?> ajouterLigneDeFrais(@PathVariable UUID uuid, @RequestBody @Valid LigneFraisDto ligne,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			throw new NoteDeFraisException(
@@ -79,29 +87,12 @@ public class NoteDeFraisController {
 		}
 		NoteDeFrais note = noteService.getNoteByUuid(uuid).orElseThrow(() -> new NoteDeFraisException(
 				new MessageErreurDto(CodeErreur.VALIDATION, "Cette note n'existe pas.")));
-		// verifier doublon de ligne (date et nature)
-		if (!noteService.verifierDoublonLigne(ligne.getDate(), ligne.getNature(), note.getLignesDeFrais())) {
-			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION,
-					"Une ligne de frais existe déjà avec ce couple date/nature."));
+		if (noteService.verifierInfos(ligne.getDate(), ligne.getNature(), ligne.getMontant(), note)) {
+			// Si toutes les vérifications sont ok, ajout d'une ligne à la note
+			return ResponseEntity
+					.ok(noteService.creerLigneDeFrais(ligne.getDate(), ligne.getMontant(), ligne.getNature(), note));
+		} else {
+			return ResponseEntity.badRequest().body("Données non valides pour l'ajout d'une ligne de frais");
 		}
-		// verifier que le montant des valide
-		// i.e < 0, que le depassement est autorisé et que le montant est inférieur à la
-		// prime
-		if (!noteService.verifierMontantValide(ligne.getMontant(), note)) {
-			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION, "Montant invalide"));
-		}
-		// verifier que la date est comprise entre la date de débit de la mission et
-		// celle de fin
-		if (!noteService.verifierDateValide(note.getMission().getDateDebut(), note.getMission().getDateFin(),
-				ligne.getDate())) {
-			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION,
-					"La date doit être comprise entre la date de début et la date de fin de la mission·"));
-		}
-		// Si toutes les vérifications sont ok, ajout d'une ligne à la note
-		return ResponseEntity
-				.ok(noteService.creerLigneDeFrais(ligne.getDate(), ligne.getMontant(), ligne.getNature(), note));
-
 	}
-	
-	
 }

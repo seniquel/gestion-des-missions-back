@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import dev.domain.LigneDeFrais;
 import dev.domain.NoteDeFrais;
+import dev.exception.CodeErreur;
+import dev.exception.MessageErreurDto;
+import dev.exception.NoteDeFraisException;
 import dev.repository.NoteDeFraisRepo;
 
 @Service
@@ -113,6 +116,36 @@ public class NoteDeFraisService {
 		note.addLigneFrais(l);
 		// entite est managed, pas de .save()
 		return l;
+	}
+
+	/**
+	 * vérifie les infos avant d'ajouter ou de modifier une ligne
+	 * 
+	 * @param date    : la date à vérifier
+	 * @param nature  : la nature à vérifier
+	 * @param montant : le montant à vérifier
+	 * @param note    : la note où faire les vérifications
+	 * @return true si les infos sont ok, false sinon
+	 */
+	public boolean verifierInfos(LocalDate date, String nature, BigDecimal montant, NoteDeFrais note) {
+		// verifier doublon de ligne (date et nature)
+		if (!verifierDoublonLigne(date, nature, note.getLignesDeFrais())) {
+			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION,
+					"Une ligne de frais existe déjà avec ce couple date/nature."));
+		}
+		// verifier que le montant des valide
+		// i.e < 0, que le depassement est autorisé et que le montant est inférieur à la
+		// prime
+		if (!verifierMontantValide(montant, note)) {
+			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION, "Montant invalide"));
+		}
+		// verifier que la date est comprise entre la date de débit de la mission et
+		// celle de fin
+		if (!verifierDateValide(note.getMission().getDateDebut(), note.getMission().getDateFin(), date)) {
+			throw new NoteDeFraisException(new MessageErreurDto(CodeErreur.VALIDATION,
+					"La date doit être comprise entre la date de début et la date de fin de la mission·"));
+		}
+		return true;
 	}
 
 }

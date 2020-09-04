@@ -34,6 +34,7 @@ public class NoteDeFrais extends EntiteModifiable {
 	 * @param signatureNumerique
 	 */
 	public NoteDeFrais() {
+		this.setSignatureNumerique(new SignatureNumerique());
 	}
 
 	/**
