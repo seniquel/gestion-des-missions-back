@@ -89,9 +89,28 @@ public class StartupListener {
 		nat1.setVersementPrime(true);
 		nat1.setPourcentagePrime(BigDecimal.valueOf(10));
 		nat1.setDebutValidite(LocalDate.now().minusMonths(10));
-		nat1.setFinValidite(LocalDate.now().plusMonths(3));
 		nat1.setPlafondFrais(BigDecimal.valueOf(150));
 		nat1.setDepassementFrais(true);
+		
+		Nature nat2 = new Nature();
+		nat2.setLibelle("Conseil");
+		nat2.setPayee(true);
+		nat2.setTjm(BigDecimal.valueOf(750));
+		nat2.setVersementPrime(true);
+		nat2.setPourcentagePrime(BigDecimal.valueOf(3.5));
+		nat2.setDebutValidite(LocalDate.now().minusMonths(10));
+		nat2.setPlafondFrais(BigDecimal.valueOf(150));
+		nat2.setDepassementFrais(true);
+		
+		Nature nat3 = new Nature();
+		nat3.setLibelle("Expertise technique");
+		nat3.setPayee(true);
+		nat3.setTjm(BigDecimal.valueOf(1000));
+		nat3.setVersementPrime(true);
+		nat3.setPourcentagePrime(BigDecimal.valueOf(4));
+		nat3.setDebutValidite(LocalDate.now().minusMonths(10));
+		nat3.setPlafondFrais(BigDecimal.valueOf(150));
+		nat3.setDepassementFrais(true);
 
 		Mission mis1 = new Mission();
 		mis1.setSignatureNumerique(new SignatureNumerique());
@@ -188,6 +207,8 @@ public class StartupListener {
 		this.ligneRepo.save(l1);
 		this.ligneRepo.save(l2);
 		this.natureRepo.save(nat1);
+		this.natureRepo.save(nat2);
+		this.natureRepo.save(nat3);
 		this.collegueRepo.save(col1);
 		this.missionRepo.save(mis1);
 		this.missionRepo.save(mis2);
