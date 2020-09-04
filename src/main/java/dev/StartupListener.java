@@ -141,6 +141,15 @@ public class StartupListener {
 		mis5.setVilleArrivee("Donaldville");
 		mis5.setStatut(Statut.EN_ATTENTE_VALIDATION);
 		mis5.setTransport(Transport.TRAIN);
+		
+		Mission mis6 = new Mission();
+		mis6.setSignatureNumerique(new SignatureNumerique());
+		mis6.setDateDebut(LocalDate.of(2020, 10, 3));
+		mis6.setDateFin(LocalDate.of(2020, 10, 16));
+		mis6.setVilleDepart("Mickeyville");
+		mis6.setVilleArrivee("Donaldville");
+		mis6.setStatut(Statut.EN_ATTENTE_VALIDATION);
+		mis6.setTransport(Transport.TRAIN);
 
 		NoteDeFrais note1 = new NoteDeFrais();
 		note1.setDateDeSaisie(LocalDate.now());
@@ -169,10 +178,12 @@ public class StartupListener {
 		mis3.setNature(nat1);
 		mis4.setNature(nat1);
 		mis5.setNature(nat1);
+		mis6.setNature(nat1);
 		col1.addMission(mis2);
 		col1.addMission(mis3);
 		col1.addMission(mis4);
-		col3.addMission(mis5);
+		col2.addMission(mis5);
+		col2.addMission(mis6);
 
 		this.ligneRepo.save(l1);
 		this.ligneRepo.save(l2);
@@ -183,6 +194,7 @@ public class StartupListener {
 		this.missionRepo.save(mis3);
 		this.missionRepo.save(mis4);
 		this.missionRepo.save(mis5);
+		this.missionRepo.save(mis6);
 
 	}
 

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import dev.controller.CollegueController;
@@ -51,6 +53,11 @@ public class MissionService {
 		}
 		
 		return missionsParAnnee;
+	}
+	
+	@Transactional
+	public void updateMission(Mission mission) {
+		repo.save(mission);
 	}
 	
 }
