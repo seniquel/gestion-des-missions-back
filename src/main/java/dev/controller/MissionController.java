@@ -18,6 +18,7 @@ import dev.domain.Collegue;
 import dev.domain.Mission;
 import dev.excel.ExportMissions;
 import dev.domain.NoteDeFrais;
+import dev.domain.Statut;
 import dev.exception.CodeErreur;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
@@ -70,5 +71,17 @@ public class MissionController {
 			throw new CollegueNotFoundException(
 					new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
 		}
+	}
+	
+	@GetMapping("validation")
+	public List<Mission> getMissionEnAttente(){
+		List<Mission> missions = service.lister();
+		List<Mission> enAttente = new ArrayList<>();
+		for(Mission miss : missions) {
+			if(miss.getStatut().equals(Statut.EN_ATTENTE_VALIDATION)) {
+				enAttente.add(miss);
+			}
+		}
+		return enAttente;
 	}
 }
