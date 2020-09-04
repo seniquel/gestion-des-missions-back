@@ -55,6 +55,11 @@ public class MissionController {
 		List<Mission> liste = service.getMissionCollegueConnecteParAnnee(annee);
 		ExportMissions.creerFichierExcel(liste, annee);
 	}
+	
+	@GetMapping("{annee}/prime")
+	public List<Mission> getMissionParAnne(@PathVariable String annee){
+		return service.getMissionCollegueConnecteParAnnee(Integer.parseInt(annee));
+	}
 
 	@GetMapping("{uuid}/noteDeFrais")
 	public ResponseEntity<?> getNoteOfMission(@PathVariable UUID uuid) {
