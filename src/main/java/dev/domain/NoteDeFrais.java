@@ -8,7 +8,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -20,16 +22,19 @@ public class NoteDeFrais extends EntiteModifiable {
 	private BigDecimal fraisTotal = BigDecimal.valueOf(0);
 
 	@OneToMany(mappedBy = "noteDeFrais", cascade = CascadeType.ALL, orphanRemoval = true)
-
 	@JsonManagedReference
 	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
 
+	@OneToOne(mappedBy="noteDeFrais")
+	@JsonBackReference
+	private Mission mission;
 	/**
 	 * Constructeur
 	 * 
 	 * @param signatureNumerique
 	 */
 	public NoteDeFrais() {
+		this.setSignatureNumerique(new SignatureNumerique());
 	}
 
 	/**
@@ -39,11 +44,12 @@ public class NoteDeFrais extends EntiteModifiable {
 	 * @param dateDeSaisie
 	 * @param lignesDeFrais
 	 */
-	public NoteDeFrais(SignatureNumerique signatureNumerique, LocalDate dateDeSaisie,
+	public NoteDeFrais(SignatureNumerique signatureNumerique, LocalDate dateDeSaisie, Mission mission,
 			List<LigneDeFrais> lignesDeFrais) {
 		this.signatureNumerique = signatureNumerique;
 		this.dateDeSaisie = dateDeSaisie;
 		this.lignesDeFrais = lignesDeFrais;
+		this.mission = mission;
 		calculerFraisTotal();
 	}
 
@@ -112,6 +118,22 @@ public class NoteDeFrais extends EntiteModifiable {
 	public void setFraisTotal(BigDecimal fraisTotal) {
 		this.fraisTotal = fraisTotal;
 	}
+	
+	
+
+	/** Getter
+	 * @return the mission
+	 */
+	public Mission getMission() {
+		return mission;
+	}
+
+	/** Setter
+	 * @param mission the mission to set
+	 */
+	public void setMission(Mission mission) {
+		this.mission = mission;
+	}
 
 	/**
 	 * Calcule automatiquement les frais totaux a partir des lignes de frais de la
@@ -119,10 +141,12 @@ public class NoteDeFrais extends EntiteModifiable {
 	 * 
 	 */
 	public void calculerFraisTotal() {
+		BigDecimal fraisTotal = BigDecimal.valueOf(0);
 		if (!this.lignesDeFrais.isEmpty()) {
 			for (LigneDeFrais ligneDeFrais : lignesDeFrais) {
-				this.fraisTotal = this.fraisTotal.add(ligneDeFrais.getMontant());
+				fraisTotal = fraisTotal.add(ligneDeFrais.getMontant());
 			}
 		}
+		this.fraisTotal = fraisTotal;
 	}
 }
