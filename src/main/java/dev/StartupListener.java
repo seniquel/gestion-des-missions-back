@@ -31,7 +31,7 @@ import dev.repository.NoteDeFraisRepo;
 @Component
 @Transactional
 public class StartupListener {
-
+  
 	private String appVersion;
 	private PasswordEncoder passwordEncoder;
 	private CollegueRepo collegueRepo;
@@ -89,9 +89,28 @@ public class StartupListener {
 		nat1.setVersementPrime(true);
 		nat1.setPourcentagePrime(BigDecimal.valueOf(10));
 		nat1.setDebutValidite(LocalDate.now().minusMonths(10));
-		nat1.setFinValidite(LocalDate.now().plusMonths(3));
 		nat1.setPlafondFrais(BigDecimal.valueOf(150));
 		nat1.setDepassementFrais(true);
+		
+		Nature nat2 = new Nature();
+		nat2.setLibelle("Conseil");
+		nat2.setPayee(true);
+		nat2.setTjm(BigDecimal.valueOf(750));
+		nat2.setVersementPrime(true);
+		nat2.setPourcentagePrime(BigDecimal.valueOf(3.5));
+		nat2.setDebutValidite(LocalDate.now().minusMonths(10));
+		nat2.setPlafondFrais(BigDecimal.valueOf(150));
+		nat2.setDepassementFrais(true);
+		
+		Nature nat3 = new Nature();
+		nat3.setLibelle("Expertise technique");
+		nat3.setPayee(true);
+		nat3.setTjm(BigDecimal.valueOf(1000));
+		nat3.setVersementPrime(true);
+		nat3.setPourcentagePrime(BigDecimal.valueOf(4));
+		nat3.setDebutValidite(LocalDate.now().minusMonths(10));
+		nat3.setPlafondFrais(BigDecimal.valueOf(150));
+		nat3.setDepassementFrais(true);
 
 		Mission mis1 = new Mission();
 		mis1.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
@@ -102,6 +121,54 @@ public class StartupListener {
 		mis1.setPrime(BigDecimal.valueOf(1000));
 		mis1.setStatut(Statut.INITIALE);
 		mis1.setTransport(Transport.TRAIN);
+    
+		Mission mis2 = new Mission();
+		mis2.setSignatureNumerique(new SignatureNumerique());
+		mis2.setDateDebut(LocalDate.of(2020, 5, 2));
+		mis2.setDateFin(LocalDate.of(2020, 5, 8));
+		mis2.setVilleDepart("Mickeyville");
+		mis2.setVilleArrivee("Donaldville");
+		mis2.setPrime(BigDecimal.valueOf(500));
+		mis2.setStatut(Statut.VALIDEE);
+		mis2.setTransport(Transport.TRAIN);
+        
+		Mission mis3 = new Mission();
+		mis3.setSignatureNumerique(new SignatureNumerique());
+		mis3.setDateDebut(LocalDate.of(2020, 7, 30));
+		mis3.setDateFin(LocalDate.of(2020, 8, 6));
+		mis3.setVilleDepart("Mickeyville");
+		mis3.setVilleArrivee("Donaldville");
+		mis3.setPrime(BigDecimal.valueOf(100));
+		mis3.setStatut(Statut.VALIDEE);
+		mis3.setTransport(Transport.TRAIN);
+        
+		Mission mis4 = new Mission();
+		mis4.setSignatureNumerique(new SignatureNumerique());
+		mis4.setDateDebut(LocalDate.of(2019, 7, 30));
+		mis4.setDateFin(LocalDate.of(2019, 8, 6));
+		mis4.setVilleDepart("Mickeyville");
+		mis4.setVilleArrivee("Donaldville");
+		mis4.setPrime(BigDecimal.valueOf(100));
+		mis4.setStatut(Statut.VALIDEE);
+		mis4.setTransport(Transport.TRAIN);
+    
+		Mission mis5 = new Mission();
+		mis5.setSignatureNumerique(new SignatureNumerique());
+		mis5.setDateDebut(LocalDate.of(2020, 10, 3));
+		mis5.setDateFin(LocalDate.of(2020, 10, 16));
+		mis5.setVilleDepart("Mickeyville");
+		mis5.setVilleArrivee("Donaldville");
+		mis5.setStatut(Statut.EN_ATTENTE_VALIDATION);
+		mis5.setTransport(Transport.TRAIN);
+		
+		Mission mis6 = new Mission();
+		mis6.setSignatureNumerique(new SignatureNumerique());
+		mis6.setDateDebut(LocalDate.of(2020, 10, 3));
+		mis6.setDateFin(LocalDate.of(2020, 10, 16));
+		mis6.setVilleDepart("Mickeyville");
+		mis6.setVilleArrivee("Donaldville");
+		mis6.setStatut(Statut.EN_ATTENTE_VALIDATION);
+		mis6.setTransport(Transport.TRAIN);
 
 		NoteDeFrais note1 = new NoteDeFrais();
 		note1.setDateDeSaisie(LocalDate.now());
@@ -125,14 +192,29 @@ public class StartupListener {
 		mis1.setNoteDeFrais(note1);
 		note1.setMission(mis1);
 		col1.addMission(mis1);
-		
-		
 		this.noteRepo.save(note1);
+		mis2.setNature(nat1);
+		mis3.setNature(nat1);
+		mis4.setNature(nat1);
+		mis5.setNature(nat1);
+		mis6.setNature(nat1);
+		col1.addMission(mis2);
+		col1.addMission(mis3);
+		col1.addMission(mis4);
+		col2.addMission(mis5);
+		col2.addMission(mis6);
 		this.ligneRepo.save(l1);
 		this.ligneRepo.save(l2);
 		this.natureRepo.save(nat1);
+		this.natureRepo.save(nat2);
+		this.natureRepo.save(nat3);
 		this.collegueRepo.save(col1);
 		this.missionRepo.save(mis1);
+		this.missionRepo.save(mis2);
+		this.missionRepo.save(mis3);
+		this.missionRepo.save(mis4);
+		this.missionRepo.save(mis5);
+		this.missionRepo.save(mis6);
 
 	}
 

@@ -19,6 +19,8 @@ public class Nature extends EntiteModifiable {
 	private Boolean payee;
 	/** versementPrime */
 	private Boolean versementPrime;
+	/** Taux journalier */
+	private BigDecimal tjm;
 	/** pourcentagePrime */
 	private BigDecimal pourcentagePrime;
 	/** debutValidite */
@@ -63,6 +65,24 @@ public class Nature extends EntiteModifiable {
 		this.finValidite = finValidite;
 		this.plafondFrais = plafondFrais;
 		this.depassementFrais = depassementFrais;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return
+	 */
+	public BigDecimal getTjm() {
+		return tjm;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param tjm
+	 */
+	public void setTjm(BigDecimal tjm) {
+		this.tjm = tjm;
 	}
 
 	/**
