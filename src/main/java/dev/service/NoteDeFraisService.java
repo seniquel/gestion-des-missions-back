@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -49,12 +50,12 @@ public class NoteDeFraisService {
 	 * @return : true si non présent, false sinon
 	 */
 	public Boolean verifierDoublonLigne(LocalDate date, String nature, List<LigneDeFrais> listeLignes) {
-		for (LigneDeFrais ligneDeFrais : listeLignes) {
-			if (ligneDeFrais.getDate().compareTo(date) == 0) {
-				if (ligneDeFrais.getNature().equals(nature)) {
-					return false;
-				}
-			}
+		List<LigneDeFrais> doublons = listeLignes.stream()
+				.filter(element -> element.getDate().compareTo(date) == 0 )
+				.filter(element -> element.getNature().equals(nature))
+				.collect(Collectors.toList());
+		if(!doublons.isEmpty()) {
+			return false;
 		}
 		return true;
 	}
