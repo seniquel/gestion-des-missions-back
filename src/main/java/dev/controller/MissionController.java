@@ -1,5 +1,6 @@
 package dev.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,5 +99,29 @@ public class MissionController {
 			mission.setStatut(Statut.REJETEE);
 		}
 		service.updateMission(mission);
+	}
+	
+	@GetMapping("current")
+	public List<Mission> getCurrentMission() {
+		List<Mission> missions = service.listerColConnecte();
+		List<Mission> missionCurrent = new ArrayList<>();
+		for(Mission miss : missions) {
+			if(miss.getDateDebut().isBefore(LocalDate.now()) && miss.getDateFin().isAfter(LocalDate.now())) {
+				missionCurrent.add(miss);
+			}
+		}
+		return missionCurrent;
+	}
+	
+	@GetMapping("futur")
+	public List<Mission> getFuturMission() {
+		List<Mission> missions = service.listerColConnecte();
+		List<Mission> missionFutur = new ArrayList<>();
+		for(Mission miss : missions) {
+			if(miss.getDateDebut().isAfter(LocalDate.now())) {
+				missionFutur.add(miss);
+			}
+		}
+		return missionFutur;
 	}
 }
