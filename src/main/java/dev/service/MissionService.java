@@ -30,6 +30,10 @@ public class MissionService {
 		return repo.findAll();
 	}
 	
+	public List<Mission> listerColConnecte(){
+		return colCtrl.findCollegueConnecte().get().getMissions();
+	}
+	
 	public Optional<Mission> getMission(UUID id){
 		return repo.findById(id);
 	}

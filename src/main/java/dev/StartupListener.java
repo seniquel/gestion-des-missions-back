@@ -119,7 +119,7 @@ public class StartupListener {
 		mis1.setVilleDepart("Mickeyville");
 		mis1.setVilleArrivee("Donaldville");
 		mis1.setPrime(BigDecimal.valueOf(1000));
-		mis1.setStatut(Statut.INITIALE);
+		mis1.setStatut(Statut.VALIDEE);
 		mis1.setTransport(Transport.TRAIN);
     
 		Mission mis2 = new Mission();
@@ -169,6 +169,16 @@ public class StartupListener {
 		mis6.setVilleArrivee("Donaldville");
 		mis6.setStatut(Statut.EN_ATTENTE_VALIDATION);
 		mis6.setTransport(Transport.TRAIN);
+		
+		Mission mis7 = new Mission();
+		mis7.setSignatureNumerique(new SignatureNumerique());
+		mis7.setDateDebut(LocalDate.now().plusDays(11));
+		mis7.setDateFin(LocalDate.now().plusDays(20));
+		mis7.setVilleDepart("Mickeyville");
+		mis7.setVilleArrivee("Donaldville");
+		mis7.setPrime(BigDecimal.valueOf(1000));
+		mis7.setStatut(Statut.INITIALE);
+		mis7.setTransport(Transport.TRAIN);
 
 		NoteDeFrais note1 = new NoteDeFrais();
 		note1.setDateDeSaisie(LocalDate.now());
@@ -198,11 +208,14 @@ public class StartupListener {
 		mis4.setNature(nat1);
 		mis5.setNature(nat1);
 		mis6.setNature(nat1);
+		mis7.setNature(nat2);
 		col1.addMission(mis2);
 		col1.addMission(mis3);
 		col1.addMission(mis4);
 		col2.addMission(mis5);
 		col2.addMission(mis6);
+		col1.addMission(mis7);
+
 		this.ligneRepo.save(l1);
 		this.ligneRepo.save(l2);
 		this.natureRepo.save(nat1);
@@ -215,6 +228,7 @@ public class StartupListener {
 		this.missionRepo.save(mis4);
 		this.missionRepo.save(mis5);
 		this.missionRepo.save(mis6);
+		this.missionRepo.save(mis7);
 
 	}
 
