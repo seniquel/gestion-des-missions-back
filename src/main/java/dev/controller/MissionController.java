@@ -106,7 +106,7 @@ public class MissionController {
 		List<Mission> missions = service.listerColConnecte();
 		List<Mission> missionCurrent = new ArrayList<>();
 		for(Mission miss : missions) {
-			if(miss.getDateDebut().isBefore(LocalDate.now()) && miss.getDateFin().isAfter(LocalDate.now())) {
+			if((miss.getDateDebut().isBefore(LocalDate.now()) || miss.getDateDebut().isEqual(LocalDate.now()) )&& miss.getDateFin().isAfter(LocalDate.now())) {
 				missionCurrent.add(miss);
 			}
 		}
