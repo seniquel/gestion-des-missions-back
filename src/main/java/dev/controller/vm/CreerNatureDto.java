@@ -60,48 +60,63 @@ public class CreerNatureDto {
 	public CreerNatureDto() {
 		this.debutValidite = LocalDate.now();
 	}
+	
 	public String getLibelle() {
 		return libelle;
 	}
+	
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
+	
 	public Boolean getPayee() {
 		return payee;
 	}
+	
 	public void setPayee(Boolean payee) {
 		this.payee = payee;
 	}
+	
 	public Boolean getVersementPrime() {
 		return versementPrime;
 	}
+	
 	public void setVersementPrime(Boolean versementPrime) {
 		this.versementPrime = versementPrime;
 	}
+	
 	public BigDecimal getTjm() {
 		return tjm;
 	}
+	
 	public void setTjm(BigDecimal tjm) {
 		this.tjm = tjm;
 	}
+	
 	public BigDecimal getPourcentagePrime() {
 		return pourcentagePrime;
 	}
+	
 	public void setPourcentagePrime(BigDecimal pourcentagePrime) {
 		this.pourcentagePrime = pourcentagePrime;
 	}
+	
 	public LocalDate getDebutValidite() {
 		return debutValidite;
 	}
+	
 	public BigDecimal getPlafondFrais() {
 		return plafondFrais;
 	}
+	
 	public void setPlafondFrais(BigDecimal plafondFrais) {
 		this.plafondFrais = plafondFrais;
 	}
+	
 	public Boolean getDepassementFrais() {
 		return depassementFrais;
 	}
+	
 	public void setDepassementFrais(Boolean depassementFrais) {
 		this.depassementFrais = depassementFrais;
 	}

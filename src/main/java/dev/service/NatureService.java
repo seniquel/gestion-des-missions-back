@@ -34,7 +34,6 @@ public class NatureService {
 		return natureSauvegardee;
 	}
 
-
 	public List<Nature> lister(){
 		return repo.findAll();
 	}

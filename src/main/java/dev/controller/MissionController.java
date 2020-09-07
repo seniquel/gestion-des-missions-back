@@ -1,6 +1,9 @@
 package dev.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,16 +130,35 @@ public class MissionController {
 	}
 	
 	@Scheduled(cron = "0 4 * * * *")
-	@PatchMapping("traitement")
 	public void updateValidation() {
 		List<Mission> missions = service.lister();
+		
 		for (Mission miss : missions) {
+			
 			if (miss.getStatut().equals(Statut.INITIALE)) {
 				miss.setStatut(Statut.EN_ATTENTE_VALIDATION);
-				logger.info(miss.toString());
 				service.updateMission(miss);
+				logger.info("Mission validée : " + miss.toString());
 			}
-			else if (miss.getStatut().equals(Statut.VALIDEE)) {
+			
+			if (miss.getStatut().equals(Statut.VALIDEE)) {
+				
+				Period joursTravailles = Period.between(miss.getDateDebut(), miss.getDateFin());
+				
+				// Calcul Prime = nombre de jours travaillés * TJM * %Prime/100 - déduction
+				BigDecimal calculPrime = BigDecimal.valueOf(joursTravailles.getDays())
+						.multiply(miss.getNature().getTjm())
+						.multiply(miss.getNature().getPourcentagePrime().divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING));
+				
+				// Pris en compte de la déduction
+				if (miss.getNature().getDepassementFrais()) {
+					calculPrime.subtract(miss.getNature().getPlafondFrais());
+				}
+				
+				miss.setPrime(calculPrime);
+				service.updateMission(miss);
+
+				logger.info("Calcul prime : " + miss.getPrime().toString() + " => " + miss.toString());
 			}
 		}
 	}
