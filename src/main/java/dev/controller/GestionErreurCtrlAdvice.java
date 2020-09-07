@@ -10,6 +10,8 @@ import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
 import dev.exception.MissionException;
 import dev.exception.MissionNotFoundException;
+import dev.exception.NatureException;
+import dev.exception.NatureNotFoundException;
 
 @ControllerAdvice
 public class GestionErreurCtrlAdvice {
@@ -31,6 +33,16 @@ public class GestionErreurCtrlAdvice {
 	
 	@ExceptionHandler(MissionNotFoundException.class)
 	public ResponseEntity<MessageErreurDto> quandMissionNotFoundException(MissionNotFoundException ex) {
+		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());	
+	}
+	
+	@ExceptionHandler(NatureException.class)
+	public ResponseEntity<MessageErreurDto> quandNatureException(NatureException ex) {
+		return ResponseEntity.badRequest().body(ex.getMessageErreur());	
+	}
+	
+	@ExceptionHandler(NatureNotFoundException.class)
+	public ResponseEntity<MessageErreurDto> quandNatureNotFoundException(NatureNotFoundException ex) {
 		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());	
 	}
 	

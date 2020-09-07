@@ -20,6 +20,7 @@ public class SignatureNumerique {
 	 * 
 	 */
 	public SignatureNumerique() {
+		this.dateMaj = LocalDate.now();
 	}
 
 	/**

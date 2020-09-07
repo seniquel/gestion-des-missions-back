@@ -63,7 +63,7 @@ public class CollegueService {
 	public Boolean seChevauchentModif(LocalDate dateDebut, LocalDate dateFin, UUID idCollegue, UUID idMission) {
 		List<Mission> listeMissions = repo.findById(idCollegue).get().getMissions();
 		for (Mission mission: listeMissions) {
-			if(mission.getDateFin().isAfter(dateDebut) && dateFin.isAfter(mission.getDateDebut()) && mission.getUuid()!=idMission) {
+			if(mission.getDateFin().isAfter(dateDebut) && dateFin.isAfter(mission.getDateDebut()) && !mission.getUuid().equals(idMission)) {
 				return true;
 			}
 		}

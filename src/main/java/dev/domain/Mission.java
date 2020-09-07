@@ -53,11 +53,9 @@ public class Mission extends EntiteModifiable {
 	private NoteDeFrais noteDeFrais;
 	
 	public Mission() {
-		this.noteDeFrais = new NoteDeFrais();
+		super();
+		this.noteDeFrais = new NoteDeFrais(new SignatureNumerique());
 		this.noteDeFrais.setDateDeSaisie(LocalDate.now());
-//		this.noteDeFrais.signatureNumerique.setDateMaj(LocalDate.now());
-		this.signatureNumerique = new SignatureNumerique();
-		this.signatureNumerique.setDateMaj(LocalDate.now());
 	}
 
 

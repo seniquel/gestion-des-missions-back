@@ -1,15 +1,11 @@
 package dev.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class NoteDeFrais extends EntiteModifiable {
@@ -17,19 +13,19 @@ public class NoteDeFrais extends EntiteModifiable {
 	private LocalDate dateDeSaisie;
 
 	@OneToMany(mappedBy = "noteDeFrais")
-	@JsonManagedReference
-	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
-
-	@OneToOne(mappedBy="noteDeFrais")
-	@JsonBackReference
-	private Mission mission;
+	private List<LigneDeFrais> lignesDeFrais;
 	
+	public NoteDeFrais() {
+		super();
+	}
+
 	/**
 	 * Constructeur
 	 * 
 	 * @param signatureNumerique
 	 */
-	public NoteDeFrais() {
+	public NoteDeFrais(SignatureNumerique signatureNumerique) {
+		super(signatureNumerique);
 	}
 
 	/**
@@ -41,7 +37,7 @@ public class NoteDeFrais extends EntiteModifiable {
 	 */
 	public NoteDeFrais(SignatureNumerique signatureNumerique, LocalDate dateDeSaisie,
 			List<LigneDeFrais> lignesDeFrais) {
-		this.signatureNumerique = signatureNumerique;
+		super(signatureNumerique);
 		this.dateDeSaisie = dateDeSaisie;
 		this.lignesDeFrais = lignesDeFrais;
 	}
@@ -80,16 +76,6 @@ public class NoteDeFrais extends EntiteModifiable {
 	 */
 	public void setLignesDeFrais(List<LigneDeFrais> lignesDeFrais) {
 		this.lignesDeFrais = lignesDeFrais;
-	}
-	
-	public void addLigneFrais(LigneDeFrais ligneDeFrais) {
-		this.lignesDeFrais.add(ligneDeFrais);
-		ligneDeFrais.setNoteDeFrais(this);
-	}
-	
-	public void removeLigneFrais(LigneDeFrais ligneDeFrais) {
-		this.lignesDeFrais.remove(ligneDeFrais);
-		ligneDeFrais.setNoteDeFrais(null);
 	}
 
 }

@@ -11,6 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import dev.domain.Mission;
+import dev.domain.NoteDeFrais;
+import dev.domain.SignatureNumerique;
 import dev.domain.Statut;
 import dev.domain.Transport;
 import dev.repository.CollegueRepo;
@@ -44,18 +46,17 @@ public class MissionService {
 	
 	public Mission creer(LocalDate dateDebut, LocalDate dateFin, String villeDepart, String villeArrivee, BigDecimal prime,
 			UUID uuidNature, UUID uuidCollegue, Statut statut, Transport transport) {
-//		NoteDeFrais noteDeFrais = new NoteDeFrais();
-//		noteDeFrais.setDateDeSaisie(LocalDate.now());
+		NoteDeFrais noteDeFrais = new NoteDeFrais();
+		noteDeFrais.setDateDeSaisie(LocalDate.now());
+		noteDeFrais.setSignatureNumerique(new SignatureNumerique());
 		Mission mission = new Mission(dateDebut, dateFin, villeDepart, villeArrivee, prime, 
 				natureRepo.findById(uuidNature).get(), collegueRepo.findById(uuidCollegue).get(), statut, transport);
-		
 		noteRepo.save(mission.getNoteDeFrais());
 		return missionRepo.save(mission);
 	}
 	
 	public boolean supprimer(UUID id) {
 		missionRepo.deleteById(id);
-		//return missionRepo.findAll().removeIf(m -> m.getUuid().equals(id));
 		return !missionRepo.existsById(id);
 	}
 	
@@ -69,6 +70,7 @@ public class MissionService {
 		mission.setNature(natureRepo.findById(uuidNature).get());
 		mission.setStatut(Statut.INITIALE);
 		mission.setTransport(transport);
+		mission.setSignatureNumerique(new SignatureNumerique());
 		return missionRepo.save(mission);	
 	}
 	

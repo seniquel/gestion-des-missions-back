@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.controller.vm.CreerMissionDto;
 import dev.domain.Collegue;
 import dev.domain.Mission;
+import dev.domain.Nature;
 import dev.domain.Statut;
 import dev.domain.Transport;
 import dev.exception.CodeErreur;
@@ -33,8 +34,10 @@ import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
 import dev.exception.MissionException;
 import dev.exception.MissionNotFoundException;
+import dev.exception.NatureNotFoundException;
 import dev.service.CollegueService;
 import dev.service.MissionService;
+import dev.service.NatureService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -43,10 +46,12 @@ public class CollegueController {
 
 	private CollegueService collegueService;
 	private MissionService missionService;
+	private NatureService natureService;
 	
-	public CollegueController(CollegueService service, MissionService missionService) {
+	public CollegueController(CollegueService service, MissionService missionService, NatureService natureService) {
 		this.collegueService = service;
 		this.missionService = missionService;
+		this.natureService = natureService;
 	}
 	
 	public Optional<Collegue> findCollegueConnecte() {
@@ -99,6 +104,14 @@ public class CollegueController {
 	
 	@PostMapping("me/missions")
 	public ResponseEntity<?> PostMission(@RequestBody @Valid CreerMissionDto mission, BindingResult result){
+		Optional<Collegue> collegue = collegueService.getCollegue(mission.getCollegueId());
+		Optional<Nature> nature = natureService.getNature(mission.getNatureId());
+		if(!collegue.isPresent()) {
+			throw new CollegueNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Ce collegue n'existe pas"));
+		}
+		if(!nature.isPresent()) {
+			throw new NatureNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Cette nature n'existe pas"));
+		}
 		if (result.hasErrors()) {
 			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Données invalides pour la création d'une mission"));
 		}
@@ -135,6 +148,14 @@ public class CollegueController {
 	
 	@PutMapping("me/missions/{uuid}")
 	public ResponseEntity<?> PutMission(@PathVariable UUID uuid, @RequestBody @Valid CreerMissionDto mission, BindingResult result){
+		Optional<Collegue> collegue = collegueService.getCollegue(mission.getCollegueId());
+		Optional<Nature> nature = natureService.getNature(mission.getNatureId());
+		if(!collegue.isPresent()) {
+			throw new CollegueNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Ce collegue n'existe pas"));
+		}
+		if(!nature.isPresent()) {
+			throw new NatureNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Cette nature n'existe pas"));
+		}
 		if (result.hasErrors()) {
 			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Données invalides pour la création d'une mission"));
 		}
@@ -170,6 +191,10 @@ public class CollegueController {
 	
 	@DeleteMapping("me/missions/{uuid}")
     public ResponseEntity<UUID> deletePost(@PathVariable UUID uuid) {
+		Optional<Mission> mission = missionService.getMission(uuid);
+		if(!mission.isPresent()) {
+			throw new MissionNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Ce collegue n'existe pas"));
+		}
         if(!missionService.getMission(uuid).get().getCollegue().getUuid().equals(this.findCollegueConnecte().get().getUuid())) {
     		throw new CollegueException(new MessageErreurDto(CodeErreur.METIER, "Vous n'avez pas le droit de supprimer une mission d'un autre collègue"));
     	}
