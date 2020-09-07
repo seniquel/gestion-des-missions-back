@@ -1,6 +1,5 @@
 package dev.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.CreerNatureDto;
-import dev.domain.Nature;import dev.domain.Statut;
-import dev.exception.CodeErreur;
-import dev.exception.MessageErreurDto;
+import dev.domain.Nature;
 import dev.service.NatureService;
 
 @RestController
