@@ -17,32 +17,41 @@ public class CreerNatureDto {
 	@Size(min=2)
 	@JsonProperty("libelle")
 	private String libelle;
+	
 	/** payee */
 	@NotNull
 	@JsonProperty("payee")
 	private Boolean payee;
+	
 	/** versementPrime */
 	@NotNull
 	@JsonProperty("versementPrime")
 	private Boolean versementPrime;
+	
 	/** Taux journalier */
 	@NotNull
+	@PositiveOrZero
 	@JsonProperty("tjm")
 	private BigDecimal tjm;
+	
 	/** pourcentagePrime */
 	@NotNull
+	@PositiveOrZero
 	@DecimalMax("10")
 	@JsonProperty("pourcentagePrime")
 	private BigDecimal pourcentagePrime;
+	
 	/** debutValidite */
 	@NotNull
 	@JsonProperty("debutValidite")
 	private LocalDate debutValidite;
+	
 	/** plafondFrais */
 	@NotNull
 	@PositiveOrZero
 	@JsonProperty("plafondFrais")
 	private BigDecimal plafondFrais;
+	
 	/** depassementFrais */
 	@NotNull
 	@JsonProperty("depassementFrais")
