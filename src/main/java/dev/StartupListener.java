@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -205,7 +204,7 @@ public class StartupListener {
 		note6.setDateDeSaisie(LocalDate.now());
 		note6.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
     
-    NoteDeFrais note7 = new NoteDeFrais();
+		NoteDeFrais note7 = new NoteDeFrais();
 		note7.setDateDeSaisie(LocalDate.now());
 		note7.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
 
@@ -221,25 +220,25 @@ public class StartupListener {
 		l2.setMontant(BigDecimal.valueOf(0.15));
 		l2.setNoteDeFrais(note1);
 
-		mis1.setNature(nat1);
 		note1.addLigneFrais(l1);
 		note1.addLigneFrais(l2);
 		mis1.setNoteDeFrais(note1);
 		note1.setMission(mis1);
 		col1.addMission(mis1);
-		mis2.setNature(nat1);
-		mis3.setNature(nat1);
-		mis4.setNature(nat1);
+		mis1.setNature(nat3);
+		mis2.setNature(nat3);
+		mis3.setNature(nat3);
+		mis4.setNature(nat3);
 		mis5.setNature(nat1);
 		mis6.setNature(nat1);
-    mis7.setNature(nat2);
+		mis7.setNature(nat3);
     
 		mis2.setNoteDeFrais(note2);
 		mis3.setNoteDeFrais(note3);
 		mis4.setNoteDeFrais(note4);
 		mis5.setNoteDeFrais(note5);
 		mis6.setNoteDeFrais(note6);
-    mis7.setNoteDeFrais(note7);
+		mis7.setNoteDeFrais(note7);
     
 		col1.addMission(mis2);
 		col1.addMission(mis3);
@@ -256,7 +255,7 @@ public class StartupListener {
 		this.noteRepo.save(note4);
 		this.noteRepo.save(note5);
 		this.noteRepo.save(note6);
-    this.noteRepo.save(note7);
+		this.noteRepo.save(note7);
 		this.natureRepo.save(nat1);
 		this.natureRepo.save(nat2);
 		this.natureRepo.save(nat3);
