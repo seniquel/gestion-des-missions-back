@@ -183,6 +183,30 @@ public class StartupListener {
 		NoteDeFrais note1 = new NoteDeFrais();
 		note1.setDateDeSaisie(LocalDate.now());
 		note1.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+		
+		NoteDeFrais note2 = new NoteDeFrais();
+		note2.setDateDeSaisie(LocalDate.now());
+		note2.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+
+		NoteDeFrais note3 = new NoteDeFrais();
+		note3.setDateDeSaisie(LocalDate.now());
+		note3.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+		
+		NoteDeFrais note4 = new NoteDeFrais();
+		note4.setDateDeSaisie(LocalDate.now());
+		note4.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+		
+		NoteDeFrais note5 = new NoteDeFrais();
+		note5.setDateDeSaisie(LocalDate.now());
+		note5.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+		
+		NoteDeFrais note6 = new NoteDeFrais();
+		note6.setDateDeSaisie(LocalDate.now());
+		note6.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+    
+    NoteDeFrais note7 = new NoteDeFrais();
+		note7.setDateDeSaisie(LocalDate.now());
+		note7.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
 
 		LigneDeFrais l1 = new LigneDeFrais();
 		l1.setDate(LocalDate.now());
@@ -202,22 +226,36 @@ public class StartupListener {
 		mis1.setNoteDeFrais(note1);
 		note1.setMission(mis1);
 		col1.addMission(mis1);
-		this.noteRepo.save(note1);
 		mis2.setNature(nat1);
 		mis3.setNature(nat1);
 		mis4.setNature(nat1);
 		mis5.setNature(nat1);
 		mis6.setNature(nat1);
-		mis7.setNature(nat2);
+    mis7.setNature(nat2);
+    
+		mis2.setNoteDeFrais(note2);
+		mis3.setNoteDeFrais(note3);
+		mis4.setNoteDeFrais(note4);
+		mis5.setNoteDeFrais(note5);
+		mis6.setNoteDeFrais(note6);
+    mis7.setNoteDeFrais(note7);
+    
 		col1.addMission(mis2);
 		col1.addMission(mis3);
 		col1.addMission(mis4);
 		col2.addMission(mis5);
 		col2.addMission(mis6);
 		col1.addMission(mis7);
-
+    
+		this.noteRepo.save(note1);
 		this.ligneRepo.save(l1);
 		this.ligneRepo.save(l2);
+		this.noteRepo.save(note2);
+		this.noteRepo.save(note3);
+		this.noteRepo.save(note4);
+		this.noteRepo.save(note5);
+		this.noteRepo.save(note6);
+    this.noteRepo.save(note7);
 		this.natureRepo.save(nat1);
 		this.natureRepo.save(nat2);
 		this.natureRepo.save(nat3);

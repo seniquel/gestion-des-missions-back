@@ -101,7 +101,5 @@ public class LigneDeFraisController {
 		} else {
 			return ResponseEntity.badRequest().body("Données non valides pour la modification d'une ligne de frais");
 		}
-
 	}
-
 }
