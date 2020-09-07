@@ -113,8 +113,8 @@ public class StartupListener {
 		nat3.setDepassementFrais(true);
 
 		Mission mis1 = new Mission();
-		mis1.setSignatureNumerique(new SignatureNumerique());
-		mis1.setDateDebut(LocalDate.now().minusDays(2));
+		mis1.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+		mis1.setDateDebut(LocalDate.now());
 		mis1.setDateFin(LocalDate.now().plusDays(10));
 		mis1.setVilleDepart("Mickeyville");
 		mis1.setVilleArrivee("Donaldville");
@@ -182,7 +182,7 @@ public class StartupListener {
 
 		NoteDeFrais note1 = new NoteDeFrais();
 		note1.setDateDeSaisie(LocalDate.now());
-		note1.setSignatureNumerique(new SignatureNumerique());
+		note1.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
 
 		LigneDeFrais l1 = new LigneDeFrais();
 		l1.setDate(LocalDate.now());
@@ -199,10 +199,10 @@ public class StartupListener {
 		mis1.setNature(nat1);
 		note1.addLigneFrais(l1);
 		note1.addLigneFrais(l2);
-		this.noteRepo.save(note1);
 		mis1.setNoteDeFrais(note1);
+		note1.setMission(mis1);
 		col1.addMission(mis1);
-    
+		this.noteRepo.save(note1);
 		mis2.setNature(nat1);
 		mis3.setNature(nat1);
 		mis4.setNature(nat1);
