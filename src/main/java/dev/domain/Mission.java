@@ -3,6 +3,7 @@ package dev.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -46,11 +47,17 @@ public class Mission extends EntiteModifiable {
 	private Transport transport;
 
 
-	@OneToOne
-	@JoinColumn(name="noteDeFrais_id")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="noteDeFrais_id", referencedColumnName = "uuid")
+	@JsonManagedReference
 	private NoteDeFrais noteDeFrais;
 	
 	public Mission() {
+		this.noteDeFrais = new NoteDeFrais();
+		this.noteDeFrais.setDateDeSaisie(LocalDate.now());
+//		this.noteDeFrais.signatureNumerique.setDateMaj(LocalDate.now());
+		this.signatureNumerique = new SignatureNumerique();
+		this.signatureNumerique.setDateMaj(LocalDate.now());
 	}
 
 
@@ -78,11 +85,12 @@ public class Mission extends EntiteModifiable {
 		this.collegue = collegue;
 		this.statut = statut;
 		this.transport = transport;
+//		this.noteDeFrais = noteDeFrais;
 		this.noteDeFrais = new NoteDeFrais();
-		noteDeFrais.setDateDeSaisie(LocalDate.now());
-		noteDeFrais.signatureNumerique.setDateMaj(LocalDate.now());
+		this.noteDeFrais.setDateDeSaisie(LocalDate.now());
+//		this.noteDeFrais.signatureNumerique.setDateMaj(LocalDate.now());
 		this.signatureNumerique = new SignatureNumerique();
-		signatureNumerique.setDateMaj(LocalDate.now());
+		this.signatureNumerique.setDateMaj(LocalDate.now());
 	}
 
 

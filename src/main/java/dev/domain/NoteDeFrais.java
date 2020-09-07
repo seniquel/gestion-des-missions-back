@@ -6,7 +6,9 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -18,6 +20,10 @@ public class NoteDeFrais extends EntiteModifiable {
 	@JsonManagedReference
 	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
 
+	@OneToOne(mappedBy="noteDeFrais")
+	@JsonBackReference
+	private Mission mission;
+	
 	/**
 	 * Constructeur
 	 * 

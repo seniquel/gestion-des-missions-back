@@ -1,5 +1,7 @@
 package dev.controller;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +28,12 @@ import dev.domain.Mission;
 import dev.domain.Statut;
 import dev.domain.Transport;
 import dev.exception.CodeErreur;
+import dev.exception.CollegueException;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
 import dev.exception.MissionException;
+import dev.exception.MissionNotFoundException;
+import dev.repository.MissionRepo;
 import dev.service.CollegueService;
 import dev.service.MissionService;
 
@@ -95,7 +102,26 @@ public class CollegueController {
 		if (result.hasErrors()) {
 			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Données invalides pour la création d'une mission"));
 		}
-		Mission missionCreee = missionService.creer(
+		if(mission.getDateDebut().isAfter(mission.getDateFin())) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "La date de début doit être avant la date de fin"));
+		}
+		if(mission.getTransport().equals("AVION") && mission.getDateDebut().isBefore(LocalDate.now().plusDays(7))) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Une mission en avion nécessite au moins 7 jours d'anticipation"));
+		}
+		if(collegueService.seChevauchent(mission.getDateDebut(), mission.getDateFin(), this.findCollegueConnecte().get().getUuid())) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Les dates de deux missions ne peuvent pas se chevaucher"));
+		}
+		if(mission.getDateDebut().getDayOfWeek().equals(DayOfWeek.SATURDAY) || mission.getDateDebut().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "La mission ne peut pas commencer pendant le week-end"));
+		}
+		if(mission.getDateFin().getDayOfWeek().equals(DayOfWeek.SATURDAY) || mission.getDateFin().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "La mission ne peut pas se terminer pendant le week-end"));
+		}
+		if(!mission.getCollegueId().equals(this.findCollegueConnecte().get().getUuid())) {
+			throw new CollegueException(new MessageErreurDto(CodeErreur.METIER, "Vous n'avez pas le droit de créer une mission pour un autre collègue"));
+		}
+		
+		return ResponseEntity.ok(missionService.creer(
 				mission.getDateDebut(), 
 				mission.getDateFin(), 
 				mission.getVilleDepart(), 
@@ -104,21 +130,55 @@ public class CollegueController {
 				mission.getNatureId(), 
 				mission.getCollegueId(), 
 				Statut.valueOf(mission.getStatut()), 
-				Transport.valueOf(mission.getTransport()));
-		
-		MissionDto missionDto = new MissionDto();
-		missionDto.setUuid(missionCreee.getUuid());
-		missionDto.setDateDebut(missionCreee.getDateDebut());
-		missionDto.setDateFin(missionCreee.getDateFin());
-		missionDto.setVilleDepart(missionCreee.getVilleDepart());
-		missionDto.setVilleArrivee(missionCreee.getVilleArrivee());
-		missionDto.setPrime(missionCreee.getPrime());
-		missionDto.setNatureId(missionCreee.getNature().getUuid());
-		missionDto.setCollegueId(missionCreee.getCollegue().getUuid());
-		missionDto.setStatut(missionCreee.getStatut().toString());
-		missionDto.setTransport(missionCreee.getTransport().toString());
-		missionDto.setNoteDeFrais(missionCreee.getNoteDeFrais());
-		
-		return ResponseEntity.ok(missionDto);
+				Transport.valueOf(mission.getTransport())));
 	}
+	
+	@PutMapping("me/missions/{uuid}")
+	public ResponseEntity<?> PutMission(@PathVariable UUID uuid, @RequestBody @Valid CreerMissionDto mission, BindingResult result){
+		if (result.hasErrors()) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Données invalides pour la création d'une mission"));
+		}
+        if(!missionService.getMission(uuid).get().getCollegue().getUuid().equals(this.findCollegueConnecte().get().getUuid())) {
+    		throw new CollegueException(new MessageErreurDto(CodeErreur.METIER, "Vous n'avez pas le droit de supprimer une mission d'un autre collègue"));
+    	}
+		if(mission.getDateDebut().isAfter(mission.getDateFin())) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "La date de début doit être avant la date de fin"));
+		}
+		if(mission.getTransport().equals("AVION") && mission.getDateDebut().isBefore(LocalDate.now().plusDays(7))) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Une mission en avion nécessite au moins 7 jours d'anticipation"));
+		}
+		if(collegueService.seChevauchentModif(mission.getDateDebut(), mission.getDateFin(), this.findCollegueConnecte().get().getUuid(), uuid)) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "Les dates de deux missions ne peuvent pas se chevaucher"));
+		}
+		if(mission.getDateDebut().getDayOfWeek().equals(DayOfWeek.SATURDAY) || mission.getDateDebut().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "La mission ne peut pas commencer pendant le week-end"));
+		}
+		if(mission.getDateFin().getDayOfWeek().equals(DayOfWeek.SATURDAY) || mission.getDateFin().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+			throw new MissionException(new MessageErreurDto(CodeErreur.VALIDATION, "La mission ne peut pas se terminer pendant le week-end"));
+		}
+		if(!mission.getCollegueId().equals(this.findCollegueConnecte().get().getUuid())) {
+			throw new CollegueException(new MessageErreurDto(CodeErreur.VALIDATION, "Vous n'avez pas le droit de créer une mission pour un autre collègue"));
+		}
+		Optional<Mission> missionAModifier = missionService.getMission(uuid);
+		if(!missionAModifier.isPresent()) {
+			throw new MissionNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
+		}
+		
+		return ResponseEntity.ok(missionService.modifier(missionAModifier.get(), mission.getDateDebut(), mission.getDateFin(), 
+				mission.getVilleDepart(), mission.getVilleArrivee(), mission.getNatureId(), Transport.valueOf(mission.getTransport())));
+	}
+	
+	@DeleteMapping("me/missions/{uuid}")
+    public ResponseEntity<UUID> deletePost(@PathVariable UUID uuid) {
+        if(!missionService.getMission(uuid).get().getCollegue().getUuid().equals(this.findCollegueConnecte().get().getUuid())) {
+    		throw new CollegueException(new MessageErreurDto(CodeErreur.METIER, "Vous n'avez pas le droit de supprimer une mission d'un autre collègue"));
+    	}
+        
+        boolean isRemoved = missionService.supprimer(uuid);
+        if (!isRemoved) {
+            throw new MissionNotFoundException(new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
+        }
+        return new ResponseEntity<>(uuid, HttpStatus.OK);
+	}
+	
 }
