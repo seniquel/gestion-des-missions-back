@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * classe conceptualisant une mission
  * 
@@ -46,18 +47,17 @@ public class Mission extends EntiteModifiable {
 	/** transport */
 	private Transport transport;
 
-
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="noteDeFrais_id", referencedColumnName = "uuid")
+	@JoinColumn(name = "noteDeFrais_id", referencedColumnName = "uuid")
 	@JsonManagedReference
 	private NoteDeFrais noteDeFrais;
-	
+
 	public Mission() {
 	}
 
-
-
-	/** Constructeur
+	/**
+	 * Constructeur
+	 * 
 	 * @param dateDebut
 	 * @param dateFin
 	 * @param villeDepart
@@ -82,8 +82,6 @@ public class Mission extends EntiteModifiable {
 		this.transport = transport;
 		this.noteDeFrais = noteDeFrais;
 	}
-
-
 
 	/**
 	 * Getter
@@ -247,23 +245,27 @@ public class Mission extends EntiteModifiable {
 		this.transport = transport;
 	}
 
-
-
-	/** Getter
+	/**
+	 * Getter
+	 * 
 	 * @return the noteDeFrais
 	 */
 	public NoteDeFrais getNoteDeFrais() {
 		return noteDeFrais;
 	}
 
-
-
-	/** Setter
+	/**
+	 * Setter
+	 * 
 	 * @param noteDeFrais the noteDeFrais to set
 	 */
 	public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
 		this.noteDeFrais = noteDeFrais;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Mission '" + nature.getLibelle() + "' du " + dateDebut + " changée au statut " + statut;
+	}
 
 }
