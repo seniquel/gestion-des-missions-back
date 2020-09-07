@@ -30,11 +30,13 @@ public class CreerNatureDto {
 	
 	/** Taux journalier */
 	@NotNull
+	@PositiveOrZero
 	@JsonProperty("tjm")
 	private BigDecimal tjm;
 	
 	/** pourcentagePrime */
 	@NotNull
+	@PositiveOrZero
 	@DecimalMax("10")
 	@JsonProperty("pourcentagePrime")
 	private BigDecimal pourcentagePrime;
