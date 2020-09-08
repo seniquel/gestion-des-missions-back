@@ -13,24 +13,34 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Nature extends EntiteModifiable {
+	
 	/** libelle */
 	private String libelle;
+	
 	/** payee */
 	private Boolean payee;
+	
 	/** versementPrime */
 	private Boolean versementPrime;
-	/** Taux journalier */
+  
+	/** Taux Journalier Moyen */
 	private BigDecimal tjm;
+	
 	/** pourcentagePrime */
 	private BigDecimal pourcentagePrime;
+	
 	/** debutValidite */
 	private LocalDate debutValidite;
+	
 	/** finValidite */
 	private LocalDate finValidite;
+	
 	/** plafondFrais */
 	private BigDecimal plafondFrais;
+	
 	/** depassementFrais */
 	private Boolean depassementFrais;
+	
 	
 	/**
 	 * Constructeur

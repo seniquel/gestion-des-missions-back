@@ -31,7 +31,7 @@ import dev.repository.NoteDeFraisRepo;
 @Component
 @Transactional
 public class StartupListener {
-  
+
 	private String appVersion;
 	private PasswordEncoder passwordEncoder;
 	private CollegueRepo collegueRepo;
@@ -81,7 +81,7 @@ public class StartupListener {
 		col3.setMotDePasse(passwordEncoder.encode("superpass"));
 		col3.setRole(Role.ROLE_MANAGER);
 		this.collegueRepo.save(col3);
-
+/*
 		// Création de missions pour un collègue
 		Nature nat1 = new Nature();
 		nat1.setLibelle("Formation");
@@ -91,7 +91,7 @@ public class StartupListener {
 		nat1.setDebutValidite(LocalDate.now().minusMonths(10));
 		nat1.setPlafondFrais(BigDecimal.valueOf(150));
 		nat1.setDepassementFrais(true);
-		
+
 		Nature nat2 = new Nature();
 		nat2.setLibelle("Conseil");
 		nat2.setPayee(true);
@@ -101,7 +101,7 @@ public class StartupListener {
 		nat2.setDebutValidite(LocalDate.now().minusMonths(10));
 		nat2.setPlafondFrais(BigDecimal.valueOf(150));
 		nat2.setDepassementFrais(true);
-		
+
 		Nature nat3 = new Nature();
 		nat3.setLibelle("Expertise technique");
 		nat3.setPayee(true);
@@ -121,7 +121,7 @@ public class StartupListener {
 		mis1.setPrime(BigDecimal.valueOf(1000));
 		mis1.setStatut(Statut.VALIDEE);
 		mis1.setTransport(Transport.TRAIN);
-    
+
 		Mission mis2 = new Mission();
 		mis2.setSignatureNumerique(new SignatureNumerique());
 		mis2.setDateDebut(LocalDate.of(2020, 5, 2));
@@ -131,7 +131,7 @@ public class StartupListener {
 		mis2.setPrime(BigDecimal.valueOf(500));
 		mis2.setStatut(Statut.VALIDEE);
 		mis2.setTransport(Transport.TRAIN);
-        
+
 		Mission mis3 = new Mission();
 		mis3.setSignatureNumerique(new SignatureNumerique());
 		mis3.setDateDebut(LocalDate.of(2020, 7, 30));
@@ -141,7 +141,7 @@ public class StartupListener {
 		mis3.setPrime(BigDecimal.valueOf(100));
 		mis3.setStatut(Statut.VALIDEE);
 		mis3.setTransport(Transport.TRAIN);
-        
+
 		Mission mis4 = new Mission();
 		mis4.setSignatureNumerique(new SignatureNumerique());
 		mis4.setDateDebut(LocalDate.of(2019, 7, 30));
@@ -151,7 +151,7 @@ public class StartupListener {
 		mis4.setPrime(BigDecimal.valueOf(100));
 		mis4.setStatut(Statut.VALIDEE);
 		mis4.setTransport(Transport.TRAIN);
-    
+
 		Mission mis5 = new Mission();
 		mis5.setSignatureNumerique(new SignatureNumerique());
 		mis5.setDateDebut(LocalDate.of(2020, 10, 3));
@@ -160,7 +160,7 @@ public class StartupListener {
 		mis5.setVilleArrivee("Donaldville");
 		mis5.setStatut(Statut.EN_ATTENTE_VALIDATION);
 		mis5.setTransport(Transport.TRAIN);
-		
+
 		Mission mis6 = new Mission();
 		mis6.setSignatureNumerique(new SignatureNumerique());
 		mis6.setDateDebut(LocalDate.of(2020, 10, 3));
@@ -169,7 +169,7 @@ public class StartupListener {
 		mis6.setVilleArrivee("Donaldville");
 		mis6.setStatut(Statut.EN_ATTENTE_VALIDATION);
 		mis6.setTransport(Transport.TRAIN);
-		
+
 		Mission mis7 = new Mission();
 		mis7.setSignatureNumerique(new SignatureNumerique());
 		mis7.setDateDebut(LocalDate.now().plusDays(11));
@@ -184,6 +184,30 @@ public class StartupListener {
 		note1.setDateDeSaisie(LocalDate.now());
 		note1.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
 
+		NoteDeFrais note2 = new NoteDeFrais();
+		note2.setDateDeSaisie(LocalDate.now());
+		note2.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+
+		NoteDeFrais note3 = new NoteDeFrais();
+		note3.setDateDeSaisie(LocalDate.now());
+		note3.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+
+		NoteDeFrais note4 = new NoteDeFrais();
+		note4.setDateDeSaisie(LocalDate.now());
+		note4.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+
+		NoteDeFrais note5 = new NoteDeFrais();
+		note5.setDateDeSaisie(LocalDate.now());
+		note5.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+
+		NoteDeFrais note6 = new NoteDeFrais();
+		note6.setDateDeSaisie(LocalDate.now());
+		note6.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+
+		NoteDeFrais note7 = new NoteDeFrais();
+		note7.setDateDeSaisie(LocalDate.now());
+		note7.setSignatureNumerique(new SignatureNumerique(LocalDate.now()));
+
 		LigneDeFrais l1 = new LigneDeFrais();
 		l1.setDate(LocalDate.now());
 		l1.setNature("hotel bien cher");
@@ -196,19 +220,26 @@ public class StartupListener {
 		l2.setMontant(BigDecimal.valueOf(0.15));
 		l2.setNoteDeFrais(note1);
 
-		mis1.setNature(nat1);
 		note1.addLigneFrais(l1);
 		note1.addLigneFrais(l2);
 		mis1.setNoteDeFrais(note1);
 		note1.setMission(mis1);
 		col1.addMission(mis1);
-		this.noteRepo.save(note1);
-		mis2.setNature(nat1);
-		mis3.setNature(nat1);
-		mis4.setNature(nat1);
+		mis1.setNature(nat3);
+		mis2.setNature(nat3);
+		mis3.setNature(nat3);
+		mis4.setNature(nat3);
 		mis5.setNature(nat1);
 		mis6.setNature(nat1);
-		mis7.setNature(nat2);
+		mis7.setNature(nat3);
+
+		mis2.setNoteDeFrais(note2);
+		mis3.setNoteDeFrais(note3);
+		mis4.setNoteDeFrais(note4);
+		mis5.setNoteDeFrais(note5);
+		mis6.setNoteDeFrais(note6);
+		mis7.setNoteDeFrais(note7);
+
 		col1.addMission(mis2);
 		col1.addMission(mis3);
 		col1.addMission(mis4);
@@ -216,8 +247,15 @@ public class StartupListener {
 		col2.addMission(mis6);
 		col1.addMission(mis7);
 
+		this.noteRepo.save(note1);
 		this.ligneRepo.save(l1);
 		this.ligneRepo.save(l2);
+		this.noteRepo.save(note2);
+		this.noteRepo.save(note3);
+		this.noteRepo.save(note4);
+		this.noteRepo.save(note5);
+		this.noteRepo.save(note6);
+		this.noteRepo.save(note7);
 		this.natureRepo.save(nat1);
 		this.natureRepo.save(nat2);
 		this.natureRepo.save(nat3);
@@ -229,7 +267,7 @@ public class StartupListener {
 		this.missionRepo.save(mis5);
 		this.missionRepo.save(mis6);
 		this.missionRepo.save(mis7);
-
+*/
 	}
 
 }

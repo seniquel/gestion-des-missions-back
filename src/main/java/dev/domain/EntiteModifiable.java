@@ -1,6 +1,10 @@
 package dev.domain;
 
-import javax.persistence.Embedded;
+import java.util.UUID;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -12,15 +16,21 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class EntiteModifiable extends EntiteBase {
 	/** signatureNumerique */
-	@Embedded
 	protected SignatureNumerique signatureNumerique;
+	
+	public EntiteModifiable() {
+		super();
+		this.signatureNumerique = new SignatureNumerique();
+	}
 
 	/**
 	 * Constructeur
 	 * 
 	 * @param signatureNumerique
 	 */
-	public EntiteModifiable() {
+	public EntiteModifiable(SignatureNumerique signatureNumerique) {
+		super();
+		this.signatureNumerique = signatureNumerique;
 	}
 
 	/**

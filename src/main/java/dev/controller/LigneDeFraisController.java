@@ -41,28 +41,6 @@ public class LigneDeFraisController {
 		this.ligneService = ligneService;
 	}
 
-	/**
-	 * transforme une exception non catchée en ResponseEntity
-	 * 
-	 * @param ex : l'excpetion
-	 * @return : une ResponseEntity
-	 */
-	@ExceptionHandler(LigneDeFraisException.class)
-	public ResponseEntity<MessageErreurDto> onLigneDeFraisException(LigneDeFraisException ex) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessageErreur());
-	}
-
-	/**
-	 * transforme une exception non catchée en ResponseEntity
-	 * 
-	 * @param ex : l'excpetion
-	 * @return : une ResponseEntity
-	 */
-	@ExceptionHandler(NoteDeFraisException.class)
-	public ResponseEntity<MessageErreurDto> onNoteDeFraisException(NoteDeFraisException ex) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessageErreur());
-	}
-
 	@GetMapping
 	public List<LigneDeFrais> getLignes() {
 		return ligneService.lister();
@@ -101,7 +79,5 @@ public class LigneDeFraisController {
 		} else {
 			return ResponseEntity.badRequest().body("Données non valides pour la modification d'une ligne de frais");
 		}
-
 	}
-
 }
