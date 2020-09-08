@@ -50,8 +50,8 @@ public class Mission extends EntiteModifiable {
 	/** statut */
 	private Statut statut;
 	
-	/** traitement */
-	private Boolean traitement = false;
+	/** traite */
+	private Boolean traite = false;
 
 	/** transport */
 	private Transport transport;
@@ -286,19 +286,19 @@ public class Mission extends EntiteModifiable {
 	/**
 	 * Getter
 	 * 
-	 * @return traitement
+	 * @return traite
 	 */
-	public Boolean getTraitement() {
-		return traitement;
+	public Boolean getTraite() {
+		return traite;
 	}
 
 	/**
 	 * Setter
 	 * 
-	 * @param traitement the traitement to set
+	 * @param traite the traite to set
 	 */
-	public void setTraitement(Boolean traite) {
-		this.traitement = traite;
+	public void setTraite(Boolean traite) {
+		this.traite = traite;
 	}
 
 }

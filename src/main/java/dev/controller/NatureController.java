@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,11 +45,13 @@ public class NatureController {
 	}
 	
 	@GetMapping
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Nature> getNature(){
 		return service.lister();
 	}
 	
 	@GetMapping("valides")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Nature> getNatureValides(){
 		List<Nature> liste = service.lister();
 		List<Nature> valides = new ArrayList<>();
@@ -61,11 +64,13 @@ public class NatureController {
 	}
 	
 	@GetMapping("{uuid}")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public Nature getNatureUuid(@PathVariable UUID uuid) {
 		return service.getNature(uuid).get();
 	}
 	
 	@PostMapping
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public ResponseEntity<?> creerNature(@RequestBody @Valid CreerNatureDto natureDto) {
 		try {
 			List<Nature> natures = service.lister();
@@ -86,6 +91,7 @@ public class NatureController {
 	}
 	
 	@PostMapping("post")
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public ResponseEntity<?> creerNatureLibelleExistant(@RequestBody @Valid CreerNatureDto natureDto) {
 		try {
 			List<Nature> natures = service.lister();
@@ -101,6 +107,7 @@ public class NatureController {
 	}
 	
 	@PatchMapping("updateDateFin/{uuid}")
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public void updateDateFin(@PathVariable UUID uuid) {
 		//mettre la date de fin à aujourd'hui
 		Nature nature = service.getNature(uuid).get();
@@ -109,6 +116,7 @@ public class NatureController {
 	}
 	
 	@PatchMapping("modifier/{uuid}")
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public void updateNature(@PathVariable UUID uuid, @RequestBody @Valid CreerNatureDto natureDto) {
 		//changer la nature sans changer la date de début
 		Nature nature = service.getNature(uuid).get();
