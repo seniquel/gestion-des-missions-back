@@ -113,8 +113,8 @@ public class NatureControllerTest {
 		nat4.setDepassementFrais(true);
 		Mockito.when(natService.lister()).thenReturn(natures);
 		Mockito.when(natService.creer("test", true, BigDecimal.valueOf(200), true, BigDecimal.valueOf(7),
-				LocalDate.of(2020, 9, 6), BigDecimal.valueOf(300), true)).thenReturn(nat4);
-		String jsonBody = "{ \"libelle\": \"test\", \"payee\": true, \"versementPrime\": true, \"tjm\": 200, \"pourcentagePrime\": 7, \"debutValidite\": \"2020-09-06\", \"plafondFrais\": 300, \"depassementFrais\": true }";
+				BigDecimal.valueOf(300), true)).thenReturn(nat4);
+		String jsonBody = "{ \"libelle\": \"test\", \"payee\": true, \"versementPrime\": true, \"tjm\": 200, \"pourcentagePrime\": 7, \"plafondFrais\": 300, \"depassementFrais\": true }";
 		mockMvc.perform(MockMvcRequestBuilders.post("/natures").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(jsonBody)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("tjm").value(200));
@@ -134,8 +134,8 @@ public class NatureControllerTest {
 		nat4.setDepassementFrais(true);
 		Mockito.when(natService.lister()).thenReturn(natures);
 		Mockito.when(natService.creer("Formation", true, BigDecimal.valueOf(200), true, BigDecimal.valueOf(7),
-				LocalDate.of(2020, 9, 6), BigDecimal.valueOf(300), true)).thenReturn(nat4);
-		String jsonBody = "{ \"libelle\": \"Formation\", \"payee\": true, \"versementPrime\": true, \"tjm\": 200, \"pourcentagePrime\": 7, \"debutValidite\": \"2020-09-06\", \"plafondFrais\": 300, \"depassementFrais\": true }";
+				BigDecimal.valueOf(300), true)).thenReturn(nat4);
+		String jsonBody = "{ \"libelle\": \"Formation\", \"payee\": true, \"versementPrime\": true, \"tjm\": 200, \"pourcentagePrime\": 7, \"plafondFrais\": 300, \"depassementFrais\": true }";
 		mockMvc.perform(MockMvcRequestBuilders.post("/natures").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(jsonBody)).andExpect(MockMvcResultMatchers.status().isConflict())
 				.andExpect(MockMvcResultMatchers.content().string("Nature existante"));
