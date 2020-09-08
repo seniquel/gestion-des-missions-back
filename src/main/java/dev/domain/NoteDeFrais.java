@@ -2,11 +2,11 @@ package dev.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -17,14 +17,20 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class NoteDeFrais extends EntiteModifiable {
 	/** dateDeSaisie */
 	private LocalDate dateDeSaisie;
-
-
 	private BigDecimal fraisTotal = BigDecimal.valueOf(0);
 
 	@OneToMany(mappedBy = "noteDeFrais", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<LigneDeFrais> lignesDeFrais = new ArrayList<>();
 
+	/**
+	 * Constructeur
+	 * 
+   */
+  	public NoteDeFrais() {
+		super();
+	}
+  
 	@OneToOne(mappedBy="noteDeFrais")
 	@JsonBackReference
 	private Mission mission;
@@ -33,8 +39,8 @@ public class NoteDeFrais extends EntiteModifiable {
 	 * 
 	 * @param signatureNumerique
 	 */
-	public NoteDeFrais() {
-		this.setSignatureNumerique(new SignatureNumerique());
+	public NoteDeFrais(SignatureNumerique signatureNumerique) {
+		super(signatureNumerique);
 	}
 
 	/**
@@ -46,7 +52,7 @@ public class NoteDeFrais extends EntiteModifiable {
 	 */
 	public NoteDeFrais(SignatureNumerique signatureNumerique, LocalDate dateDeSaisie, Mission mission,
 			List<LigneDeFrais> lignesDeFrais) {
-		this.signatureNumerique = signatureNumerique;
+		super(signatureNumerique);
 		this.dateDeSaisie = dateDeSaisie;
 		this.lignesDeFrais = lignesDeFrais;
 		this.mission = mission;

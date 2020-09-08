@@ -50,6 +50,9 @@ public class MissionController {
 	@GetMapping("{uuid}")
 	public ResponseEntity<Optional<Mission>> getMissionByUUID(@PathVariable UUID uuid) {
 		Optional<Mission> mission = service.getMission(uuid);
+		if(mission.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(mission);
 		if (mission.isPresent()) {
 			return ResponseEntity.status(HttpStatus.OK).body(mission);
 		} else {
