@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * classe conceptualisant une mission
  * 
@@ -19,16 +20,22 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 public class Mission extends EntiteModifiable {
+	
 	/** dateDebut */
 	private LocalDate dateDebut;
+	
 	/** dateFin */
 	private LocalDate dateFin;
+	
 	/** villeDepart */
 	private String villeDepart;
+	
 	/** villeArrivee */
 	private String villeArrivee;
+	
 	/** prime */
 	private BigDecimal prime;
+	
 	/** nature */
 	@ManyToOne
 	@JoinColumn(name = "nature_id")
@@ -46,21 +53,20 @@ public class Mission extends EntiteModifiable {
 	/** transport */
 	private Transport transport;
 
-
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="noteDeFrais_id", referencedColumnName = "uuid")
+	@JoinColumn(name = "noteDeFrais_id", referencedColumnName = "uuid")
 	@JsonManagedReference
 	private NoteDeFrais noteDeFrais;
-	
+
 	public Mission() {
 		super();
 		this.noteDeFrais = new NoteDeFrais(new SignatureNumerique());
 		this.noteDeFrais.setDateDeSaisie(LocalDate.now());
 	}
 
-
-
-	/** Constructeur
+	/**
+	 * Constructeur
+	 * 
 	 * @param dateDebut
 	 * @param dateFin
 	 * @param villeDepart
@@ -83,15 +89,11 @@ public class Mission extends EntiteModifiable {
 		this.collegue = collegue;
 		this.statut = statut;
 		this.transport = transport;
-//		this.noteDeFrais = noteDeFrais;
 		this.noteDeFrais = new NoteDeFrais();
 		this.noteDeFrais.setDateDeSaisie(LocalDate.now());
-//		this.noteDeFrais.signatureNumerique.setDateMaj(LocalDate.now());
 		this.signatureNumerique = new SignatureNumerique();
 		this.signatureNumerique.setDateMaj(LocalDate.now());
 	}
-
-
 
 	/**
 	 * Getter
@@ -255,23 +257,27 @@ public class Mission extends EntiteModifiable {
 		this.transport = transport;
 	}
 
-
-
-	/** Getter
+	/**
+	 * Getter
+	 * 
 	 * @return the noteDeFrais
 	 */
 	public NoteDeFrais getNoteDeFrais() {
 		return noteDeFrais;
 	}
 
-
-
-	/** Setter
+	/**
+	 * Setter
+	 * 
 	 * @param noteDeFrais the noteDeFrais to set
 	 */
 	public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
 		this.noteDeFrais = noteDeFrais;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Mission '" + nature.getLibelle() + "' début le " + dateDebut + ", statut " + statut;
+	}
 
 }

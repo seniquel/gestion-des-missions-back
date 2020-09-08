@@ -2,6 +2,7 @@ package dev.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import dev.controller.CollegueController;
 import dev.domain.Mission;
 import dev.domain.NoteDeFrais;
 import dev.domain.SignatureNumerique;
@@ -23,17 +25,19 @@ import dev.repository.NoteDeFraisRepo;
 @Service
 @Transactional
 public class MissionService {
-	
+  
 	private MissionRepo missionRepo;
 	private NatureRepo natureRepo;
 	private CollegueRepo collegueRepo;
 	private NoteDeFraisRepo noteRepo;
+  private CollegueController colCtrl;
 	
-	public MissionService(MissionRepo repo, NatureRepo natureRepo, CollegueRepo collegueRepo, NoteDeFraisRepo noteRepo) {
+	public MissionService(MissionRepo repo, NatureRepo natureRepo, CollegueRepo collegueRepo, NoteDeFraisRepo noteRepo, CollegueController colCtrl) {
 		this.missionRepo = repo;
 		this.natureRepo = natureRepo;
 		this.collegueRepo = collegueRepo;
 		this.noteRepo = noteRepo;
+    this.colCtrl = colCtrl;
 	}
 
 	public List<Mission> lister(){
@@ -74,4 +78,28 @@ public class MissionService {
 		return missionRepo.save(mission);	
 	}
 	
+	public List<Mission> getMissionCollegueConnecteParAnnee(int annee) {
+		List<Mission> missions = colCtrl.findCollegueConnecte().get().getMissions();
+		List<Mission> missionsParAnnee = new ArrayList<>();
+		if (annee == LocalDate.now().getYear()) {
+			for (Mission miss : missions) {
+				if (miss.getDateFin().getYear() == annee && miss.getDateFin().compareTo(LocalDate.now()) < 0) {
+					missionsParAnnee.add(miss);
+				}
+			}
+		} else {
+			for (Mission miss : missions) {
+				if (miss.getDateFin().getYear() == annee) {
+					missionsParAnnee.add(miss);
+				}
+			}
+		}
+
+		return missionsParAnnee;
+	}
+
+	public void updateMission(Mission mission) {
+		repo.save(mission);
+	}
+
 }

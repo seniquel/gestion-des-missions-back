@@ -23,6 +23,14 @@ public class SignatureNumerique {
 		this.dateMaj = LocalDate.now();
 	}
 
+	/** Constructeur
+	 * @param dateMaj
+	 */
+	public SignatureNumerique(LocalDate dateMaj) {
+		super();
+		this.dateMaj = dateMaj;
+	}
+
 	/**
 	 * Getter
 	 * 

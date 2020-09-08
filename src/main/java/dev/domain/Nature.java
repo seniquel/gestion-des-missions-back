@@ -13,24 +13,34 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Nature extends EntiteModifiable {
+	
 	/** libelle */
 	private String libelle;
+	
 	/** payee */
 	private Boolean payee;
+	
 	/** versementPrime */
 	private Boolean versementPrime;
+  
 	/** Taux Journalier Moyen */
-	private BigDecimal TJM;
+	private BigDecimal tjm;
+	
 	/** pourcentagePrime */
 	private BigDecimal pourcentagePrime;
+	
 	/** debutValidite */
 	private LocalDate debutValidite;
+	
 	/** finValidite */
 	private LocalDate finValidite;
+	
 	/** plafondFrais */
 	private BigDecimal plafondFrais;
+	
 	/** depassementFrais */
 	private Boolean depassementFrais;
+	
 	
 	/**
 	 * Constructeur
@@ -42,30 +52,46 @@ public class Nature extends EntiteModifiable {
 	/**
 	 * Constructeur
 	 * 
-	 * @param signatureNumerique
+	 * @param tjm
 	 * @param libelle
 	 * @param payee
 	 * @param versementPrime
 	 * @param pourcentagePrime
 	 * @param debutValidite
-	 * @param finValidite
 	 * @param plafondFrais
 	 * @param depassementFrais
 	 * @param missions
 	 */
-	public Nature(SignatureNumerique signatureNumerique, String libelle, Boolean payee, Boolean versementPrime,
-			BigDecimal TJM, BigDecimal pourcentagePrime, LocalDate debutValidite, LocalDate finValidite, 
-			BigDecimal plafondFrais, Boolean depassementFrais) {
-		this.signatureNumerique = signatureNumerique;
+	public Nature(String libelle, Boolean payee, BigDecimal tjm, Boolean versementPrime,
+			BigDecimal pourcentagePrime, LocalDate debutValidite, BigDecimal plafondFrais,
+			Boolean depassementFrais) {
 		this.libelle = libelle;
 		this.payee = payee;
+		this.tjm = tjm;
 		this.versementPrime = versementPrime;
 		this.TJM = TJM;
 		this.pourcentagePrime = pourcentagePrime;
 		this.debutValidite = debutValidite;
-		this.finValidite = finValidite;
 		this.plafondFrais = plafondFrais;
 		this.depassementFrais = depassementFrais;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return
+	 */
+	public BigDecimal getTjm() {
+		return tjm;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param tjm
+	 */
+	public void setTjm(BigDecimal tjm) {
+		this.tjm = tjm;
 	}
 
 	/**
@@ -210,14 +236,6 @@ public class Nature extends EntiteModifiable {
 	 */
 	public void setDepassementFrais(Boolean depassementFrais) {
 		this.depassementFrais = depassementFrais;
-	}
-
-	public BigDecimal getTJM() {
-		return TJM;
-	}
-
-	public void setTJM(BigDecimal tJM) {
-		TJM = tJM;
 	}
 
 }
