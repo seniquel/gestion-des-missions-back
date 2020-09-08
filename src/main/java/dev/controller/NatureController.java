@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,11 +30,13 @@ public class NatureController {
 	}
 	
 	@GetMapping
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Nature> getNature(){
 		return service.lister();
 	}
 	
 	@PostMapping
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public ResponseEntity<?> creerNature(@RequestBody @Valid CreerNatureDto natureDto) {
 		try {
 			List<Nature> natures = service.lister();
