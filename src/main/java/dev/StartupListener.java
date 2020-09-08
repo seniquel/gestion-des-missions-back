@@ -64,6 +64,7 @@ public class StartupListener {
 		col1.setMotDePasse(passwordEncoder.encode("superpass"));
 		col1.setRole(Role.ROLE_ADMINISTRATEUR);
 
+
 		Collegue col2 = new Collegue();
 		// col2.setSignatureNumerique(new SignatureNumerique());
 		col2.setNom("User");
@@ -71,7 +72,7 @@ public class StartupListener {
 		col2.setEmail("user@dev.fr");
 		col2.setMotDePasse(passwordEncoder.encode("superpass"));
 		col2.setRole(Role.ROLE_UTILISATEUR);
-		this.collegueRepo.save(col2);
+		//this.collegueRepo.save(col2);
 
 		Collegue col3 = new Collegue();
 		// col3.setSignatureNumerique(new SignatureNumerique());
@@ -80,8 +81,8 @@ public class StartupListener {
 		col3.setEmail("manager@dev.fr");
 		col3.setMotDePasse(passwordEncoder.encode("superpass"));
 		col3.setRole(Role.ROLE_MANAGER);
-		this.collegueRepo.save(col3);
-
+		//this.collegueRepo.save(col3);
+/*
 		// Création de missions pour un collègue
 		Nature nat1 = new Nature();
 		nat1.setLibelle("Formation");
@@ -102,7 +103,7 @@ public class StartupListener {
 		nat2.setPlafondFrais(BigDecimal.valueOf(150));
 		nat2.setDepassementFrais(true);
 
-		/*Nature nat3 = new Nature();
+		Nature nat3 = new Nature();
 		nat3.setLibelle("Expertise technique");
 		nat3.setPayee(true);
 		nat3.setTjm(BigDecimal.valueOf(1000));
