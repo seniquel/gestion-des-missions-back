@@ -22,8 +22,8 @@ public class Nature extends EntiteModifiable {
 	
 	/** versementPrime */
 	private Boolean versementPrime;
-	
-	/** taux journalier */
+  
+	/** Taux Journalier Moyen */
 	private BigDecimal tjm;
 	
 	/** pourcentagePrime */

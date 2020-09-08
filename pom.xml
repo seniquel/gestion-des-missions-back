@@ -132,7 +132,7 @@
 				<jdbc.user>cxnlbeqtgtthrk</jdbc.user>
 				<jdbc.pass>c49ca208f3f319c795d410a31de58f5780a432de902a610f91af765f151d085e</jdbc.pass>
 				<jpa.hibernate.ddl>create-drop</jpa.hibernate.ddl>
-				<jdbc.dialect>org.hibernate.dialect.PostgreSQL92Dialect</jdbc.dialect>
+				<jdbc.dialect>org.hibernate.dialect.PostgreSQLDialect</jdbc.dialect>
 				<jdbc.connections.max.active>5</jdbc.connections.max.active>
 			</properties>
 			<dependencies>

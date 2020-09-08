@@ -11,6 +11,8 @@ import dev.exception.LigneDeFraisException;
 import dev.exception.MessageErreurDto;
 import dev.exception.MissionException;
 import dev.exception.MissionNotFoundException;
+import dev.exception.NatureException;
+import dev.exception.NatureNotFoundException;
 import dev.exception.NoteDeFraisException;
 
 @ControllerAdvice
@@ -36,6 +38,15 @@ public class GestionErreurCtrlAdvice {
 		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());	
 	}
 	
+	@ExceptionHandler(NatureException.class)
+	public ResponseEntity<MessageErreurDto> quandNatureException(NatureException ex) {
+		return ResponseEntity.badRequest().body(ex.getMessageErreur());	
+	}
+	
+	@ExceptionHandler(NatureNotFoundException.class)
+	public ResponseEntity<MessageErreurDto> quandNatureNotFoundException(NatureNotFoundException ex) {
+		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());
+	}
 
 	@ExceptionHandler(LigneDeFraisException.class)
 	public ResponseEntity<MessageErreurDto> onLigneDeFraisException(LigneDeFraisException ex) {

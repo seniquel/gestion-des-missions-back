@@ -62,6 +62,9 @@ public class Mission extends EntiteModifiable {
 	private NoteDeFrais noteDeFrais;
 
 	public Mission() {
+		super();
+		this.noteDeFrais = new NoteDeFrais(new SignatureNumerique());
+		this.noteDeFrais.setDateDeSaisie(LocalDate.now());
 	}
 
 	/**
@@ -79,7 +82,7 @@ public class Mission extends EntiteModifiable {
 	 * @param noteDeFrais
 	 */
 	public Mission(LocalDate dateDebut, LocalDate dateFin, String villeDepart, String villeArrivee, BigDecimal prime,
-			Nature nature, Collegue collegue, Statut statut, Transport transport, NoteDeFrais noteDeFrais) {
+			Nature nature, Collegue collegue, Statut statut, Transport transport) {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.villeDepart = villeDepart;
@@ -89,7 +92,10 @@ public class Mission extends EntiteModifiable {
 		this.collegue = collegue;
 		this.statut = statut;
 		this.transport = transport;
-		this.noteDeFrais = noteDeFrais;
+		this.noteDeFrais = new NoteDeFrais();
+		this.noteDeFrais.setDateDeSaisie(LocalDate.now());
+		this.signatureNumerique = new SignatureNumerique();
+		this.signatureNumerique.setDateMaj(LocalDate.now());
 	}
 
 	/**
