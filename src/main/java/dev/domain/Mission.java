@@ -20,22 +20,22 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 public class Mission extends EntiteModifiable {
-	
+
 	/** dateDebut */
 	private LocalDate dateDebut;
-	
+
 	/** dateFin */
 	private LocalDate dateFin;
-	
+
 	/** villeDepart */
 	private String villeDepart;
-	
+
 	/** villeArrivee */
 	private String villeArrivee;
-	
+
 	/** prime */
 	private BigDecimal prime;
-	
+
 	/** nature */
 	@ManyToOne
 	@JoinColumn(name = "nature_id")
@@ -49,6 +49,9 @@ public class Mission extends EntiteModifiable {
 
 	/** statut */
 	private Statut statut;
+	
+	/** traitement */
+	private Boolean traitement = false;
 
 	/** transport */
 	private Transport transport;
@@ -272,6 +275,24 @@ public class Mission extends EntiteModifiable {
 	@Override
 	public String toString() {
 		return "Mission '" + nature.getLibelle() + "' début le " + dateDebut + ", statut " + statut;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return traitement
+	 */
+	public Boolean getTraitement() {
+		return traitement;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param traitement the traitement to set
+	 */
+	public void setTraitement(Boolean traite) {
+		this.traitement = traite;
 	}
 
 }

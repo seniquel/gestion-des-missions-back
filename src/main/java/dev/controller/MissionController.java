@@ -139,32 +139,29 @@ public class MissionController {
 		List<Mission> missions = service.lister();
 
 		for (Mission miss : missions) {
-			
-			Boolean traitement = true;
-			
+					
 			if (miss.getStatut().equals(Statut.INITIALE)) {
 				miss.setStatut(Statut.EN_ATTENTE_VALIDATION);
 				service.updateMission(miss);
 				logger.info("Mission validée ==> " + miss.toString());
 				serviceMail.sendEmail();
 			}
-			if (miss.getDateFin().isBefore(LocalDate.now()) && traitement) {
+			
+			if (miss.getDateFin().isBefore(LocalDate.now()) && !miss.getTraitement()) {
 				Period joursTravailles = Period.between(miss.getDateDebut(), miss.getDateFin());
 
-				// Calcul Prime = nombre de jours travaillés * TJM * %Prime/100 - déduction
 				BigDecimal calculPrime = BigDecimal.valueOf(joursTravailles.getDays())
 						.multiply(miss.getNature().getTjm()).multiply(miss.getNature().getPourcentagePrime()
 								.divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING));
 
-				// Prise en compte de la déduction
 				if (miss.getNature().getDepassementFrais()) {
 					calculPrime.subtract(miss.getNature().getPlafondFrais());
 				}
-				miss.setPrime(calculPrime);
-				service.updateMission(miss);
-				logger.info("Prime de la mission terminée : " + miss.getPrime().toString() + " ==> " + miss.toString());
 				
-				traitement = false;
+				miss.setPrime(calculPrime);
+				miss.setTraitement(true);
+				service.updateMission(miss);
+				logger.info("Prime de la mission terminée : " + miss.getPrime().toString() + " ==> " + miss.toString());	
 			}
 		}
 	}
