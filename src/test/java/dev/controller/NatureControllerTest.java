@@ -113,7 +113,7 @@ public class NatureControllerTest {
 		nat4.setDepassementFrais(true);
 		Mockito.when(natService.lister()).thenReturn(natures);
 		Mockito.when(natService.creer("test", true, BigDecimal.valueOf(200), true, BigDecimal.valueOf(7),
-				 BigDecimal.valueOf(300), true)).thenReturn(nat4);
+				BigDecimal.valueOf(300), true)).thenReturn(nat4);
 		String jsonBody = "{ \"libelle\": \"test\", \"payee\": true, \"versementPrime\": true, \"tjm\": 200, \"pourcentagePrime\": 7, \"plafondFrais\": 300, \"depassementFrais\": true }";
 		mockMvc.perform(MockMvcRequestBuilders.post("/natures").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(jsonBody)).andExpect(MockMvcResultMatchers.status().isOk())
@@ -134,6 +134,7 @@ public class NatureControllerTest {
 		nat4.setDepassementFrais(true);
 		Mockito.when(natService.lister()).thenReturn(natures);
 		Mockito.when(natService.creer("Formation", true, BigDecimal.valueOf(200), true, BigDecimal.valueOf(7),
+				BigDecimal.valueOf(300), true)).thenReturn(nat4);
 				 BigDecimal.valueOf(300), true)).thenReturn(nat4);
 		String jsonBody = "{ \"libelle\": \"Formation\", \"payee\": true, \"versementPrime\": true, \"tjm\": 200, \"pourcentagePrime\": 7, \"plafondFrais\": 300, \"depassementFrais\": true }";
 		mockMvc.perform(MockMvcRequestBuilders.post("/natures").contentType(MediaType.APPLICATION_JSON)

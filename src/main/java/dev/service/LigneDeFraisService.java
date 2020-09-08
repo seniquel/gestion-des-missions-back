@@ -114,7 +114,7 @@ public class LigneDeFraisService {
 	 * @param note           : la note rattachée
 	 * @return true si ok, false sinon
 	 */
-	private boolean verifierMontantAModifier(BigDecimal ancienMontant, BigDecimal nouveauMontant, NoteDeFrais note) {
+	public boolean verifierMontantAModifier(BigDecimal ancienMontant, BigDecimal nouveauMontant, NoteDeFrais note) {
 		BigDecimal montantTotal = note.getFraisTotal().subtract(ancienMontant).add(nouveauMontant);
 		BigDecimal plafondFrais = note.getMission().getNature().getPlafondFrais();
 		Boolean depassement = note.getMission().getNature().getDepassementFrais();
@@ -141,7 +141,7 @@ public class LigneDeFraisService {
 	 * @param lignesDeFrais : les lignes de frais a tester
 	 * @return : true si ok, false sinon
 	 */
-	private boolean verifierDoublonLigne(UUID uuid, LocalDate date, String nature, List<LigneDeFrais> lignesDeFrais) {
+	public boolean verifierDoublonLigne(UUID uuid, LocalDate date, String nature, List<LigneDeFrais> lignesDeFrais) {
 		List<LigneDeFrais> doublons = lignesDeFrais.stream()
 				.filter(element -> !element.getUuid().equals(uuid))
 				.filter(element -> element.getDate().compareTo(date) == 0 )
