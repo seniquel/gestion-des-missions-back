@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.CreerNatureDto;
+import dev.domain.LigneDeFrais;
+import dev.domain.Mission;
 import dev.domain.Nature;
+import dev.exception.CodeErreur;
+import dev.exception.LigneDeFraisException;
+import dev.exception.MessageErreurDto;
+import dev.service.MissionService;
 import dev.service.NatureService;
 
 @RestController
@@ -29,9 +36,11 @@ import dev.service.NatureService;
 public class NatureController {
 	
 	private NatureService service;
+	private MissionService missService;
 	
-	public NatureController(NatureService service) {
+	public NatureController(NatureService service, MissionService missService) {
 		this.service = service;
+		this.missService = missService;
 	}
 	
 	@GetMapping
@@ -112,6 +121,39 @@ public class NatureController {
 		nature.setPlafondFrais(natureDto.getPlafondFrais());
 		
 		service.update(nature);
+	}
+	
+	@DeleteMapping("{uuid}")
+	public ResponseEntity<?> deleteNature(@PathVariable UUID uuid) {
+		
+		try {
+			List<Mission> missions = missService.lister();
+			Boolean utilise = false;
+			Boolean supprimable = false;
+			for(Mission mission : missions) {
+				if(mission.getNature().getUuid().equals(uuid) && mission.getDateFin().isAfter(LocalDate.now())) {
+					utilise = true;
+				}
+			}
+			
+			if (utilise ==true) {
+				updateDateFin(uuid);
+				return ResponseEntity.status(HttpStatus.OK).body("update fin de validité");
+			}
+			else {
+				Nature nature = service.getNature(uuid).get();
+				service.delete(nature);
+				return ResponseEntity.status(HttpStatus.OK).body("Nature supprimé");
+			}
+			
+			
+	
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+		}
+		
+		
+		
 	}
 
 }

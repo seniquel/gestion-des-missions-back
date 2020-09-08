@@ -10,7 +10,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import dev.domain.LigneDeFrais;
 import dev.domain.Nature;
+import dev.domain.NoteDeFrais;
 import dev.domain.SignatureNumerique;
 import dev.repository.NatureRepo;
 
@@ -45,6 +47,11 @@ public class NatureService {
 	@Transactional
 	public void update(Nature nature) {
 		this.repo.save(nature);
+	}
+	
+	@Transactional
+	public void delete(Nature nature) {
+		this.repo.deleteById(nature.getUuid());;
 	}
 
 }
