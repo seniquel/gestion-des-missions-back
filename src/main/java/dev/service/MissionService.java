@@ -30,14 +30,12 @@ public class MissionService {
 	private NatureRepo natureRepo;
 	private CollegueRepo collegueRepo;
 	private NoteDeFraisRepo noteRepo;
-  private CollegueController colCtrl;
 	
-	public MissionService(MissionRepo repo, NatureRepo natureRepo, CollegueRepo collegueRepo, NoteDeFraisRepo noteRepo, CollegueController colCtrl) {
+	public MissionService(MissionRepo repo, NatureRepo natureRepo, CollegueRepo collegueRepo, NoteDeFraisRepo noteRepo) {
 		this.missionRepo = repo;
 		this.natureRepo = natureRepo;
 		this.collegueRepo = collegueRepo;
 		this.noteRepo = noteRepo;
-    this.colCtrl = colCtrl;
 	}
 
 	public List<Mission> lister(){
@@ -76,30 +74,6 @@ public class MissionService {
 		mission.setTransport(transport);
 		mission.setSignatureNumerique(new SignatureNumerique());
 		return missionRepo.save(mission);	
-	}
-	
-	public List<Mission> listerColConnecte() {
-		return colCtrl.findCollegueConnecte().get().getMissions();
-	}
-	
-	public List<Mission> getMissionCollegueConnecteParAnnee(int annee) {
-		List<Mission> missions = colCtrl.findCollegueConnecte().get().getMissions();
-		List<Mission> missionsParAnnee = new ArrayList<>();
-		if (annee == LocalDate.now().getYear()) {
-			for (Mission miss : missions) {
-				if (miss.getDateFin().getYear() == annee && miss.getDateFin().compareTo(LocalDate.now()) < 0) {
-					missionsParAnnee.add(miss);
-				}
-			}
-		} else {
-			for (Mission miss : missions) {
-				if (miss.getDateFin().getYear() == annee) {
-					missionsParAnnee.add(miss);
-				}
-			}
-		}
-
-		return missionsParAnnee;
 	}
 
 	public void updateMission(Mission mission) {

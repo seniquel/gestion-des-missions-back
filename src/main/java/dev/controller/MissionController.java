@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.domain.Collegue;
 import dev.domain.Mission;
 import dev.domain.Statut;
 import dev.excel.ExportMissions;
 import dev.exception.CodeErreur;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
+import dev.service.CollegueService;
 import dev.service.MissionService;
 
 @RestController
@@ -35,11 +38,41 @@ import dev.service.MissionService;
 public class MissionController {
 
 	private MissionService service;
+	private CollegueService collegueService;
 	
 	Logger logger = Logger.getLogger(MissionController.class.getName());
 
-	public MissionController(MissionService service) {
+	public MissionController(MissionService service, CollegueService collegueService) {
 		this.service = service;
+		this.collegueService = collegueService;
+	}
+	
+	public Optional<Collegue> findCollegueConnecte() {
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		return collegueService.findByEmail(email);
+	}
+	
+	public List<Mission> listerColConnecte() {
+		return this.findCollegueConnecte().get().getMissions();
+	}
+	
+	public List<Mission> getMissionCollegueConnecteParAnnee(int annee) {
+		List<Mission> missions = this.findCollegueConnecte().get().getMissions();
+		List<Mission> missionsParAnnee = new ArrayList<>();
+		if (annee == LocalDate.now().getYear()) {
+			for (Mission miss : missions) {
+				if (miss.getDateFin().getYear() == annee && miss.getDateFin().compareTo(LocalDate.now()) < 0) {
+					missionsParAnnee.add(miss);
+				}
+			}
+		} else {
+			for (Mission miss : missions) {
+				if (miss.getDateFin().getYear() == annee) {
+					missionsParAnnee.add(miss);
+				}
+			}
+		}
+		return missionsParAnnee;
 	}
 
 	@GetMapping
@@ -61,13 +94,13 @@ public class MissionController {
 
 	@PostMapping("missions-par-annee")
 	public void creerFichierExcel(@RequestBody int annee) {
-		List<Mission> liste = service.getMissionCollegueConnecteParAnnee(annee);
+		List<Mission> liste = this.getMissionCollegueConnecteParAnnee(annee);
 		ExportMissions.creerFichierExcel(liste, annee);
 	}
 
 	@GetMapping("{annee}/prime")
 	public List<Mission> getMissionParAnne(@PathVariable String annee) {
-		return service.getMissionCollegueConnecteParAnnee(Integer.parseInt(annee));
+		return this.getMissionCollegueConnecteParAnnee(Integer.parseInt(annee));
 	}
 
 	@GetMapping("{uuid}/noteDeFrais")
@@ -107,7 +140,7 @@ public class MissionController {
 
 	@GetMapping("current")
 	public List<Mission> getCurrentMission() {
-		List<Mission> missions = service.listerColConnecte();
+		List<Mission> missions = this.listerColConnecte();
 		List<Mission> missionCurrent = new ArrayList<>();
 		for (Mission miss : missions) {
 			if ((miss.getDateDebut().isBefore(LocalDate.now()) || miss.getDateDebut().isEqual(LocalDate.now()))
@@ -120,7 +153,7 @@ public class MissionController {
 
 	@GetMapping("futur")
 	public List<Mission> getFuturMission() {
-		List<Mission> missions = service.listerColConnecte();
+		List<Mission> missions = this.listerColConnecte();
 		List<Mission> missionFutur = new ArrayList<>();
 		for (Mission miss : missions) {
 			if (miss.getDateDebut().isAfter(LocalDate.now())) {
@@ -163,4 +196,5 @@ public class MissionController {
 			}
 		}
 	}
+	
 }
