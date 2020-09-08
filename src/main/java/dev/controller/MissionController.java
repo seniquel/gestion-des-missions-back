@@ -30,6 +30,7 @@ import dev.excel.ExportMissions;
 import dev.exception.CodeErreur;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
+import dev.service.EmailService;
 import dev.service.CollegueService;
 import dev.service.MissionService;
 
@@ -39,12 +40,14 @@ public class MissionController {
 
 	private MissionService service;
 	private CollegueService collegueService;
+  private EmailService serviceMail;
 	
 	Logger logger = Logger.getLogger(MissionController.class.getName());
 
-	public MissionController(MissionService service, CollegueService collegueService) {
+	public MissionController(MissionService service, CollegueService collegueService, EmailService serviceMail) {
 		this.service = service;
 		this.collegueService = collegueService;
+    this.serviceMail = serviceMail;
 	}
 	
 	public Optional<Collegue> findCollegueConnecte() {
@@ -162,37 +165,40 @@ public class MissionController {
 		}
 		return missionFutur;
 	}
-	
+
+	@GetMapping("traitement")
 	@Scheduled(cron = "0 4 * * * *")
 	public void updateValidation() {
-		List<Mission> missions = service.lister();
 		
+		List<Mission> missions = service.lister();
+
 		for (Mission miss : missions) {
+			
+			Boolean traitement = true;
 			
 			if (miss.getStatut().equals(Statut.INITIALE)) {
 				miss.setStatut(Statut.EN_ATTENTE_VALIDATION);
 				service.updateMission(miss);
-				logger.info("Mission validée : " + miss.toString());
+				logger.info("Mission validée ==> " + miss.toString());
+				serviceMail.sendEmail();
 			}
-			
-			if (miss.getStatut().equals(Statut.VALIDEE)) {
-				
+			if (miss.getDateFin().isBefore(LocalDate.now()) && traitement) {
 				Period joursTravailles = Period.between(miss.getDateDebut(), miss.getDateFin());
-				
+
 				// Calcul Prime = nombre de jours travaillés * TJM * %Prime/100 - déduction
 				BigDecimal calculPrime = BigDecimal.valueOf(joursTravailles.getDays())
-						.multiply(miss.getNature().getTjm())
-						.multiply(miss.getNature().getPourcentagePrime().divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING));
-				
-				// Pris en compte de la déduction
+						.multiply(miss.getNature().getTjm()).multiply(miss.getNature().getPourcentagePrime()
+								.divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING));
+
+				// Prise en compte de la déduction
 				if (miss.getNature().getDepassementFrais()) {
 					calculPrime.subtract(miss.getNature().getPlafondFrais());
 				}
-				
 				miss.setPrime(calculPrime);
 				service.updateMission(miss);
-
-				logger.info("Calcul prime : " + miss.getPrime().toString() + " => " + miss.toString());
+				logger.info("Prime de la mission terminée : " + miss.getPrime().toString() + " ==> " + miss.toString());
+				
+				traitement = false;
 			}
 		}
 	}
