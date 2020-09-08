@@ -78,6 +78,10 @@ public class MissionService {
 		return missionRepo.save(mission);	
 	}
 	
+	public List<Mission> listerColConnecte() {
+		return colCtrl.findCollegueConnecte().get().getMissions();
+	}
+	
 	public List<Mission> getMissionCollegueConnecteParAnnee(int annee) {
 		List<Mission> missions = colCtrl.findCollegueConnecte().get().getMissions();
 		List<Mission> missionsParAnnee = new ArrayList<>();
@@ -99,7 +103,7 @@ public class MissionService {
 	}
 
 	public void updateMission(Mission mission) {
-		repo.save(mission);
+		missionRepo.save(mission);
 	}
 
 }

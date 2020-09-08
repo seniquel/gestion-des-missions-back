@@ -50,9 +50,6 @@ public class MissionController {
 	@GetMapping("{uuid}")
 	public ResponseEntity<Optional<Mission>> getMissionByUUID(@PathVariable UUID uuid) {
 		Optional<Mission> mission = service.getMission(uuid);
-		if(mission.isPresent()) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(mission);
 		if (mission.isPresent()) {
 			return ResponseEntity.status(HttpStatus.OK).body(mission);
 		} else {
@@ -60,6 +57,7 @@ public class MissionController {
 					new MessageErreurDto(CodeErreur.VALIDATION, "Cette mission n'existe pas"));
 		}
 	}
+		
 
 	@PostMapping("missions-par-annee")
 	public void creerFichierExcel(@RequestBody int annee) {

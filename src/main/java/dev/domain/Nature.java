@@ -69,7 +69,6 @@ public class Nature extends EntiteModifiable {
 		this.payee = payee;
 		this.tjm = tjm;
 		this.versementPrime = versementPrime;
-		this.TJM = TJM;
 		this.pourcentagePrime = pourcentagePrime;
 		this.debutValidite = debutValidite;
 		this.plafondFrais = plafondFrais;

@@ -45,7 +45,8 @@ public class GestionErreurCtrlAdvice {
 	
 	@ExceptionHandler(NatureNotFoundException.class)
 	public ResponseEntity<MessageErreurDto> quandNatureNotFoundException(NatureNotFoundException ex) {
-		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());	
+		return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessageErreur());
+	}
 
 	@ExceptionHandler(LigneDeFraisException.class)
 	public ResponseEntity<MessageErreurDto> onLigneDeFraisException(LigneDeFraisException ex) {
