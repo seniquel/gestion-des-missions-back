@@ -30,6 +30,7 @@ import dev.excel.ExportMissions;
 import dev.exception.CodeErreur;
 import dev.exception.CollegueNotFoundException;
 import dev.exception.MessageErreurDto;
+import dev.exception.PrimeException;
 import dev.service.EmailService;
 import dev.service.CollegueService;
 import dev.service.MissionService;
@@ -181,9 +182,13 @@ public class MissionController {
 				serviceMail.sendEmail();
 			}
 			
-			if (miss.getDateFin().isBefore(LocalDate.now()) && !miss.getTraitement()) {
+			if (miss.getDateFin().isBefore(LocalDate.now()) && !miss.getTraite()) {
 				Period joursTravailles = Period.between(miss.getDateDebut(), miss.getDateFin());
 
+				if (miss.getNature().getTjm() == null || miss.getNature().getPourcentagePrime() == null) {
+					throw new PrimeException(new MessageErreurDto(CodeErreur.METIER, "Le TJM ou le pourcentage de la prime est incorrect"));
+				}
+				
 				BigDecimal calculPrime = BigDecimal.valueOf(joursTravailles.getDays())
 						.multiply(miss.getNature().getTjm()).multiply(miss.getNature().getPourcentagePrime()
 								.divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING));
@@ -193,11 +198,10 @@ public class MissionController {
 				}
 				
 				miss.setPrime(calculPrime);
-				miss.setTraitement(true);
+				miss.setTraite(true);
 				service.updateMission(miss);
 				logger.info("Prime de la mission terminée : " + miss.getPrime().toString() + " ==> " + miss.toString());	
 			}
 		}
 	}
-	
 }
