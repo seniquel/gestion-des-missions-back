@@ -51,10 +51,10 @@ public class CreerMissionDto {
 	@JsonProperty("natureId")
 	private UUID natureId;
 	
-	/** missionId */
+	/** collegueId */
 	@NotNull
-	@JsonProperty("missionId")
-	private UUID missionId;
+	@JsonProperty("collegueId")
+	private UUID collegueId;
 	
 	/** statut */
 	@NotNull
@@ -67,11 +67,7 @@ public class CreerMissionDto {
 	@NotBlank
 	@JsonProperty("transport")
 	private String transport;
-	
-	/** noteDeFraisId */
-	@NotNull
-	@JsonProperty("noteDeFraisId")
-	private UUID noteDeFraisId;
+
 
 	public LocalDate getDateDebut() {
 		return dateDebut;
@@ -121,12 +117,12 @@ public class CreerMissionDto {
 		this.natureId = natureId;
 	}
 
-	public UUID getMissionId() {
-		return missionId;
+	public UUID getCollegueId() {
+		return collegueId;
 	}
 
-	public void setMissionId(UUID missionId) {
-		this.missionId = missionId;
+	public void setCollegueId(UUID collegueId) {
+		this.collegueId = collegueId;
 	}
 
 	public String getStatut() {
@@ -144,14 +140,5 @@ public class CreerMissionDto {
 	public void setTransport(String transport) {
 		this.transport = transport;
 	}
-
-	public UUID getNoteDeFraisId() {
-		return noteDeFraisId;
-	}
-
-	public void setNoteDeFraisId(UUID noteDeFraisId) {
-		this.noteDeFraisId = noteDeFraisId;
-	}
-	
 	
 }
