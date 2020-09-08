@@ -82,7 +82,7 @@ public class StartupListener {
 		col3.setMotDePasse(passwordEncoder.encode("superpass"));
 		col3.setRole(Role.ROLE_MANAGER);
 		this.collegueRepo.save(col3);
-
+/*
 		// Création de missions pour un collègue
 		Nature nat1 = new Nature();
 		nat1.setLibelle("Formation");
@@ -268,7 +268,7 @@ public class StartupListener {
 		this.missionRepo.save(mis5);
 		this.missionRepo.save(mis6);
 		this.missionRepo.save(mis7);
-
+*/
 	}
 
 }
