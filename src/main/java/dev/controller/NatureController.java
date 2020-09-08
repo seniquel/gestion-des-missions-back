@@ -9,7 +9,9 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.CreerNatureDto;
+import dev.domain.LigneDeFrais;
+import dev.domain.Mission;
 import dev.domain.Nature;
+import dev.exception.CodeErreur;
+import dev.exception.LigneDeFraisException;
+import dev.exception.MessageErreurDto;
+import dev.service.MissionService;
 import dev.service.NatureService;
 
 @RestController
@@ -29,17 +37,21 @@ import dev.service.NatureService;
 public class NatureController {
 	
 	private NatureService service;
+	private MissionService missService;
 	
-	public NatureController(NatureService service) {
+	public NatureController(NatureService service, MissionService missService) {
 		this.service = service;
+		this.missService = missService;
 	}
 	
 	@GetMapping
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Nature> getNature(){
 		return service.lister();
 	}
 	
 	@GetMapping("valides")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Nature> getNatureValides(){
 		List<Nature> liste = service.lister();
 		List<Nature> valides = new ArrayList<>();
@@ -52,11 +64,13 @@ public class NatureController {
 	}
 	
 	@GetMapping("{uuid}")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public Nature getNatureUuid(@PathVariable UUID uuid) {
 		return service.getNature(uuid).get();
 	}
 	
 	@PostMapping
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public ResponseEntity<?> creerNature(@RequestBody @Valid CreerNatureDto natureDto) {
 		try {
 			List<Nature> natures = service.lister();
@@ -77,6 +91,7 @@ public class NatureController {
 	}
 	
 	@PostMapping("post")
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public ResponseEntity<?> creerNatureLibelleExistant(@RequestBody @Valid CreerNatureDto natureDto) {
 		try {
 			List<Nature> natures = service.lister();
@@ -92,6 +107,7 @@ public class NatureController {
 	}
 	
 	@PatchMapping("updateDateFin/{uuid}")
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public void updateDateFin(@PathVariable UUID uuid) {
 		//mettre la date de fin à aujourd'hui
 		Nature nature = service.getNature(uuid).get();
@@ -100,6 +116,7 @@ public class NatureController {
 	}
 	
 	@PatchMapping("modifier/{uuid}")
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public void updateNature(@PathVariable UUID uuid, @RequestBody @Valid CreerNatureDto natureDto) {
 		//changer la nature sans changer la date de début
 		Nature nature = service.getNature(uuid).get();
@@ -112,6 +129,39 @@ public class NatureController {
 		nature.setPlafondFrais(natureDto.getPlafondFrais());
 		
 		service.update(nature);
+	}
+	
+	@DeleteMapping("{uuid}")
+	public ResponseEntity<?> deleteNature(@PathVariable UUID uuid) {
+		
+		try {
+			List<Mission> missions = missService.lister();
+			Boolean utilise = false;
+			Boolean supprimable = false;
+			for(Mission mission : missions) {
+				if(mission.getNature().getUuid().equals(uuid) && mission.getDateFin().isAfter(LocalDate.now())) {
+					utilise = true;
+				}
+			}
+			
+			if (utilise ==true) {
+				updateDateFin(uuid);
+				return ResponseEntity.status(HttpStatus.OK).body("update fin de validité");
+			}
+			else {
+				Nature nature = service.getNature(uuid).get();
+				service.delete(nature);
+				return ResponseEntity.status(HttpStatus.OK).body("Nature supprimé");
+			}
+			
+			
+	
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+		}
+		
+		
+		
 	}
 
 }
