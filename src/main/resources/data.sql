@@ -4,7 +4,7 @@ INSERT INTO "COLLEGUE" VALUES
 (X'684d9ffff25841e5a4605b914b2570fd', 'admin@dev.fr', '$2a$10$xNN5e1DJZgknnyczOPM.PO1drZOSQlNiT4lgyYY7MFV83Tfmtb4BC', 'Admin', 'DEV', 1);         
                    
 INSERT INTO "NATURE" VALUES
-(X'e8b438fe46eb4107b4c4c456b0ae935a', NULL, DATE '2019-11-07', TRUE, NULL, 'Formation', TRUE, 150.00, 10.00, NULL, TRUE),
+(X'e8b438fe46eb4107b4c4c456b0ae935a', NULL, DATE '2019-11-07', TRUE, NULL, 'Formation', TRUE, 150.00, 10.00, 0, TRUE),
 (X'f82096cdbe5b49e49e847f3dfec21e3e', NULL, DATE '2019-11-07', TRUE, NULL, 'Conseil', TRUE, 150.00, 3.50, 750.00, TRUE),
 (X'0c8320fad5254390b4309e0e51df37c2', NULL, DATE '2019-11-07', TRUE, NULL, 'Expertise technique', TRUE, 150.00, 4.00, 1000.00, TRUE); 
            
@@ -27,5 +27,11 @@ INSERT INTO "MISSION" VALUES
 (X'eeb16a7fa0bf48ed879e9b22ce23e7cc', NULL, DATE '2020-07-30', DATE '2020-08-06', 100.00, 2, FALSE, 1, 'Donaldville', 'Mickeyville', X'684d9ffff25841e5a4605b914b2570fd', X'e8b438fe46eb4107b4c4c456b0ae935a', X'5f630b7445a24f0b81fc3723418b1f32'),
 (X'3aa5f1fd98274f10a1c0dab0880fd8e2', NULL, DATE '2019-07-30', DATE '2019-08-06', 100.00, 2, FALSE, 1, 'Donaldville', 'Mickeyville', X'684d9ffff25841e5a4605b914b2570fd', X'e8b438fe46eb4107b4c4c456b0ae935a', X'e01ef693d1fb41ce9ae326fc42289ba5'),
 (X'21c83be22b30440e96132330a441802b', NULL, DATE '2020-09-18', DATE '2020-09-27', 1000.00, 0, FALSE, 1, 'Donaldville', 'Mickeyville', X'684d9ffff25841e5a4605b914b2570fd', X'f82096cdbe5b49e49e847f3dfec21e3e', X'c2b847aec7db4181938b9e6d06e75d78'),
+<<<<<<< HEAD
 (X'4a21cd6579f344b7af32bead4a4ca2aa', NULL, DATE '2020-10-03', DATE '2020-10-16', 500.00, 1, FALSE, 1, 'Donaldville', 'Mickeyville', X'500305c589bb4d0c87b6454ab1e00d1d', X'e8b438fe46eb4107b4c4c456b0ae935a', X'be5c8fd5b79643b59b95238ab2dfefbd'),
 (X'87db3c35613e4b4eb0d252b5ac1d3882', NULL, DATE '2020-10-03', DATE '2020-10-16', 300.00, 1, FALSE, 1, 'Donaldville', 'Mickeyville', X'500305c589bb4d0c87b6454ab1e00d1d', X'e8b438fe46eb4107b4c4c456b0ae935a', X'15512baf8340410ca4b18a4e9bca5a8d');             
+=======
+(X'4a21cd6579f344b7af32bead4a4ca2aa', NULL, DATE '2020-10-03', DATE '2020-10-16', NULL, 1, FALSE, 1, 'Donaldville', 'Mickeyville', X'500305c589bb4d0c87b6454ab1e00d1d', X'e8b438fe46eb4107b4c4c456b0ae935a', X'be5c8fd5b79643b59b95238ab2dfefbd'),
+(X'87db3c35613e4b4eb0d252b5ac1d3882', NULL, DATE '2020-10-03', DATE '2020-10-16', NULL, 1, FALSE, 1, 'Donaldville', 'Mickeyville', X'500305c589bb4d0c87b6454ab1e00d1d', X'e8b438fe46eb4107b4c4c456b0ae935a', X'15512baf8340410ca4b18a4e9bca5a8d');             
+   
+>>>>>>> fa4501396769314dd2e30da73d346f8be5bea793

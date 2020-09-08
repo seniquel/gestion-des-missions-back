@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -60,11 +61,13 @@ public class CollegueController {
 	}
 	
 	@GetMapping
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Collegue> getCollegues(){
 		return collegueService.lister();
 	}
 	
 	@GetMapping("{uuid}")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<Optional<Collegue>> getCollegueByUUID(@PathVariable UUID uuid) {
 		Optional<Collegue> collegue = collegueService.getCollegue(uuid);
 		if(collegue.isPresent()) {
@@ -78,6 +81,7 @@ public class CollegueController {
 	}
 	
 	@GetMapping("{uuid}/missions")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<List<Mission>> getMissionsCollegueByUUID(@PathVariable UUID uuid) {
 		Optional<Collegue> collegue = collegueService.getCollegue(uuid);
 		if(collegue.isPresent()) {
@@ -91,18 +95,21 @@ public class CollegueController {
 	}
 	
 	@GetMapping("me")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<Optional<Collegue>> getCollegueConnecte(){
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(this.findCollegueConnecte());
 	}
 	
 	@GetMapping("me/missions")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<List<Mission>> getMissionsCollegueConnecte(){
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(this.findCollegueConnecte().get().getMissions());
 	}
 	
 	@PostMapping("me/missions")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<?> PostMission(@RequestBody @Valid CreerMissionDto mission, BindingResult result){
 		Optional<Collegue> collegue = collegueService.getCollegue(mission.getCollegueId());
 		Optional<Nature> nature = natureService.getNature(mission.getNatureId());
@@ -147,6 +154,7 @@ public class CollegueController {
 	}
 	
 	@PutMapping("me/missions/{uuid}")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<?> PutMission(@PathVariable UUID uuid, @RequestBody @Valid CreerMissionDto mission, BindingResult result){
 		Optional<Collegue> collegue = collegueService.getCollegue(mission.getCollegueId());
 		Optional<Nature> nature = natureService.getNature(mission.getNatureId());
@@ -190,6 +198,7 @@ public class CollegueController {
 	}
 	
 	@DeleteMapping("me/missions/{uuid}")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
     public ResponseEntity<UUID> deletePost(@PathVariable UUID uuid) {
 		Optional<Mission> mission = missionService.getMission(uuid);
 		if(!mission.isPresent()) {

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -80,11 +81,13 @@ public class MissionController {
 	}
 
 	@GetMapping
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Mission> getMission() {
 		return service.lister();
 	}
 
 	@GetMapping("{uuid}")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<Optional<Mission>> getMissionByUUID(@PathVariable UUID uuid) {
 		Optional<Mission> mission = service.getMission(uuid);
 		if (mission.isPresent()) {
@@ -97,17 +100,20 @@ public class MissionController {
 		
 
 	@PostMapping("missions-par-annee")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public void creerFichierExcel(@RequestBody int annee) {
 		List<Mission> liste = this.getMissionCollegueConnecteParAnnee(annee);
 		ExportMissions.creerFichierExcel(liste, annee);
 	}
 
 	@GetMapping("{annee}/prime")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Mission> getMissionParAnne(@PathVariable String annee) {
 		return this.getMissionCollegueConnecteParAnnee(Integer.parseInt(annee));
 	}
 
 	@GetMapping("{uuid}/noteDeFrais")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public ResponseEntity<?> getNoteOfMission(@PathVariable UUID uuid) {
 		Optional<Mission> mission = service.getMission(uuid);
 		if (mission.isPresent()) {
@@ -119,6 +125,7 @@ public class MissionController {
 	}
 
 	@GetMapping("validation")
+	@Secured(value="ROLE_MANAGER")
 	public List<Mission> getMissionEnAttente() {
 		List<Mission> missions = service.lister();
 		List<Mission> enAttente = new ArrayList<>();
@@ -131,6 +138,7 @@ public class MissionController {
 	}
 
 	@PatchMapping("validation")
+	@Secured(value="ROLE_MANAGER")
 	public void updateStatut(@RequestParam String uuid, @RequestParam String str) {
 		Mission mission = service.getMission(UUID.fromString(uuid)).get();
 
@@ -143,6 +151,7 @@ public class MissionController {
 	}
 
 	@GetMapping("current")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Mission> getCurrentMission() {
 		List<Mission> missions = this.listerColConnecte();
 		List<Mission> missionCurrent = new ArrayList<>();
@@ -156,6 +165,7 @@ public class MissionController {
 	}
 
 	@GetMapping("futur")
+	@Secured(value="ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR, ROLE_MANAGER")
 	public List<Mission> getFuturMission() {
 		List<Mission> missions = this.listerColConnecte();
 		List<Mission> missionFutur = new ArrayList<>();
