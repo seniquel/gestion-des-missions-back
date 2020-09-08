@@ -25,9 +25,9 @@ public class NatureService {
 
 	@Transactional
 	public Nature creer(String libelle, Boolean payee, BigDecimal tjm, Boolean versementPrime,
-			BigDecimal pourcentagePrime, LocalDate debutValidite, BigDecimal plafondFrais,
+			BigDecimal pourcentagePrime, BigDecimal plafondFrais,
 			Boolean depassementFrais) {
-		Nature nature = new Nature(libelle, payee, tjm, versementPrime, pourcentagePrime, debutValidite, plafondFrais, depassementFrais);
+		Nature nature = new Nature(libelle, payee, tjm, versementPrime, pourcentagePrime, LocalDate.now(), plafondFrais, depassementFrais);
 
 		Nature natureSauvegardee = this.repo.save(nature);
 
@@ -41,6 +41,11 @@ public class NatureService {
 
 	public Optional<Nature> getNature(UUID id){
 		return repo.findById(id);
+	}
+	
+	@Transactional
+	public void update(Nature nature) {
+		this.repo.save(nature);
 	}
 
 }
