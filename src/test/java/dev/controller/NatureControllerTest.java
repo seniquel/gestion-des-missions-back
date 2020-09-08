@@ -30,6 +30,7 @@ import dev.domain.Nature;
 import dev.security.JWTAuthenticationSuccessHandler;
 import dev.security.JWTAuthorizationFilter;
 import dev.security.WebSecurityConfig;
+import dev.service.MissionService;
 import dev.service.NatureService;
 
 @WebMvcTest(value = NatureController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {
@@ -44,6 +45,9 @@ public class NatureControllerTest {
 
 	@MockBean
 	NatureService natService;
+	
+	@MockBean
+	MissionService misService;
 
 	@Before
 	public void setUp() {
@@ -135,10 +139,10 @@ public class NatureControllerTest {
 		Mockito.when(natService.lister()).thenReturn(natures);
 		Mockito.when(natService.creer("Formation", true, BigDecimal.valueOf(200), true, BigDecimal.valueOf(7),
 				BigDecimal.valueOf(300), true)).thenReturn(nat4);
-				 BigDecimal.valueOf(300), true)).thenReturn(nat4);
 		String jsonBody = "{ \"libelle\": \"Formation\", \"payee\": true, \"versementPrime\": true, \"tjm\": 200, \"pourcentagePrime\": 7, \"plafondFrais\": 300, \"depassementFrais\": true }";
 		mockMvc.perform(MockMvcRequestBuilders.post("/natures").contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON).content(jsonBody)).andExpect(MockMvcResultMatchers.status().isConflict())
+				.accept(MediaType.APPLICATION_JSON).content(jsonBody))
+				.andExpect(MockMvcResultMatchers.status().isConflict())
 				.andExpect(MockMvcResultMatchers.content().string("Nature existante"));
 	}
 
