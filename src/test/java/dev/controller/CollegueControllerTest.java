@@ -36,6 +36,8 @@ import dev.security.JWTAuthenticationSuccessHandler;
 import dev.security.JWTAuthorizationFilter;
 import dev.security.WebSecurityConfig;
 import dev.service.CollegueService;
+import dev.service.MissionService;
+import dev.service.NatureService;
 
 @WebMvcTest(value = CollegueController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {WebSecurityConfig.class, JWTAuthenticationSuccessHandler.class, JWTAuthorizationFilter.class}))
 public class CollegueControllerTest {
@@ -47,6 +49,12 @@ public class CollegueControllerTest {
 
 	@MockBean
 	CollegueService colService;
+	
+	@MockBean
+	MissionService misService;
+	
+	@MockBean
+	NatureService natService;
 
 	protected List<Collegue> collegues = new ArrayList<>();
 
