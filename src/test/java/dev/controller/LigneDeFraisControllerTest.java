@@ -1,6 +1,5 @@
 package dev.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -90,30 +89,5 @@ public class LigneDeFraisControllerTest {
 				.thenReturn(Optional.of(lignes.get(0)));
 		mockMvc.perform(MockMvcRequestBuilders.delete("/lignesDeFrais/fe8a5705-2e81-4ce7-a891-865bb505b934")
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-	}
-
-	/**
-	 * Test si doublon (même infos que l2, uuid de l1)
-	 */
-	@Test
-	@WithMockUser(username = "admin", roles = { "USER", "ADMIN" })
-	void testerDoublonLigne() {
-		Mockito.when(ligService
-				.verifierDoublonLigne(UUID.fromString("fe8a5705-2e81-4ce7-a891-865bb505b934"),
-				LocalDate.of(2020, 9, 7), "petit pain", lignes)).thenReturn(false);
-		assertThat(ligService.verifierDoublonLigne(UUID.fromString("fe8a5705-2e81-4ce7-a891-865bb505b934"),
-				LocalDate.of(2020, 9, 7), "petit pain", lignes)).isFalse();
-	}
-
-	/**
-	 * Test si doublon (même infos que l2, uuid de l1)
-	 */
-	@Test
-	@WithMockUser(username = "admin", roles = { "USER", "ADMIN" })
-	void testerNoDoublonLigne() {
-		Mockito.when(ligService.verifierDoublonLigne(UUID.fromString("fe8a5705-2e81-4ce7-a891-865bb505b777"),
-				LocalDate.of(2020, 9, 7), "W/e", lignes)).thenReturn(true);
-		assertThat(ligService.verifierDoublonLigne(UUID.fromString("fe8a5705-2e81-4ce7-a891-865bb505b777"),
-				LocalDate.of(2020, 9, 7), "W/e", lignes)).isTrue();
 	}
 }
