@@ -10,10 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import dev.domain.LigneDeFrais;
 import dev.domain.Nature;
-import dev.domain.NoteDeFrais;
-import dev.domain.SignatureNumerique;
 import dev.repository.NatureRepo;
 
 @Service
