@@ -73,7 +73,7 @@ public class NatureController {
 	@Secured(value="ROLE_ADMINISTRATEUR")
 	public ResponseEntity<?> creerNature(@RequestBody @Valid CreerNatureDto natureDto) {
 		try {
-			List<Nature> natures = service.lister();
+			List<Nature> natures = getNatureValides();
 			for(Nature nat : natures) {
 				if(nat.getLibelle().toUpperCase().equals(natureDto.getLibelle().toUpperCase())) {
 					return ResponseEntity.status(HttpStatus.CONFLICT).body("Nature existante");
@@ -132,6 +132,7 @@ public class NatureController {
 	}
 	
 	@DeleteMapping("{uuid}")
+	@Secured(value="ROLE_ADMINISTRATEUR")
 	public ResponseEntity<?> deleteNature(@PathVariable UUID uuid) {
 		
 		try {
