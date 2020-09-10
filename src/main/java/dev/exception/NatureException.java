@@ -2,6 +2,10 @@ package dev.exception;
 
 public class NatureException extends RuntimeException {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 2179156588957961507L;
 	private MessageErreurDto messageErreur;
 
 	public NatureException(MessageErreurDto messageErreur) {

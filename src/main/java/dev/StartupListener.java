@@ -34,13 +34,61 @@ public class StartupListener {
 	public StartupListener(@Value("${app.version}") String appVersion, PasswordEncoder passwordEncoder,
 			CollegueRepo collegueRepo, NatureRepo natureRepo, MissionRepo missionRepo, NoteDeFraisRepo noteRepo,
 			LigneDeFraisRepo ligneRepo) {
-		this.appVersion = appVersion;
+		this.setAppVersion(appVersion);
 		this.passwordEncoder = passwordEncoder;
-		this.collegueRepo = collegueRepo;
-		this.natureRepo = natureRepo;
-		this.missionRepo = missionRepo;
-		this.noteRepo = noteRepo;
+		this.setCollegueRepo(collegueRepo);
+		this.setNatureRepo(natureRepo);
+		this.setMissionRepo(missionRepo);
+		this.setNoteRepo(noteRepo);
+		this.setLigneRepo(ligneRepo);
+	}
+
+	public LigneDeFraisRepo getLigneRepo() {
+		return ligneRepo;
+	}
+
+	public void setLigneRepo(LigneDeFraisRepo ligneRepo) {
 		this.ligneRepo = ligneRepo;
+	}
+
+	public NoteDeFraisRepo getNoteRepo() {
+		return noteRepo;
+	}
+
+	public void setNoteRepo(NoteDeFraisRepo noteRepo) {
+		this.noteRepo = noteRepo;
+	}
+
+	public MissionRepo getMissionRepo() {
+		return missionRepo;
+	}
+
+	public void setMissionRepo(MissionRepo missionRepo) {
+		this.missionRepo = missionRepo;
+	}
+
+	public NatureRepo getNatureRepo() {
+		return natureRepo;
+	}
+
+	public void setNatureRepo(NatureRepo natureRepo) {
+		this.natureRepo = natureRepo;
+	}
+
+	public CollegueRepo getCollegueRepo() {
+		return collegueRepo;
+	}
+
+	public void setCollegueRepo(CollegueRepo collegueRepo) {
+		this.collegueRepo = collegueRepo;
+	}
+
+	public String getAppVersion() {
+		return appVersion;
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
 	}
 
 	@EventListener(ContextRefreshedEvent.class)
@@ -54,7 +102,6 @@ public class StartupListener {
 		col1.setEmail("admin@dev.fr");
 		col1.setMotDePasse(passwordEncoder.encode("superpass"));
 		col1.setRole(Role.ROLE_ADMINISTRATEUR);
-
 
 		Collegue col2 = new Collegue();
 		// col2.setSignatureNumerique(new SignatureNumerique());
