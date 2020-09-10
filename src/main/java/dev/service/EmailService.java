@@ -16,8 +16,8 @@ public class EmailService {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("be3837f76a-0e53e3@inbox.mailtrap.io");
 		message.setTo("manager@dev.fr");
-		message.setSubject("Gestion des Missions - Traitement de nuit");
-		message.setText("Missions au statut initiale passées en attente de validation");
+		message.setSubject("GDM - Traitement de nuit");
+		message.setText("Les missions au statut initiale ont été passé en attente de validation");
 		
 		javaMailSender.send(message);
 	}
