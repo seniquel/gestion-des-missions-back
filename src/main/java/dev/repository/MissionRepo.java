@@ -1,14 +1,12 @@
 package dev.repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import dev.domain.Collegue;
+import dev.domain.Mission;
 @Repository
-public interface CollegueRepo extends JpaRepository<Collegue, UUID> {
+public interface MissionRepo extends JpaRepository<Mission, UUID> {
 
-    Optional<Collegue> findByEmail(String email);
 }

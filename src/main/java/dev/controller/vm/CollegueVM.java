@@ -3,10 +3,6 @@ package dev.controller.vm;
 import dev.domain.Collegue;
 import dev.domain.Role;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * Structure modèlisant un collègue servant à communiquer avec l'extérieur (WEB API).
  */
@@ -15,13 +11,13 @@ public class CollegueVM {
     private String email;
     private String nom;
     private String prenom;
-    private List<Role> roles = new ArrayList<>();
+    private Role role;
 
     public CollegueVM(Collegue col) {
         this.email = col.getEmail();
         this.nom = col.getNom();
         this.prenom = col.getPrenom();
-        this.roles = col.getRoles().stream().map(roleCollegue -> roleCollegue.getRole()).collect(Collectors.toList());
+        this.role = col.getRole();
     }
 
     public String getEmail() {
@@ -48,11 +44,12 @@ public class CollegueVM {
         this.prenom = prenom;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
+    
 }
